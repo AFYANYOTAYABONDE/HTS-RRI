@@ -7,13 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-<!DOCTYPE html>
-<!--<html  manifest="rriv1.appcache">-->
+<!--<!DOCTYPE html>-->
+<html  manifest="htsrriv1.appcache">
 <html  >
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HSDSA RRI 2018</title>
+		<title>HSDSA HTS RRI</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                     <link rel="stylesheet" href="css/select2.min.css">
-                    <link rel="shortcut icon" href="logo.png">
+                    <link rel="shortcut icon" href="htsrri.png">
                   
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,7 +60,7 @@ input:focus {
                 </li>
           
                 
-                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>
+                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Counsellor</span></a></li>
                  <li><a title="Add Widget" data-toggle="modal" style="display:none;" id="exportdataanchor2" href="#addWidgetModal"><i class="glyphicon glyphicon-cloud-upload"></i> Export Data</a></li>
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
@@ -76,7 +76,7 @@ input:focus {
     
 </div>
 <!-- /Header -->
-     <div class="well well-sm" >
+     <div class="well well-sm" style="display:none" >
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
    <strong>Note!</strong> Targets have been hidden from the screen. To show targets for each site, un check the button besides. <b>Hide targets </b> <input type="checkbox" onclick="togglehidding();" checked id="hidetargets" />
   </div>
@@ -89,7 +89,7 @@ input:focus {
 
             
             
-          <h5 style="text-align: center;color:blue;">HTS RRI Aug-Sep 2018</h5>
+          <h5 style="text-align: center;color:blue;">HTS RRI Aug-Sep 2018 1.0.0</h5>
 
       
       
@@ -223,10 +223,11 @@ input:focus {
                                     <div class="controls">
                                         <select  onchange=""   name="modality" id="modality" class="form-control" >
                                             <option value="">Select Modality</option>
-                                            <option value="Optimized Testing">Optimized Testing</option>
+                                            <option value="Optimized Testing IPD">Optimized Testing IPD</option>
+                                            <option value="Optimized Testing OPD">Optimized Testing OPD</option>
                                             <option value="PNS">PNS</option>
                                             <option value="Index Testing">Index Testing</option>
-                                            <option value="Others">Others</option>
+                                            <!--<option value="Others">Others</option>-->
                                            
                                         </select>
                                     </div>
@@ -413,7 +414,7 @@ input:focus {
                  <div class="control-group">
                                     <label><font color="red"><b>*</b></font>Counsellor Name</label>
                                     <div class="controls">
-                                        <input type="text" size="14" placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" >
+                                        <input type="text" maxlength="30" placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" >
                                     </div>
                                 </div> 
                     
@@ -427,6 +428,8 @@ input:focus {
                                              <option value="Laikipia">Laikipia</option>
                                              <option value="Nakuru">Nakuru</option>
                                              <option value="Narok">Narok</option>
+                                             <option value="Samburu">Samburu</option>
+                                             <option value="Turkana">Turkana</option>
                                             
                                            
                                         </select>
@@ -495,7 +498,7 @@ input:focus {
                                     </div>
                                 </div> 
                     
-                      <div class="control-group" >
+                      <div class="control-group" style="display:none;">
                                     <label>Report Type</label>
                                     <div class="controls">
                                         <select  name="rpt_type" id="rpt_type" style="width:100%;" class="form-control">
@@ -519,6 +522,8 @@ input:focus {
                                              <option value="Laikipia">Laikipia</option>
                                              <option value="Nakuru">Nakuru</option>
                                              <option value="Narok">Narok</option>
+                                              <option value="Samburu">Samburu</option>
+                                             <option value="Turkana">Turkana</option>
                                             
                                            
                                         </select>
@@ -632,7 +637,7 @@ input:focus {
                 <script type="text/javascript" src="js/datatables.min.js"></script>
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
-  //              var hostname="https://hsdsacluster2.fhi360.org";
+                //var hostname="http://hsdsacluster2.fhi360.org";
   var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
@@ -665,8 +670,8 @@ input:focus {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                         url:'sites.json',                            
-                    type:'post',  
+                    url:'sites1.json',                            
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                      for(var i=0;i<data.length;i++){
@@ -728,7 +733,7 @@ function adduser(cname,cfacil) {
   function updateuser(){
    //alert("save called");   
    var counsname=$("#counsellorreg").val();   
-   var counsfacil=$("#counsellorfacil").val();
+   var counsfacil=$("#counsellorfacil").val().replace("'","");
    
    if(counsname===''){alert("Enter Counsellor name");}
    else if(counsfacil===''){alert("Enter Counsellor facility");}
@@ -826,7 +831,7 @@ $("#usernamelabel").click();
    function loaduser()
    {
    //alert("save called");   
-    var cname=$("#counsellorreg").val();   
+    var cname=$("#counsellorreg").val().replace("'","");   
    var cfacil=$("#counsellorfacil").val();   
         adduser(cname,cfacil);   
   }  
@@ -942,7 +947,7 @@ function gettargets(){
     
    
               $.ajax({
-                    url:hostname+':8080/aphiaplus_moi/gettargets',                            
+                    url:hostname+':8080/hsdsarri/gettargets',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1582,7 +1587,7 @@ tca=$("#tca").val();
        
    
 
-else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else)+ parseInt(linked_here)) > parseInt(positive)){
+else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else)+ parseInt(linked_here))!==parseInt(positive)){
        alert('# Total positives should be equal to the sum of TCA , Dead , Declined , Linked in this facility , linked to other facility');
    $("#positive").focus();      
             
@@ -1597,8 +1602,11 @@ else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else
     // var startd=startdate.replace('-','');      
     // var startd=startd.replace('-','');      
      var endd=enddate.replace('-','');      
-     var endd=endd.replace('-','');      
-      id=facilitynameandmfl[0]+"_"+endd;
+     var endd=endd.replace('-',''); 
+     var cns=counselorname.replace('-','');
+     var mod=modality.replace('-','');
+     
+      id=facilitynameandmfl[0]+"_"+endd+"_"+cns+"_"+mod;
       //this should not be cleared
       $("#rowid").val(id);
       
@@ -1743,7 +1751,7 @@ function selectsearchdata()
                }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr id='"+dat.doc._id+"'><td> "+dat.doc.enddate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+		 dbdata+="<tr id='"+dat.doc._id+"'><td> "+dat.doc.enddate+" </td><td><b>"+dat.doc.facility+"</b> <i>("+dat.doc.modality+")</i> done by "+dat.doc.counselorname+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
           	    
                   }
             } //end of for loop
@@ -1770,7 +1778,7 @@ function selectsearchdata()
 
 function appendtabledata( dbdata ){
     
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date</th><th style='width:50%;'>Facility</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date</th><th style='width:50%;'>Facility, Modality , Counsellor</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
          
 	   $(document).ready(function() {
                 
@@ -2160,7 +2168,7 @@ tca=$("#tca").val();
        
    
 
-else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else)+ parseInt(linked_here))> parseInt(positive)){
+else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else)+ parseInt(linked_here))!==parseInt(positive)){
        alert('# Total positives should be equal to the sum of TCA , Dead , Declined , Linked in this facility , linked to other facility');
    $("#positive").focus();      
             
@@ -2183,6 +2191,8 @@ else if((parseInt(tca)+ parseInt(dead)+ parseInt(declined)+ parseInt(linked_else
      //var startd=startd.replace('-','');      
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-','');      
+     var cns=counselorname.replace('-','');      
+     var mod=modality.replace('-','');      
          
      var facilityname=facilitynameandmfl[1];
             //save data to the db
@@ -2925,7 +2935,7 @@ function getreport(){
                
                 //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
              
-                var ur=hostname+":8080/aphiaplus_moi/"+rpttypeurl+"?startdate=" + startdate + "&enddate=" + enddate+ "&county=" + cnty ;
+                var ur=hostname+":8080/hsdsarri/"+rpttypeurl+"?startdate=" + startdate + "&enddate=" + enddate+ "&county=" + cnty ;
  console.log(ur);
                 $.fileDownload(ur).done(function () { $('.loading').hide(); $('#excelreportbtn').show(); $('#excelreportbtn').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#excelreportbtn').show(); });
  
