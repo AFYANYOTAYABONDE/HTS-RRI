@@ -164,6 +164,15 @@ tca=request.getParameter("tca");
                             if(!id.contains("annual")){ //notify user only when importing weekly summaries
                             txtresponse="<font color='green'> Data for <b> "+facilityname+" </b> updated succesfully for date "+enddate+" </font>";
                              //sm.Sendemail("RRI Sep. IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated RRI Sep Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
+                            
+                            if(counsellor.equals("select counsellor")){
+                                try {
+                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, \n This is to notify you that data for "+facilityname+"  for date "+enddate+" Has no Counsellor name. \n \n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facilityname+" & date "+enddate,"EKaunda@fhi360.org"+usermail);
+                                } catch (MessagingException ex) {
+                                    Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
                             }
                         }
                         else 
@@ -219,8 +228,16 @@ tca=request.getParameter("tca");
                              if(!id.contains("annual")){
                             txtresponse="<font color='green'> Data for "+facilityname+" added succesfully for date "+enddate+"  </font>";
                            
+                            //check if counsellor name is select counsellor
+                            
                             //add team leaders variable at this point 
-                            //sm.Sendemail("RRI Sep. IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully  for date  "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "RRI Sep. data export for "+facilityname+" & date "+enddate,"EKaunda@fhi360.org,JOnyalo@fhi360.org"+usermail);
+                            if(counsellor.equals("select counsellor")){
+                                try {
+                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, \n This is to notify you that data for "+facilityname+"  for date "+enddate+" Has no Counsellor name. \n \n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facilityname+" & date "+enddate,"EKaunda@fhi360.org"+usermail);
+                                } catch (MessagingException ex) {
+                                    Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
                              }                          } 
                         else {
                              if(!id.contains("annual")){

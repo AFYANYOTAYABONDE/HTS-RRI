@@ -42,6 +42,10 @@
         <servlet-name>updateTestedTargets</servlet-name>
         <servlet-class>Scripts.updateTestedTargets</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>reports</servlet-name>
+        <servlet-class>reports.reports</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -81,6 +85,10 @@
     <servlet-mapping>
         <servlet-name>updateTestedTargets</servlet-name>
         <url-pattern>/updateTestedTargets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>reports</servlet-name>
+        <url-pattern>/reports</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

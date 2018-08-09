@@ -89,7 +89,7 @@ input:focus {
 
             
             
-          <h5 style="text-align: center;color:blue;">HTS RRI Aug-Sep 2018 1.0.0</h5>
+          <h5 style="text-align: center;color:blue;">HTS RRI Aug-Sep 2018 v 1.0.4</h5>
 
       
       
@@ -140,6 +140,7 @@ input:focus {
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
                             <li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> View Data</a></li> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
+                            <li><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active well col-md-12" id="dataentry">
@@ -203,8 +204,8 @@ input:focus {
                                         <div class="control-group">
                                             <label> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
                                             <div class="controls">
-                                                <select  onchange=""   name="counsellor" id="counsellor" class="form-control" >
-                                                    <option>Select Counsellor</option>
+                                                <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
+                                                    <option value=''>Select Counsellor</option>
 
                                                 </select>
                                             </div>
@@ -340,8 +341,15 @@ input:focus {
                             </div>
                             
                             <div class="tab-pane well" id="searchdata">
-                                 <button id="btnDeleteRow" value="cancel">Delete selected Row</button>
+                                 <button id="btnDeleteRow" style='display:none;' value="cancel">Delete selected Row</button>
                                 <div id="searchtablediv">
+                                  
+                                </div>    
+                               <!--- Data export---->
+                            </div>
+                            <div class="tab-pane well" id="viewcounsellors">
+                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected counselor</button>
+                                <div id="searchtabledivcns">
                                   
                                 </div>    
                                <!--- Data export---->
@@ -483,7 +491,7 @@ input:focus {
             </div>
             <div class="modal-body">
                 <form  id="excelreportsfom" method="post">
-                                <div class="control-group">
+                                <div class="control-group" style="display:none;">
                                     <label><font color="red"><b>*</b></font>Report Start Date</label>
                                     <div class="controls">
                                        <input type="text"  name ="startdaterpt" id="startdaterpt"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
@@ -491,7 +499,7 @@ input:focus {
                                 </div> 
                     
                     
-                  <div class="control-group">
+                  <div class="control-group" style="display:none;">
                                     <label><font color="red"><b>*</b></font>Report End Date</label>
                                     <div class="controls">
                                        <input type="text"  name ="enddaterpt" id="enddaterpt"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
@@ -500,11 +508,11 @@ input:focus {
                     
                       <div class="control-group" style="display:none;">
                                     <label>Report Type</label>
-                                    <div class="controls">
+                                    <div class="controls" style="display:none;">
                                         <select  name="rpt_type" id="rpt_type" style="width:100%;" class="form-control">
                                            
                                              <!--<option title="From 1st October of the selected date year to the end date specified inside the same date year " value="excelreport_cumulative">Cumulative</option>-->
-                                             <option title="Weekly data breakdown per sites" value="excelreport_weekly">Weekly</option>
+                                             <option title="Weekly data breakdown per sites" value="reports">Weekly</option>
                                             
                                             
                                            
@@ -637,8 +645,8 @@ input:focus {
                 <script type="text/javascript" src="js/datatables.min.js"></script>
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
-                //var hostname="http://hsdsacluster2.fhi360.org";
-  var hostname="http://localhost";
+               var hostname="http://hsdsacluster2.fhi360.org";
+  //var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                 </script>
@@ -788,9 +796,16 @@ $("#usernamelabel").click();
 	       dat=da.rows[a].doc;
                 
             if(dat.cname!==''){
-                
+                if(da.total_rows===1){
+           counsellors="<option value='"+dat.cname+"'>"+dat.cname+"</option>"
+           $("#facilityname").val(dat.cfacil);
+           $('#facilityname').select2();
+                                     
+                                     }
+       else {
            counsellors+="<option value='"+dat.cname+"'>"+dat.cname+"</option>"
            
+       }
            
            $("#counsellor").html(counsellors);
           $('#counsellor').select2(); 
@@ -1166,7 +1181,7 @@ function createdynamicinputs(){
               }
               
               
-              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);'  "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\"  onfocus='this.value = this.value;' type='text' min ='"+minimum+"' max='"+maximum+"' maxlength='7' data-"+indicatorid+"='0' data-previous_"+indicatorid+"='0'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
+              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);'  "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\"  onfocus='this.value = this.value;' type='"+inputtype+"' min ='"+minimum+"' max='"+maximum+"' maxlength='7' data-"+indicatorid+"='0' data-previous_"+indicatorid+"='0'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
             //IndicatorID	Age	IndicatorName	Level	datainputtype	Min	Max	onblur	onkeypress	Class	Required
     
      
@@ -1417,7 +1432,7 @@ tca=$("#tca").val();
     //$("select:first").focus();
      }
      
-     else if(counselorname==='')
+     else if(counselorname===''||counselorname==='select  Counsellor')
      {         
   
    alert('Select Counsellor');
@@ -1713,6 +1728,7 @@ function clearcommentsonly(){
 
 
 var dbdata="";
+var dbdata1="";
 
 //===================================================VIEW WEEKLY DATA============================================================
 //a function to select a few search data that should appear in a data table
@@ -1751,7 +1767,7 @@ function selectsearchdata()
                }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr id='"+dat.doc._id+"'><td> "+dat.doc.enddate+" </td><td><b>"+dat.doc.facility+"</b> <i>("+dat.doc.modality+")</i> done by "+dat.doc.counselorname+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.enddate+" </td><td><b>"+dat.doc.facility+"</b> <i>("+dat.doc.modality+")</i> done by "+dat.doc.counselorname+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
           	    
                   }
             } //end of for loop
@@ -1773,6 +1789,141 @@ function selectsearchdata()
     
     
 }
+
+
+
+function selectconsdata()
+{
+    
+    
+    
+    //rread from weekly data db
+    
+
+  
+    
+  userdb.allDocs({include_docs: true, ascending: true}).then( function(doc) { 
+ 
+     
+	   //console.log(doc);
+	   for(b=0;b<doc.total_rows;b++)
+           {
+             
+               var dat={};
+               dat=doc.rows[b];
+               
+                 var myid=dat.doc._id;
+               if(myid.indexOf("annual")===-1){
+	   
+	       
+	      //console.log(dat.doc.facility);
+              //how to reference each column 
+              //alert(dat.doc.startdate);
+              //dat.doc._id
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>*";
+              if(dat.doc.syncstatus==="Yes"){
+                 statusicon=""; 
+                  
+               }
+	     var fc=dat.doc.cfacil;
+             var fcar=fc.split("_");
+             
+		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
+		 dbdata1+="<tr id=\""+dat.doc._id+"\"><td> "+fcar[1]+" </td><td>"+dat.doc.cname+"</td></tr>";
+          	    
+                  }
+            } //end of for loop
+                    
+	appendtablecounsellordata(dbdata1);
+			
+  }).catch(function (err){console.log(err)});
+    
+
+    
+    
+    
+    
+    
+    
+    //read data from the db
+    
+  	  
+    
+    
+}
+
+
+
+selectconsdata();
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
+//
+function appendtablecounsellordata( dbdata1 ){
+    
+     $("#searchtabledivcns").html("<table id='searchtablecns' class='table table-striped table-bordered'><thead><tr><th style='width:50%;'>Facility</th><th style='width:50%;'>Counsellor Name</th></tr></thead><tbody>"+dbdata1+"</tbody></table>");
+         
+	   $(document).ready(function() {
+                
+         /* $('#searchtable').DataTable({              
+              "autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+          
+     
+    var table2 = $('#searchtablecns').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
+ 
+    $('#searchtablecns tbody').on( 'click', 'tr', function () {
+        if ($(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+             $('#btnDeleteRowcns').hide();  
+        }
+        else {
+            table2.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+           $('#btnDeleteRowcns').show();  
+            }
+    } );
+ 
+    $('#btnDeleteRowcns').click( function () {
+       
+     var tablerowid1=table2.$('tr.selected').attr('id');
+      
+        
+        if(ConfirmDeletecns()===true){
+        
+        deletecnsdata(tablerowid1);
+        
+        table2.row('.selected').remove().draw( false );
+    }
+        //call the delete function now
+    } );
+
+          
+          
+          
+          
+            
+                                     } ); 
+    
+                                                          }
+                                                          
+                                                         // appendtablecounsellordata( dbdata1 );
+                                                          
+//
+//
+//--------------------------------------------------------------------------------------------------------------------------------
+
+
 
 //call the function that displays the data
 
@@ -1801,10 +1952,12 @@ function appendtabledata( dbdata ){
     $('#searchtable tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
+             $('#btnDeleteRow').hide();
         }
         else {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
+             $('#btnDeleteRow').show();
         }
     } );
  
@@ -1998,7 +2151,7 @@ tca=$("#tca").val();
      }
      
      
-     else if(counselorname==='')
+     else if(counselorname===''|| counselorname==='select  Counsellor')
      {         
   
    alert('Select Counsellor');
@@ -2468,10 +2621,10 @@ function unsynceddata(){
                          cnt1++;   
                             
                         }
-               var displaytext=cnt1+" sites";
+               var displaytext=cnt1+" records";
                if(cnt1===1){
                    
-                    displaytext=cnt1+" site";
+                    displaytext=cnt1+" record";
                }
               
           	                    } //end of for loop
@@ -2895,8 +3048,12 @@ $(document).ready(function(){
 function getreport(){
     
     
-    var exelstart=$("#startdaterpt").val();
-    var exelend=$("#enddaterpt").val();
+//    var exelstart=$("#startdaterpt").val();
+//    var exelend=$("#enddaterpt").val();
+    
+     var exelstart="2018-08-06";
+    var exelend="2018-09-30";
+    
     var countyrpt=$("#rpt_county").val();
     var rpttypeurl=$("#rpt_type").val();   
         if (exelstart==='')
@@ -2997,7 +3154,7 @@ function checkids(){
 
 function ConfirmDelete()
     {
-      var x = confirm("Are you sure you want to delete data for the selected facility?");
+      var x = confirm("Are you sure you want to delete the selected data?");
       if (x)
           return true;
       else
@@ -3005,7 +3162,14 @@ function ConfirmDelete()
     }
 
 
-
+function ConfirmDeletecns()
+    {
+      var y = confirm("Are you sure you want to delete the selected counsellor?");
+      if (y)
+          return true;
+      else
+        return false;
+    }
 
 
 
@@ -3019,6 +3183,23 @@ dailydatadb.get(id).then(function(doc) {
   return dailydatadb.remove(doc);
 }).then(function (result) {
     unsynceddata();
+  // handle result
+}).catch(function (err) {
+  console.log(err);
+});
+
+  
+    
+}
+
+function deletecnsdata(id){
+    
+    //a function to delete entered data
+console.log("Id niii"+id);
+userdb.get(id).then(function(doc) {
+  return userdb.remove(doc);
+}).then(function (result) {
+  
   // handle result
 }).catch(function (err) {
   console.log(err);
