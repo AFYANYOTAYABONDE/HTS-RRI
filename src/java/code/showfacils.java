@@ -32,7 +32,7 @@ public class showfacils extends HttpServlet {
             
             dbConnweb conn= new dbConnweb();
             
-              conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200");    
+              //conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200");    
              conn.rs= conn.st.executeQuery("SHOW VARIABLES LIKE 'max_allowed_packet' ");    
             if(conn.rs.next()){
                 System.out.println("Max_allowed_connection_"+conn.rs.getString(2));
