@@ -123,12 +123,12 @@ else {
           
           //set maxconnection
 
-
+System.out.println(" HTS RRI Data upload by "+counselorname+" ");
            
            // conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200");
             conn.rs = conn.st.executeQuery("SHOW VARIABLES LIKE 'max_allowed_packet' ");
             if (conn.rs.next()) {
-                System.out.println("Max_allowed_connection_" + conn.rs.getString(2));
+               // System.out.println("Max_allowed_connection_" + conn.rs.getString(2));
 
             }            
                   
@@ -141,7 +141,7 @@ else {
    conn.rs=conn.st.executeQuery(checkexisting);
    
    if(conn.rs.next()){
-       System.out.println(" Data for id "+id+" and counsellor "+counselorname+" already added ");
+       //System.out.println(" Data for id "+id+" and counsellor "+counselorname+" already added ");
    
    //do update code here
    
@@ -210,7 +210,7 @@ conn.pst1.setString(21,datestartedart);
    
                      myresponse=" update daily_raw set  facility='"+facility+"',counsellor='"+counselorname+"',register_no='"+register_no+"',serialno='"+serialno+"',date_tested='"+date_tested+"',age='"+age+"',gender='"+gender+"',modality='"+modality+"',testresult='"+testresult+"',linked='"+linked+"',cccno='"+cccno+"',linked_site='"+linked_site+"',other_facility_linked='"+other_facility_linked+"',reason_not_linked='"+reason_not_linked+"',reason_for_death='"+reason_for_death+"',other_reason_for_death='"+other_reason_for_death+"',reason_for_declining='"+reason_for_declining+"',other_reason_for_declining='"+other_reason_for_declining+"',user='"+user+"',timestamp='"+timestamp+"',datestartedart='"+datestartedart+"'"
                  + " where id='"+id+"' ";
-                      System.out.println(myresponse);
+                     // System.out.println(myresponse);
                         
    
    }
@@ -235,7 +235,7 @@ conn.pst1.setString(21,datestartedart);
       myresponse=" insert into daily_raw "
   + " ( id,facility,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,datestartedart) "
 + " values ('"+id+"','"+facility+"','"+counselorname+"','"+register_no+"','"+serialno+"','"+date_tested+"','"+age+"','"+gender+"','"+modality+"','"+testresult+"','"+linked+"','"+cccno+"','"+linked_site+"','"+other_facility_linked+"','"+reason_not_linked+"','"+reason_for_death+"','"+other_reason_for_death+"','"+reason_for_declining+"','"+other_reason_for_declining+"','"+user+"','"+timestamp+"','"+datestartedart+"')";
-      System.out.println(myresponse);                   
+     // System.out.println(myresponse);                   
             
          
        

@@ -142,11 +142,15 @@ input:focus {
                                 <br/>Export Data 
                                 <span id="unexportedno" style="color:yellow;">(0 records )</span>
                             </a>
+                                                 <a href="live_edit.jsp" class="btn btn-primary col-sm-2">
+                            <i class="glyphicon glyphicon-link"></i>
+                            <br>HTS Live
+                        </a>
                        
-                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
+<!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
                             <i class="glyphicon glyphicon-link"></i>
                             <br>Index Testing <br/>/ PNS
-                        </a>
+                        </a>-->
                         
                         <!--<a href="#" class="btn btn-primary col-sm-3">
                             <i class="glyphicon glyphicon-cog"></i>
@@ -189,7 +193,7 @@ input:focus {
                                 
                                 <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
-                                <tr><th class="col-xs-12" style="text-align:center"><b>Enter HTS Data</b></th></tr>
+                                <tr><th class="col-xs-12" style="text-align:center" id="headerid"><b>Enter HTS Data</b></th></tr>
                                 </table>
 <!--                                <tr><td class="col-xs-12">
                                 <div class="control-group">
@@ -673,7 +677,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -712,7 +716,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Re-Export</h4>
             </div>
             <div class="modal-body">
@@ -743,7 +747,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Submit zero report</h4>
             </div>
             <div class="modal-body">
@@ -792,7 +796,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Counsellor Activation</h4>
             </div>
             <div class="modal-body">
@@ -865,7 +869,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
             </div>
             <div class="modal-body">
@@ -961,7 +965,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
@@ -1478,11 +1482,22 @@ syncstatus:syncstatus,
 completed: false
   };
   dailydatadb.put(dailydata, function callback(err, result) {
+      
+      console.log("Result:  "+result+" error: "+err);
+      
     if (!err) 
     {
       console.log('daily data added succesfully');
       
     }
+    else {
+        
+       $("#headerid").html("<font color='red'><b>Record Not Saved. You have already entered another record with similar serial number, register no. and modality</b></font>");
+         alert("Duplicate Error!.You have already entered another record with similar serial number, register no. and modality");
+        
+            console.log('Saving Error: Another Record exists with a similar serial number, register no. and modality ');   
+        
+         }
   });
 }	
 
@@ -1709,7 +1724,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>×</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>Ã</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -1971,7 +1986,7 @@ $("#actiondone").html("Data Saved Successfully");
 //$("#message").hide().delay(800).fade(400);
 
 
-console.log('daily data entered');
+//console.log('daily data entered');
 //open reports tab
  //$('#reportsbutton').click();
  //$('#inpatient_uptake_cmts').focus();

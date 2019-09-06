@@ -188,19 +188,9 @@ input:focus {
                                 
                                 <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
-                                <tr><th class="col-xs-12" style="text-align:center"><b>Enter HTS Data</b></th></tr>
+                                <tr><th class="col-xs-12" style="text-align:center"><b>Enter Index Testing Data</b></th></tr>
                                 </table>
-<!--                                <tr><td class="col-xs-12">
-                                <div class="control-group">
-                                    <label><font color="red"><b>*</b></font> Date </label>
-                                    <div class="controls">
-                                        <input type="text" onchange="checkids();" name ="startdate" id="startdate" data-date-end-date="0d" autocomplete="off" class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                        
-                                    </div>
-                                </div>
-                                        </td></tr>-->
-                                
-<!--                                <tr>
+<!--    
                                     <td class="col-xs-12">-->
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font> Date Test Conducted </label>
@@ -261,10 +251,17 @@ input:focus {
 <!--                                <tr>
                                     <td class="col-xs-12">-->
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
+                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Contacts Entry point <span class='badge' title='Register No.' data-toggle='popover' data-trigger='hover' data-content='Group the contacts as listed below.'>?</span> </label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
+                                       <select class='form-control' name="contacts_modality" id='contacts_modality'> 
+                                           <option value="">Select Contacts</option>
+                                        <option value="New Positive">New Positive Contacts</option>
+                                        <option value="PMTCT">PMTCT Contacts</option>
+                                        <option value="STF">STF Contacts</option>
+                                        <option value="TB">TB Contacts</option>
+                                        <option value="Other Known Positive">Other KP Contacts</option>
+                                        <option value="Discordant Couple">Discordant Couple</option>
+                                  </select>
                                     </div>
                                 </div>
                                         
@@ -273,308 +270,38 @@ input:focus {
                                 </tr>
                                 -->
                                 
-                                 
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
+                                
+                                <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Contacts Category <span class='badge' title='Contacts' data-toggle='popover' data-trigger='hover' data-content='Specify if you want to do entries for sexual contacts and or Biological cildren'>?</span> </label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="serialno" id="serialno"  autocomplete="off"  class="form-control"  placeholder="e.g 0001 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);'  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Sex</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select type="text"   onblur="validatemodalitiesbygender();" name="gender" id="gender"  autocomplete="off"  class="form-control" >
-                                            <option value=''>select sex</option>
-                                            <option value='Female'>Female</option>
-                                            <option value='Male'>Male</option>
-                                            </select>
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                
-                                HTS Testing Modality
-                                
-                                
-                                <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange=""   name="modality" id="modality" class="form-control" >
-                                            <option value="">Select Modality</option>
-                                            <option value='index_testing'>Index Testing</option>
-                                            <option value='malnutrition'>PITC Malnutrition</option>
-                                            <option value='pediatrics'>PITC Pediatrics</option>
-                                            <option value='tb_clinics'>PITC TB</option>
-                                            <option value='other_pitc'>Other PITC</option>
-                                            <option value='vmmc'>VMMC Services</option>
-                                            <option value='vct'>VCT</option>
-                                            <option value='inpatient'>PITC Inpatient</option>
-                                            <option value='sti'>PITC STI</option>
-                                            <option value='emergency'>PITC Emergency</option>
-                                            <option value='anc1'>Initial test at ANC 1</option>
-                                            <option value='anc2'>Initial test at ANC 2</option>
-                                            <option value='ld'>Initial test at Labour & Delivery</option>
-                                            <option value='pnc'>Initial test at PNC < 6 wks</option>
-                                            
-                                            <!--<option value="Others">Others</option>-->
-                                           
+                                        <select multiple="true" class='form-control' name="category" style='height:100%;' id='category'> 
+                                        <option value="Sexual Contacts">Sexual Contacts</option>
+                                        <option value="Biological Children">Biological Children</option>
                                         </select>
                                     </div>
                                 </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                
-                                 <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTC Test Results</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
-                                            <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
-                                          </select>
-                                    </div>
-                                </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                 
-                                 
-                                 <tr class="" >
-                                     <td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage linked" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Is the Patient Started on ART?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange="whichfacility();"   name="linked" id="linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                    
-
-
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-                                 
-<!--                                  <tr class='' >
-                                      <td class="col-xs-12"> -->
-
-
-                               
-
-                                             
-                                             <div class="control-group  linkage linked_site col-xs-12"  style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Started in this Facility?</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="specifyFacilityLinked();"   name="linked_site" id="linked_site" class="form-control" >
-                                 <option value='' >Select Results</option>
-                                 <option value='This Facility'>Yes</option>
-                                 <option value='Other Facility'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-
-                                <div class="control-group  linkage linked_site col-xs-12" style="display:none;border: 0.5px dotted #2e6da4;">
-                                <label class="col-xs-12"><font color="red"><b>*</b></font>Date Started on ART</label>
-                                <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                </div>
-                                </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_facility_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Facility Started on ART</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="other_facility_linked" id="other_facility_linked"  autocomplete="off"  class="form-control"  placeholder="e.g Kabarnet District Hospital ">
+                                                               
                                   
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage cccno" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>CCC Number (mflcode-patient no)</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onclick="setmflcode();" onkeypress="setmflcode();" name="cccno" id="cccno"  autocomplete="off"  class="form-control"  placeholder="e.g 55555-23232 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>  -->
-                                 
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_not_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Not started on ART</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdiedordeclined();"   name="reason_not_linked" id="reason_not_linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Declined'>Declined</option>
-                                 <option value='Died'>Died</option>
-                                 <option value='TCA'>TCA</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Declined</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdeclinedother();"   name="reason_for_declining" id="reason_for_declining" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='To consult spouse'>To consult spouse</option>
-                                 <option value='Not ready to start'>Not ready to start</option>
-                                 <option value='Religious reasons'>Religious reasons</option>
-                                 <option value='Associated costs '>Associated costs </option>
-                                 <option value='Relocated to other area'>Relocated to other area</option>
-                                 <option value='Distance to health facility'>Distance to health facility</option>
-                                 <option value='Guardian declined RX for child'>Guardian declined RX for child</option>
-                                 <option value='No reason given'>No reason given</option>
-                                 <option value='Other reason'>Other reason</option>
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 
-                                 <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Declined</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_declining" id="other_reason_for_declining"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr> -->
-                                
-                                
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Died</label>
-                                 <div class="controls col-xs-12">
-                                 <select  onchange="isshowdeadother();"   name="reason_for_death" id="reason_for_death" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='HIV disease resulting in TB'>HIV disease resulting in TB</option>
-                                 <option value='HIV disease resulting in other infectious and parasitic disease'>HIV disease resulting in other infectious and parasitic disease</option>
-                                 <option value='HIV disease resulting in cancer'>HIV disease resulting in cancer</option>
-                                 <option value='HIV disease, resulting in other diseases or conditions leading to death'>HIV disease, resulting in other diseases or conditions leading to death</option>
-                                 <option value='Other natural causes'>Other natural causes</option>
-                                 <option value='Non-natural causes'>Non-natural causes</option>
-                                 <option value='Unknown Cause'>Unknown Cause</option>
-
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-<!--                                  <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Died</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_death" id="other_reason_for_death"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr> -->
-                                 
-                                 
-                                 
-                                
-<!--                                    </table>
-                                         <table class='table table-striped table-bordered' id="dynamicindicators"  > -->
-                                   
-                                <!------INDICATORS----->
-                                                                 
-                                  
-                                  
+                                  </section>
                                      
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note: Please enter data for all input fields.</div>
+                                        <div class="alert-info">Note:Please enter data for all input fields.</div>
                                    <br/>
                                     <div class="controls">
-                                        <button type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
+                                         <button type="submit" id='next' onclick="nextelement();" style="margin-left: 0%;" class="btn-sm btn-success active">
+                                            Next >>
+                                        </button>
+                                        
+                                        <button style='display:none;' type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
                                             SAVE
                                         </button>
-                                     </div>
+                                    </div>
                                     <div class="controls">
                                         <button type="submit" id='updatebutton' onclick="updateweeklydata();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
                                             UPDATE
                                         </button>
-                                    
-                                        
                                     </div>
                                     
                                 </div>

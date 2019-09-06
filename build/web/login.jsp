@@ -51,7 +51,7 @@
           <!--<h3 style="color:#4b8df8; text-align: left;font-size: 42px; font-family: cambria;margin-left: 25%;font-weight: bold;"><b>( IMIS )</b></h3>--> 
       </div>
       <br/>
-  <div class="content" style="">
+      <div class="content" style="border-color: #33ffff;">
       
  
       
