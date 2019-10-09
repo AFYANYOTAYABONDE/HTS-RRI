@@ -124,7 +124,7 @@ input:focus {
           <div class="row">
                 <!-- center left-->
                 
-          <div class="col-md-12">
+          <div class="col-md-12" style="padding-left:3px;padding-right:3px;">
                     
 
                   
@@ -181,13 +181,13 @@ input:focus {
                             <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="dataentry">
+                            <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
                                 
                                 
                               <!--Data entry code-->
                     <div class="panel panel-default">
                        
-                        <div class="panel-body" style="width:100%;">
+                        <div class="panel-body" style="width:100%;padding:2px;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 

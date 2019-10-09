@@ -110,6 +110,10 @@
         <servlet-name>submitZero</servlet-name>
         <servlet-class>code.submitZero</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getPnsIndicators</servlet-name>
+        <servlet-class>getters.getPnsIndicators</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -217,6 +221,10 @@
     <servlet-mapping>
         <servlet-name>submitZero</servlet-name>
         <url-pattern>/submitZero</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getPnsIndicators</servlet-name>
+        <url-pattern>/getPnsIndicators</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

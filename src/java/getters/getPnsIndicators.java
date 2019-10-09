@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package code;
+package getters;
 
 import database.dbConnweb;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import org.json.JSONObject;
  *
  * @author Emmanuel E
  */
-public class getcancellors extends HttpServlet {
+public class getPnsIndicators extends HttpServlet {
 
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -37,44 +37,23 @@ public class getcancellors extends HttpServlet {
             
               // conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200"); 
                
-           Calendar cal = Calendar.getInstance(); 
-           int year=cal.get(Calendar.YEAR);
-           int month=cal.get(Calendar.MONTH)+1;
-           //if month is october, get targets for the next year
-           if(month>=10){year=year+1;}
-            int ordinalDay = cal.get(Calendar.DAY_OF_YEAR);
-    int weekDay = cal.get(Calendar.DAY_OF_WEEK) - 1; // Sunday = 0
-    int numberOfWeeks = (ordinalDay - weekDay + 10) / 7;
+         
             JSONArray jarr=new JSONArray();
             //String getfacils="SELECT id,facility,year,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,new_art_target_child,new_art_target_adult,new_art_target_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,ipt_target_child,ipt_target_adult,ipt_target_total,testing_target_child,testing_target_adult,testing_target_total,pmtct_hiv_pos_target,eid_target,viral_load_mothers_target,timestamp FROM  targets where year ='"+year+"'order by id";
            
             //currently i am not validating targets that are being fetched 
             
-            String getcns="SELECT active, " +
-"   code, " +
-"   gender, " +
-"   county, " +
-"   cadre, " +
-"   facility, " +
-"   mflcode, " +
-"   fullname, " +
-"   Currentfacility, " +
-"   Currentmflcode, " +
-"   RRI_Name " +
-"FROM aphiaplus_moi.counsellor where active='1' order by RRI_Name";
+            String getcns="SELECT * from pmtct_art_cohort.pns_indicators where active='1' order by id";
             
             conn.rs=conn.st.executeQuery(getcns);
             while (conn.rs.next()){
                  JSONObject jobj= new JSONObject();
-            jobj.put("code",conn.rs.getString("code"));
-            jobj.put("gender",conn.rs.getString("gender"));
-            jobj.put("county",conn.rs.getString("county"));
-            jobj.put("facility",conn.rs.getString("facility"));
-            jobj.put("mflcode",conn.rs.getString("mflcode"));
-            jobj.put("fullname",conn.rs.getString("fullname"));
-            jobj.put("Currentfacility",conn.rs.getString("Currentfacility"));
-            jobj.put("Currentmflcode",conn.rs.getString("Currentmflcode"));
-            jobj.put("RRI_Name",conn.rs.getString("RRI_Name"));
+            jobj.put("id",conn.rs.getString("id"));
+            jobj.put("tableid",conn.rs.getString("tableid"));
+            jobj.put("indicator",conn.rs.getString("indicator"));
+            jobj.put("section","");
+            jobj.put("subsection","");
+            jobj.put("has_contact_type",conn.rs.getString("has_contacts_type"));
 
 
 
@@ -90,14 +69,13 @@ public class getcancellors extends HttpServlet {
             
           // System.out.println(""+jarr); 
             
-            try (PrintWriter out = response.getWriter()) 
-            {
+            try (PrintWriter out = response.getWriter()) {
                 
                 
                 out.println(jarr);
             }
         }   catch (SQLException ex) {
-            Logger.getLogger(showfacils.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getPnsIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
