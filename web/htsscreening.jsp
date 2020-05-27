@@ -8,12 +8,12 @@
 
 
 <!DOCTYPE html>
-<html  manifest="htsrriv1.appcache">
-<!--<html  >-->
+<!--<html  manifest="htsrriv1.appcache">-->
+<html  >
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HTS RRI</title>
+		<title>HTS SCREENING</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -118,7 +118,7 @@ input:focus {
 
             
             
-           
+            
 
      
           <div class="row">
@@ -131,8 +131,8 @@ input:focus {
 
                     <div class="btn-group btn-group-justified">
                         <a href="#" id='refreshpage' class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-refresh"></i>
-                            <br> Refresh
+                            <i id="testingsign" class="glyphicon glyphicon-ok-sign"></i>
+                             Testing Guide
                         </a>
                        
                          
@@ -142,10 +142,10 @@ input:focus {
                                 <br/>Export Data 
                                 <span id="unexportedno" style="color:yellow;">(0 records )</span>
                             </a>
-                                                 <a href="live_edit.jsp" class="btn btn-primary col-sm-2">
+<!--                                                 <a href="live_edit.jsp" class="btn btn-primary col-sm-2">
                             <i class="glyphicon glyphicon-link"></i>
                             <br>HTS Live
-                        </a>
+                        </a>-->
                        
 <!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
                             <i class="glyphicon glyphicon-link"></i>
@@ -170,7 +170,8 @@ input:focus {
                    
 
                     <!--tabs-->
-                    <div class="panel">
+                    <div class="panel" style="height:100vh;overflow-y:scroll;" >
+                        <div style="overflow-y: scroll;">
                         <ul class=" nav nav-tabs " id="myTab">
                             <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
@@ -247,40 +248,15 @@ input:focus {
                                 <!--<tr><td class="col-xs-12">--> 
 
                                         <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
+                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Screener</label>
                                             <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                                 <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
-                                                    <option value=''>Select Counsellor</option>
+                                                    <option value=''>Select Screener</option>
 
                                                 </select>
                                             </div>
                                         </div>
 
-
-                                    <!--</td></tr>-->
-                                    
-                                
-                                
-                                
-                                
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                -->
-                                
-                                 
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
@@ -297,7 +273,7 @@ input:focus {
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
+                                        <input type="text" onkeypress='return numbers(event);'  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
                                   
                                     </div>
                                 </div>
@@ -330,7 +306,7 @@ input:focus {
                                 
                                 <tr><td class="col-xs-12"> -->
                                              
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+<!--                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select  onchange=""   name="modality" id="modality" class="form-control" >
@@ -350,11 +326,11 @@ input:focus {
                                             <option value='ld'>Initial test at Labour & Delivery</option>
                                             <option value='pnc'>Initial test at PNC < 6 wks</option>
                                             
-                                            <!--<option value="Others">Others</option>-->
+                                            <option value="Others">Others</option>
                                            
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
                                              
                                              
 <!--                                             </td></tr>
@@ -362,17 +338,55 @@ input:focus {
                                  <tr><td class="col-xs-12"> -->
                                              
                                              <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Test Results</label>
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>Have you ever Tested Positive For HIV</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
+                                        <select     name="testedpositive" id="testedpositive" class="form-control" >
                                             <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
+                                            <option  value='Yes'>Yes</option>
+                                            <option value='No'>No</option>
                                           </select>
                                     </div>
                                 </div>
                                              
-                                             
+                                                     <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>When was the last time you tested for HIV?</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select     name="lasttest" id="lasttest" class="form-control" >
+                                            <option value="">Select Results</option>
+                                            <option data-testaction='Counsel'  value='Less 3 months'>Less than 3 months ago</option>
+                                            <option data-testaction='continue' value='Above 3 months'>More than 3 months ago</option>
+                                            <option data-testaction='continue' value='Never tested'>Never Tested</option>
+                                          </select>
+                                    </div>
+                                </div>  
+
+
+
+    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>Is any of below status true?</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select multiple    name="riskybehaviour" id="riskybehaviour" class="form-control" >
+                                            
+<option data-testaction='Counsel'  value='Multiple sex partners'>Client with Multiple sex partners</option>
+<option data-testaction='continue' value='Unprotected sex ukp partner'>Client who has had Unprotected sex with a partner with unknown status</option>
+<option data-testaction='continue' value='Unprotected sex with a known positive'>Client who has had Unprotected sex with a known positive</option>
+<option data-testaction='continue' value='drug user sharing needles (IOU)'>drug user sharing needles (IOU)</option>
+<option data-testaction='continue' value='FSW'>FSW with frequent exposure to unprotected sex</option>
+<option data-testaction='continue' value='MSM'>MSM with multiple partners or partner with unknown status</option>
+<option data-testaction='continue' value='Truck drivers'>Truck drivers - with frequent exposure to unprotected sex</option>
+<option data-testaction='continue' value='Fisher folk'>Fisher folk with multiple sex partners or exposure to unprotected sex with partners of unknown status</option>
+                                          </select>
+                                    </div>
+                                </div>  
+
+<!--Individuals with Risk behavior, e.g.:
+
+g)
+h) Fisher folk with multiple sex partners or exposure to unprotected sex with
+partners of unknown status-->
+
+
+
 <!--                                             </td></tr>
                                  
                                  
@@ -651,6 +665,7 @@ input:focus {
                             
                             </div>
                         </div>
+                        </div>
 
                     </div>
                     <!--/tabs-->
@@ -672,14 +687,14 @@ input:focus {
     </div>
 
 <!-- /Main -->
- <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5>
-<footer class="text-center"> &copy; HSDSA USAID </footer>
+
+<footer class="text-center"> &copy; HSDSA USAID <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5></footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -718,7 +733,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Re-Export</h4>
             </div>
             <div class="modal-body">
@@ -749,7 +764,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Submit zero report</h4>
             </div>
             <div class="modal-body">
@@ -798,7 +813,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Counsellor Activation</h4>
             </div>
             <div class="modal-body">
@@ -871,7 +886,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
             </div>
             <div class="modal-body">
@@ -967,7 +982,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
@@ -1726,7 +1741,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'x</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>Ã</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -3811,19 +3826,6 @@ function validatemodalities(){
     
     
 }
-
-
-function validateAge(){
-    
-     var miakangapi=$("#age").val();
-     
-     if(miakangapi.startsWith("0")){
-     $("#age").val("");    
-         
-     }
-     //alert(miakangapi);
-    
-                      }
 
 //validatemodalities();
 

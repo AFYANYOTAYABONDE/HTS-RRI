@@ -13,15 +13,15 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HTS RRI</title>
+		<title>Facility WorkLoad</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                  <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
-                  <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
-                    <link rel="stylesheet" href="css/select2.css">
-                    <link rel="shortcut icon" href="htsrri.png">
+                <link rel="stylesheet" href="css/select2.css">
+                <link rel="shortcut icon" href="images/fwl.png">
                   
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -56,6 +56,13 @@ input:focus {
   }
 }
 
+.form-control input {
+border-color: #5cb85c; 
+border:#5cb85c;
+    
+}
+
+
 
 </style>
 
@@ -65,7 +72,9 @@ input:focus {
 <!-- header -->
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
+        
         <div class="navbar-header">
+            <button id="toolid" style="float:left;color:white;" class="navbar-toggle btn btn-default" > <i class="glyphicon glyphicon-stats"></i>  Daily Facility WorkLoad Summary</button>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -86,11 +95,11 @@ input:focus {
                 </li>
           
                 
-                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>
+                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Update user</span></a></li>
                   <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
                   <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
                  <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>
-                 <li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>
+                 <!--<li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>-->
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
@@ -130,22 +139,18 @@ input:focus {
                   
 
                     <div class="btn-group btn-group-justified">
-                        <a href="#" id='refreshpage' class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-refresh"></i>
-                            <br> Refresh
+                        <a href="#" id='refreshpage' class="btn btn-success col-sm-2">
+                            <i class="glyphicon glyphicon-stats"></i>
+                             Facility WorkLoad Summary
                         </a>
                        
                          
                             
-                            <a  class="btn btn-primary col-sm-2" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
-                                <i class="glyphicon glyphicon-cloud-upload"></i>
-                                <br/>Export Data 
-                                <span id="unexportedno" style="color:yellow;">(0 records )</span>
+                            <a  class="btn btn-success col-sm-2" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
+                                <i class="glyphicon glyphicon-cloud-upload"></i> Export Data 
+                                <label id="unexportedno" style="color:yellow;">(0 records )</label>
                             </a>
-                                                 <a href="live_edit.jsp" class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-link"></i>
-                            <br>HTS Live
-                        </a>
+                             
                        
 <!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
                             <i class="glyphicon glyphicon-link"></i>
@@ -172,13 +177,13 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
                             <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                            
-                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
+                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Users</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
@@ -191,10 +196,10 @@ input:focus {
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
-                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
+<!--                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
                                 <tr><th class="col-xs-12" style="text-align:center" id="headerid"><b>Enter HTS Data</b></th></tr>
-                                </table>
+                                </table>-->
 <!--                                <tr><td class="col-xs-12">
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Date </label>
@@ -207,14 +212,30 @@ input:focus {
                                 
 <!--                                <tr>
                                     <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Date Test Conducted </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+
+                           <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: solid; border-right-style: solid; border-bottom-style: none; border-left-style: solid;">
+                                    <label  class="col-xs-4" style="padding-top:20px;padding-left:2px;">Date </label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:20px;">
+                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" required="true" readonly placeholder="e.g yyyy-mm-dd">
                                    <input type="hidden"  name ="rowid" id="rowid"  />
                                    <input type="hidden"  name ="unexported" id="unexported"  />
                                     </div>
                                 </div>
+
+      
+                                  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Facility</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="checkids();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
+                                            <option>Select Facility Name</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                                
+
+
+        
                                         
                                         
 <!--                                </td>
@@ -225,332 +246,255 @@ input:focus {
                                 
                                 
                               
+                          
                                 
-                                  <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="checkids();validatemodalities();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
-                                            <option>Select Facility Name</option>
-                                           
+              
+
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:2px;" class="col-xs-6">OPD Attendance<span class='badge' title='OPD' data-toggle='popover' data-trigger='hover' data-content='Opd Attendance on the date above'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onblur="runValidation('screened','opd_t','opd_t');" required="true" onkeypress='return numbers(event);' onkeyup="percent('screened','opd_t','screenrate'); removeFirstZero('opd_t');" name="opd_t" id="opd_t"  autocomplete="off"  class="form-control" title="enter OPD attendants on the date above"  placeholder="OPD Attendance">
+ </div>
+ </div>
+             
+
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">OPD Screened <span class='badge' title='Screened' data-toggle='popover' data-trigger='hover' data-content='# OPD Clients Screened'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('screened','opd_t','screenrate'); removeFirstZero('opd_t');" onblur="runValidation('opd_eligible','screened','screened');runValidation('screened','opd_t','screened');" required="true" name="screened" id="screened"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="# Screened">
+ </div>
+ </div>
+                                
+  <div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">Screening Rate <span class='badge' title='Screening Rate' data-toggle='popover' data-trigger='hover' data-content='% of the OPD Clients Screened'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="screenrate" id="screenrate"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="%OPD Screened">
+ </div>
+ </div>                               
+        
+                                
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">OPD Eligible <span class='badge' title='Eligible' data-toggle='popover' data-trigger='hover' data-content='# of OPD Clients Eligible for Testing'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="removeFirstZero('opd_eligible');" onblur="runValidation('opd_eligible','screened','opd_eligible');runValidation('opd_tested','opd_eligible','opd_eligible');" required="true" name="opd_eligible" id="opd_eligible"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="#OPD Eligible">
+ </div>
+ </div>                               
+                                
+  <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">OPD Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='# of OPD Clients Tested'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('opd_positive','opd_tested','opd_Yield');removeFirstZero('opd_tested');" onblur="runValidation('opd_positive','opd_tested','opd_tested');runValidation('opd_tested','opd_eligible','opd_tested');" required="true" name="opd_tested" id="opd_tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="#OPD Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">OPD Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='# of OPD Clients Tested & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('opd_positive','opd_tested','opd_Yield');removeFirstZero('opd_positive');" onblur="runValidation('opd_positive','opd_tested','opd_positive');" required="true" name="opd_positive" id="opd_positive"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="#OPD Positive">
+ </div>
+ </div>  
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">OPD Yield <span class='badge' title='OPD Yield' data-toggle='popover' data-trigger='hover' data-content='% of the OPD Positives out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="opd_Yield" id="opd_Yield"  autocomplete="off"  class="form-control" title=""  placeholder="%OPD Yield">
+ </div>
+ </div>  
+                                
+                                
+                                
+                                
+                                
+                                <!----PMTCT------>
+                                
+                                
+                                <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">PMTCT Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='# of PMTCT Clients Tested'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('pmtct_positive','pmtct_tested','pmtct_Yield');removeFirstZero('pmtct_tested');" onblur="runValidation('pmtct_positive','pmtct_tested','pmtct_tested');" required="true" name="pmtct_tested" id="pmtct_tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# PMTCT Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">PMTCT Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='# of PMTCT Clients Tested & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('pmtct_positive','pmtct_tested','pmtct_Yield');removeFirstZero('pmtct_positive');" onblur="runValidation('pmtct_positive','pmtct_tested','pmtct_positive');" required="true" name="pmtct_positive" id="pmtct_positive"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# PMTCT Positive">
+ </div>
+ </div>  
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">PMTCT Yield <span class='badge' title='PMTCT Yield' data-toggle='popover' data-trigger='hover' data-content='% of the PMTCT Positives out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="pmtct_Yield" id="pmtct_Yield"  autocomplete="off"  class="form-control" title=""  placeholder="%PMTCT Yield">
+ </div>
+ </div>  
+  
+<!--                                
+                                --VCT----
+                                
+                                <hr style="color:#EBEBEB ;">
+                                <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">VCT Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='# of VCT Clients Tested'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('vct_positive','vct_tested','vct_Yield');removeFirstZero('vct_tested');" onblur="runValidation('vct_positive','vct_tested','vct_tested');" required="true" name="vct_tested" id="vct_tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# VCT Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">VCT Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='# of VCT Clients Tested & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('vct_positive','vct_tested','vct_Yield');removeFirstZero('vct_positive');" onblur="runValidation('vct_positive','vct_tested','vct_positive');" required="true" name="vct_positive" id="vct_positive"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# VCT Positive">
+ </div>
+ </div>  
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">VCT Yield <span class='badge' title='VCT Yield' data-toggle='popover' data-trigger='hover' data-content='% of the VCT Positives out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="vct_Yield" id="vct_Yield"  autocomplete="off"  class="form-control" title=""  placeholder="%VCT Yield">
+ </div>
+ </div>                                  -->
+                                
+  
+                                
+                                 <!----VCT------>
+                                
+                                <!--<hr style="color:#EBEBEB ;">-->
+                                <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">PNS Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='# of Clients tested through PNS including Biological children'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('index_positive','index_tested','index_yield');removeFirstZero('index_tested');" onblur="runValidation('index_positive','index_tested','index_tested');" required="true" name="index_tested" id="index_tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# PNS Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">PNS Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='# of of Clients tested through PNS & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+     <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('index_positive','index_tested','index_yield');removeFirstZero('index_positive');" onblur="runValidation('index_positive','index_tested','index_positive');" required="true" name="index_positive" id="index_positive"  autocomplete="off"  class="form-control" title="enter # Positive on the date above"  placeholder="# PNS Positive">
+ </div>
+ </div>  
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">PNS Yield <span class='badge' title='PNS Yield' data-toggle='popover' data-trigger='hover' data-content='% of the PNS Positives out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="index_yield" id="index_yield"  autocomplete="off"  class="form-control" title=""  placeholder="%PNS Yield">
+ </div>
+ </div>                                 
+  
+                                
+  <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">Self Test <span class='badge' title='Self Tested' data-toggle='popover' data-trigger='hover' data-content='# of Clients self tested '>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="removeFirstZero('self_test');" required="true" name="self_test" id="self_test"  autocomplete="off"  class="form-control" title="enter # Self Tested on the date above"  placeholder="# Self Tested">
+ </div>
+ </div>                                    
+
+<div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">Referred For prep <span class='badge' title='Prep' data-toggle='popover' data-trigger='hover' data-content='# of Clients referred forPrep '>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' required="true" onkeyup="removeFirstZero('Referred_Prep');" onblur="" name="Referred_Prep" id="Referred_Prep"  autocomplete="off"  class="form-control" title="enter # Reffered For prep on the date above"  placeholder="# Prep">
+ </div>
+</div>                                
+ 
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">GBV Cases <span class='badge' title='gbv' data-toggle='popover' data-trigger='hover' data-content='# of GBV Cases Reported '>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' required="true" onkeyup="removeFirstZero('Referred_Prep');" onblur="" name="gbv" id="gbv"  autocomplete="off"  class="form-control" title="enter # GBV cases on the date above"  placeholder="# GBV">
+ </div>
+</div>                                
+                                
+                                
+ <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">Total Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='Total # of Newly HIV tested clients'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+     <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('Total_Positive','Total_Tested','Total_Yield');removeFirstZero('Total_Tested');" onblur="runValidation('Total_Positive','Total_Tested','Total_Tested');" required="true" name="Total_Tested" id="Total_Tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="# Total Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">Total Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='Total # of Newly HIV tested clients & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('Total_Positive','Total_Tested','Total_Yield');removeFirstZero('Total_Positive');" onblur="runValidation('Total_Positive','Total_Tested','Total_Positive');" required="true" name="Total_Positive" id="Total_Positive"  autocomplete="off"  class="form-control" title="enter # Positive on the date above"  placeholder="# Total Positive">
+ </div>
+ </div>   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+ <label style="padding-left:1px;" class="col-xs-6 ">Total Linked <span class='badge' title='Linked' data-toggle='popover' data-trigger='hover' data-content='# of Clients linked to ART'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('Total_Linked','Total_Positive','Total_Linkage');removeFirstZero('Total_Linked');" required="true" onblur="" name="Total_Linked" id="Total_Linked"  autocomplete="off"  class="form-control" title="enter # Positive on the date above"  placeholder="# Total Linked">
+ </div>
+ </div>                               
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+ <label style="padding-left:0px;" class="col-xs-6">Overall Yield <span class='badge' title='Overall Yield' data-toggle='popover' data-trigger='hover' data-content='% of the Total Positives out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="Total_Yield" id="Total_Yield"  autocomplete="off"  class="form-control" title=""  placeholder="%Overall Yield">
+ </div>
+</div>                                  
+
+
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+ <label style="padding-left:0px;" class="col-xs-6">Overall Linkage <span class='badge' title='Overall Linkage' data-toggle='popover' data-trigger='hover' data-content='% of the Total Linked out of the Total Positives'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="Total_Linkage" id="Total_Linkage"  autocomplete="off"  class="form-control" title=""  placeholder="%Overall Linkage">
+ </div>
+</div>                                  
+ 
+                                
+                                
+                                <div class="control-group col-xs-12" style="background-color:#EBEBEB ;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Uploaded By</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
+                                            <option value=''>Select user</option>
+
                                         </select>
                                     </div>
                                 </div>
                                 
-                                
-                               
-                                
-                               
-                                
-                                          <!--</td></tr>-->
-                                  
-                                <!--counsellor-->
-                                <!--<tr><td class="col-xs-12">--> 
+<!--
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
 
-                                        <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
-                                            <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                                <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
-                                                    <option value=''>Select Counsellor</option>
+pmtct_tested
+pmtct_positive
+pmtct_Yield
 
-                                                </select>
-                                            </div>
-                                        </div>
+vct_tested
+vct_positive
+vct_Yield
 
+index_tested
+index_positive
+index_yield
 
-                                    <!--</td></tr>-->
-                                    
-                                
-                                
-                                
-                                
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                -->
-                                
-                                 
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="serialno" id="serialno"  autocomplete="off"  class="form-control"  placeholder="e.g 0001 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Sex</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select type="text"   onblur="validatemodalitiesbygender();" name="gender" id="gender"  autocomplete="off"  class="form-control" >
-                                            <option value=''>select sex</option>
-                                            <option value='Female'>Female</option>
-                                            <option value='Male'>Male</option>
-                                            </select>
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                
-                                HTS Testing Modality
-                                
-                                
-                                <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange=""   name="modality" id="modality" class="form-control" >
-                                            <option value="">Select Modality</option>
-                                            <option value='index_testing'>Index Testing</option>
-                                            <option value='malnutrition'>PITC Malnutrition</option>
-                                            <option value='pediatrics'>PITC Pediatrics</option>
-                                            <option value='tb_clinics'>PITC TB</option>
-                                            <option value='other_pitc'>Other PITC</option>
-                                            <option value='vmmc'>VMMC Services</option>
-                                            <option value='vct'>VCT</option>
-                                            <option value='inpatient'>PITC Inpatient</option>
-                                            <option value='sti'>PITC STI</option>
-                                            <option value='emergency'>PITC Emergency</option>
-                                            <option value='anc1'>Initial test at ANC 1</option>
-                                            <option value='anc2'>Initial test at ANC 2</option>
-                                            <option value='ld'>Initial test at Labour & Delivery</option>
-                                            <option value='pnc'>Initial test at PNC < 6 wks</option>
-                                            
-                                            <!--<option value="Others">Others</option>-->
-                                           
-                                        </select>
-                                    </div>
-                                </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                
-                                 <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Test Results</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
-                                            <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
-                                          </select>
-                                    </div>
-                                </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                 
-                                 
-                                 <tr class="" >
-                                     <td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage linked" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Is the Patient Started on ART?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange="whichfacility();"   name="linked" id="linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                    
+self_test
+Referred_Prep
 
+Total_Tested
+Total_Positive
+Total_Linked
+Total_Linkage
+-->
 
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-                                 
-<!--                                  <tr class='' >
-                                      <td class="col-xs-12"> -->
-
-
-                               
-
-                                             
-                                             <div class="control-group  linkage linked_site col-xs-12"  style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Started in this Facility?</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="specifyFacilityLinked();"   name="linked_site" id="linked_site" class="form-control" >
-                                 <option value='' >Select Results</option>
-                                 <option value='This Facility'>Yes</option>
-                                 <option value='Other Facility'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-
-                                <div class="control-group  linkage linked_site col-xs-12" style="display:none;border: 0.5px dotted #2e6da4;">
-                                <label class="col-xs-12"><font color="red"><b>*</b></font>Date Started on ART</label>
-                                <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                </div>
-                                </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_facility_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Facility Started on ART</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="other_facility_linked" id="other_facility_linked"  autocomplete="off"  class="form-control"  placeholder="e.g Kabarnet District Hospital ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage cccno" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>CCC Number (mflcode-patient no)</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onclick="setmflcode();" onkeypress="setmflcode();" name="cccno" id="cccno"  autocomplete="off"  class="form-control"  placeholder="e.g 55555-23232 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>  -->
-                                 
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_not_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Not started on ART</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdiedordeclined();"   name="reason_not_linked" id="reason_not_linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Declined'>Declined</option>
-                                 <option value='Died'>Died</option>
-                                 <option value='TCA'>TCA</option>
-                                 <option value='On Treatment preparation'>On Treatment preparation</option>
-                                 <option value='Started TB Treatment'>Started TB Treatment</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Declined</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdeclinedother();"   name="reason_for_declining" id="reason_for_declining" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='To consult spouse'>To consult spouse</option>
-                                 <option value='Not ready to start'>Not ready to start</option>
-                                 <option value='Religious reasons'>Religious reasons</option>
-                                 <option value='Associated costs '>Associated costs </option>
-                                 <option value='Relocated to other area'>Relocated to other area</option>
-                                 <option value='Distance to health facility'>Distance to health facility</option>
-                                 <option value='Guardian declined RX for child'>Guardian declined RX for child</option>
-                                 <option value='No reason given'>No reason given</option>
-                                 <option value='Other reason'>Other reason</option>
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 
-                                 <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Declined</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_declining" id="other_reason_for_declining"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr> -->
-                                
-                                
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Died</label>
-                                 <div class="controls col-xs-12">
-                                 <select  onchange="isshowdeadother();"   name="reason_for_death" id="reason_for_death" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='HIV disease resulting in TB'>HIV disease resulting in TB</option>
-                                 <option value='HIV disease resulting in other infectious and parasitic disease'>HIV disease resulting in other infectious and parasitic disease</option>
-                                 <option value='HIV disease resulting in cancer'>HIV disease resulting in cancer</option>
-                                 <option value='HIV disease, resulting in other diseases or conditions leading to death'>HIV disease, resulting in other diseases or conditions leading to death</option>
-                                 <option value='Other natural causes'>Other natural causes</option>
-                                 <option value='Non-natural causes'>Non-natural causes</option>
-                                 <option value='Unknown Cause'>Unknown Cause</option>
-
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-<!--                                  <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Died</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_death" id="other_reason_for_death"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
+                                      
                                         
 <!--                                </td>
                                 </tr> -->
@@ -569,7 +513,7 @@ input:focus {
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note: Please enter data for all input fields.</div>
+                               <div id="utumani" class="alert-info">Note: Please enter data for all input fields.</div>
                                    <br/>
                                     <div class="controls">
                                         <button type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
@@ -641,7 +585,7 @@ input:focus {
                             </div>
                             
                             <div class="tab-pane well" id="viewcounsellors">
-                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected counselor</button>
+                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected User</button>
                                 <div id="searchtabledivcns">
                                   
                                 </div>    
@@ -672,14 +616,14 @@ input:focus {
     </div>
 
 <!-- /Main -->
- <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5>
-<footer class="text-center"> &copy; HSDSA USAID </footer>
+
+<footer class="text-center"> &copy; AfyaNyota | USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">x</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -749,7 +693,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
                 <h4 class="modal-title">Submit zero report</h4>
             </div>
             <div class="modal-body">
@@ -799,17 +743,15 @@ input:focus {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Counsellor Activation</h4>
+                <h4 class="modal-title">System User Details</h4>
             </div>
             <div class="modal-body">
                 <form action="#" id="userform" method="post">
                  <div class="control-group">
-                                    <label><font color="red"><b>*</b></font>Counsellor Name</label>
+                                    <label><font color="red"><b>*</b></font>Enter  Full Name</label>
                                     <div class="controls">
-                                        <select  maxlength='30' placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" >
+                                        <input  maxlength='30' placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" />
                                     
-                                        <option value=''>select counsellors</option>
-                                        </select>
                                     </div>
                                 </div> 
                     
@@ -830,7 +772,7 @@ input:focus {
                                 </div>
                     
                     <div class="control-group" >
-                                    <label>Current Facility:</label>
+                                    <label>Facility Name</label>
                                     <div class="controls">
                                         <select  name="counsellorfacil" id="counsellorfacil" style="width:100%;" class="form-control">
                                             <option value="">Select Facility</option>
@@ -848,7 +790,7 @@ input:focus {
                                     <label></label>
                                     <div class="controls">
                                         <button onclick=" updateuser();"  type="submit" style="margin-left: 50%;"  class="btn-lg btn-success active">
-                                            Activate
+                                            Update
                                         </button>
                                     </div>
                                 </div>   
@@ -971,9 +913,9 @@ input:focus {
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting patient level data for the HTS RRI.</p>
-                    <h3>Activating HTS counsellors</h3>
-                 <p> The first time of installing/running the application,You should specify the name of the HTS counsellor from the availed list.</p>
+                <p>This  application is created for aiding users in collecting Facility Attendance Tool</p>
+                    <h3>Activating User</h3>
+                 <p> The first time of installing/running the application,You should specify the name of the system users from the availed list.</p>
                 
                 <h3>Data Elements</h3>
                 <p>The specific elements that we are interested in are;</p>
@@ -1022,6 +964,75 @@ input:focus {
 
 
 
+
+
+
+
+<div class="modal" id="whatsappform">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
+                <!--<label id='tumawp' class='btn btn-info'>Share <i class='glyphicon glyphicon-share'></i></label>-->
+            </div>
+            <div class="modal-body">
+              
+              <form id="whatsapp">
+               
+                  <table border='0px' class='table table-condensed' style='font-size:11px;'>
+<tr style='color:white;background-color:gray;'><th colspan='4' style='font-size:15px;text-align:center;'> <b><label id='lbl_facility' ></label></b> Workload summary for date <label id='lbl_date_tested'></label></th></tr>
+
+<tr><td style='border:1px solid gray;' rowspan='7'><b>OPD</b></td><td style='text-align:left;'><b>Attendance:</b> </td><td><label id='lbl_opd_t'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. screened:</b> </td><td><label id='lbl_screened'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Screening rate (%)</b> </td><td><label id='lbl_screenrate'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Eligible for testing:</b> </td><td><label id='lbl_opd_eligible'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. tested:</b> </td><td><label id='lbl_opd_tested'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. positive:</b> </td><td><label id='lbl_opd_positive'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Positive yield (%)</b> </td><td><label id='lbl_opd_Yield'></label></td><td></td></tr>
+<tr><td rowspan='3' style='border:1px solid gray;'><b>PMTCT</b></td><td style='text-align:left;'><b>No. tested:</b> </td><td><label id='lbl_pmtct_tested'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. positive:</b> </td><td><label id='lbl_pmtct_positive'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Positive yield (%)</b> </td><td><label id='lbl_pmtct_Yield'></label></td><td></td></tr>
+<tr><td style='border:1px solid gray;' rowspan='3'><b>PNS</b></td><td style='text-align:left;'><b>No. tested:</b> </td><td><label id='lbl_index_tested'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. positive:</b> </td><td><label id='lbl_index_positive'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Positive yield (%)</b> </td><td><label id='lbl_index_yield'></label></td><td></td></tr>
+<tr><td style='border:1px solid gray;' rowspan='9'><b>OVERALL</b></td><td style='text-align:left;'><b>HTS SELF Tests:</b> </td><td><label id='lbl_self_test'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Referred for Prep:</b> </td><td><label id='lbl_Referred_Prep'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. GBV Cases:</b> </td><td><label id='lbl_gbv'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Tested:</b> </td><td><label id='lbl_Total_Tested'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Positive:</b> </td><td><label id='lbl_Total_Positive'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Positive yield (%)</b> </td><td><label id='lbl_Total_Yield'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Total Linked:</b> </td><td><label id='lbl_Total_Linked'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Linkage Rate (%)</b> </td><td><label id='lbl_Total_Linkage'></label></td><td></td></tr>
+<tr style='border:1px solid gray;'><td style='text-align:left;'><b>Submitted By:</b> </td><td><label id='lbl_counsellor'></label></td><td></td></tr>
+
+
+  
+  <tr><td><img alt='' id='pisa' /></td></tr>
+
+
+</table>
+              
+              </form>
+            
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
+            </div>
+        </div>
+        
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
+
+
+
+
+
+
+
+
 	<!-- script references -->
                 <script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.js"></script>
@@ -1038,6 +1049,9 @@ input:focus {
                  
                 <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
                 <script type="text/javascript" src="js/datatables.min.js"></script>
+                <script type="text/javascript" src="js/html2canvas.js"></script>
+                <script type="text/javascript" src="js/FileSaver.js"></script>
+                
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
               //var hostname="https://hsdsacluster2.fhi360.org:8443/htsrri/";
@@ -1173,7 +1187,7 @@ function adduser(code,cname,cfacil,fullname) {
 userdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
 if(da.total_rows===0){
     //activatecounsellors();
-$("#usernamelabel").html("Activate a Counsellor");
+$("#usernamelabel").html("Activate a User");
 $("#usernamelabel").click();
 $("#usernamelabel").click();
 
@@ -1197,6 +1211,8 @@ $("#usernamelabel").click();
             $('#facilityname').select2();
             $('#facilityname_zerorpt').select2();
            
+           $("#usernamelabel").html("Hi "+dat.cname);
+           
            // validatemodalities();
                                      
                                      }
@@ -1212,7 +1228,7 @@ $("#usernamelabel").click();
            user=dat.cname;
             }
             else {
-             counsellors="<option value=''>Activate a Counsellor</option>";
+             counsellors="<option value=''>Activate a User</option>";
              $("#counsellor").html(counsellors);
      }
    
@@ -1393,7 +1409,7 @@ function getcounsellorslist(){
     
 }
 
-getcounsellorslist();
+//getcounsellorslist();
 
 
 
@@ -1449,39 +1465,44 @@ $('#exportbutton').hide();
 
  
 //This is a document to save all tables 
-var dailydatadb = new PouchDB('client_data_rrisep',{auto_compaction: true});
+var dailydatadb = new PouchDB('workload_client_data',{auto_compaction: true});
 var remoteCouch = false;
 var weeklydata;
 
 //receive the artist, song title and lyrics text
-function insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user,syncstatus,datestartedart) {
+function insertdailydata(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,pmtct_tested,pmtct_positive,pmtct_Yield,index_tested,index_positive,index_yield,self_test,Referred_Prep,gbv,Total_Tested,Total_Positive,Total_Yield,Total_Linked,Total_Linkage,timestamp,user, syncstatus) {
    
    
         dailydata = {
-        _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
-	facility:facilityname,
-       counselorname:counsellor,
-       register_no:register_no,
-       serialno:serialno,
+       _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
+       facility:facilityname,
+       counselorname:counsellor,      
        date_tested:date_tested,
-       age:age,
-       gender:gender,
-	modality:modality,
-        testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-timestamp:timestamp,
-user:user,
-syncstatus:syncstatus,        
-completed: false
+       opd_t:opd_t,
+       screened:screened,
+       screenrate:screenrate,
+       opd_eligible:opd_eligible,
+       opd_tested:opd_tested,
+       opd_positive:opd_positive,
+       opd_Yield:opd_Yield,
+       pmtct_tested:pmtct_tested,
+       pmtct_positive:pmtct_positive,
+       pmtct_Yield:pmtct_Yield,
+       index_tested:index_tested,
+       index_positive:index_positive,
+       index_yield:index_yield,
+       self_test:self_test,
+       Referred_Prep:Referred_Prep,
+       gbv:gbv,
+       Total_Tested:Total_Tested,
+       Total_Positive:Total_Positive,
+       Total_Yield:Total_Yield,
+       Total_Linked:Total_Linked,
+       Total_Linkage:Total_Linkage,
+       timestamp:timestamp,
+       user:user,
+       syncstatus:syncstatus,        
+       completed: false
   };
   dailydatadb.put(dailydata, function callback(err, result) {
       
@@ -1495,9 +1516,9 @@ completed: false
     else {
         
        $("#headerid").html("<font color='red'><b>Record Not Saved. You have already entered another record with similar serial number, register no. and modality</b></font>");
-         alert("Duplicate Error!.You have already entered another record with similar serial number, register no. and modality");
+         alert("Duplicate Error!.You have already entered data for that date. Consider editing the data");
         
-            console.log('Saving Error: Another Record exists with a similar serial number, register no. and modality ');   
+            console.log('Saving Error: Data for that data has been entered ');   
         
          }
   });
@@ -1512,38 +1533,43 @@ completed: false
 var id=null;
 var facility=null;
 var counsellor=null;
-var register_no=null;
-var serialno=null;
+
 var date_tested=null;
-var age=null;
-var gender=null;
-var modality=null;
-var testresult=null;
-var linked=null;
-var cccno=null;
-var linked_site=null;
-var other_facility_linked=null;
-var reason_not_linked=null;
-var reason_for_death=null;
-var other_reason_for_death=null;
-var reason_for_declining=null;
-var other_reason_for_declining=null;
+
 var user=null;
 var timestamp=null;
 var datestartedart=null;
 
-//var viralload_tg=null; 
-//var viralload=null; 
-//var viralload_mothers=null; 
 
-   
-//var newart=null;
-//var newpos_pmtct=null;
-//var art_pmtct=null;
-   
+var opd_t=null;
+var screened=null;
+var screenrate=null;
+var opd_eligible=null;
+var opd_tested=null;
+var opd_positive=null;
+var opd_Yield=null;
+
+var pmtct_tested=null;
+var pmtct_positive=null;
+var pmtct_Yield=null;
+
+var index_tested=null;
+var index_positive=null;
+var index_yield=null;
+
+var self_test=null;
+var Referred_Prep=null;
+var gbv=null;
+
+var Total_Tested=null;
+var Total_Positive=null;
+var Total_Yield=null;
+var Total_Linked=null;
+var Total_Linkage = null;
+
    //added 201605 
     var progressbarstoskip=[];
-     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining"];
+     var allindicatorsarray=["rowid","facilityname","enddate","counsellor","opd_t","screened","screenrate","opd_eligible","opd_tested","opd_positive","opd_Yield","pmtct_tested","pmtct_positive","pmtct_Yield","index_tested","index_positive","index_yield","self_test","Referred_Prep","gbv","Total_Tested","Total_Positive","Total_Yield","Total_Linked","Total_Linkage"];
      var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
@@ -1726,7 +1752,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'x</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>x</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -1774,53 +1800,53 @@ function sumofindicators(sourceindicators,destinationindicator){
 //=========================================set targets================================
 
 //function settargets(facilitymfl){
-function activatecounsellors(){
-
-counsellorslistdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
-if(da.total_rows===0){
-//getcounsellorslist();
-alert("No loaded list of counsellors");
-
-                      }
-     else {
-       
-            var counsellors="<option value=''>select  Counsellor(s)</option>";
-            var a;
-     for(a=0;a<da.total_rows;a++){
-                var dat={}; 
-           
-	       dat=da.rows[a].doc;
-                
-            if(dat.RRI_Name!==''){
-                if(1===1){
-               // if(dat.isactive===1){
-                    
-           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+" ["+dat.Currentfacility+"]</option>"
-           
-           
-         
-                                     
-                                     }
-     
-           
-           $("#counsellorreg").html(counsellors);
-          $('#counsellorreg').select2(); 
-          $('#counsellorreg').css('width','100%'); 
-
-        
-            }
-            else {
-             //alert("");
-             console.log("Skipped Counsellor without rri name "+dat.RRI_Name);
-     }
-   
-
-     }//end of row
-
-        }
-});
-
-}
+//function activatecounsellors(){
+//
+//counsellorslistdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
+//if(da.total_rows===0){
+////getcounsellorslist();
+////alert("No loaded list of counsellors");
+//
+//                      }
+//     else {
+//       
+//            var counsellors="<option value=''>select  Counsellor(s)</option>";
+//            var a;
+//     for(a=0;a<da.total_rows;a++){
+//                var dat={}; 
+//           
+//	       dat=da.rows[a].doc;
+//                
+//            if(dat.RRI_Name!==''){
+//                if(1===1){
+//               // if(dat.isactive===1){
+//                    
+//           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+" ["+dat.Currentfacility+"]</option>"
+//           
+//           
+//         
+//                                     
+//                                     }
+//     
+//           
+//           $("#counsellorreg").html(counsellors);
+//          $('#counsellorreg').select2(); 
+//          $('#counsellorreg').css('width','100%'); 
+//
+//        
+//            }
+//            else {
+//             //alert("");
+//             console.log("Skipped Counsellor without rri name "+dat.RRI_Name);
+//     }
+//   
+//
+//     }//end of row
+//
+//        }
+//});
+//
+//}
 
 
 
@@ -1833,35 +1859,44 @@ function validateweeklydata(){
     
     //receive all the fields from the weekly data from
 id=$("#rowid").val();
-facility=$("#facilityname").val();
-counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
-date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-//user=$("#user").val();
-//timestamp=$("#timestamp").val();
-datestartedart=$("#artstartdate").val();
 
-    console.log("Date started ART__"+datestartedart);
-    //var user=$("#username").val(); 
-    var user="hsdsa"; 
-      var currentdate = new Date();
+facility=$("#facilityname").val();
+
+counsellor=$("#counsellor").val();
+
+opd_t=$("#opd_t").val();
+screened=$("#screened").val();
+screenrate=$("#screenrate").val();
+opd_eligible=$("#opd_eligible").val();
+opd_tested=$("#opd_tested").val();
+opd_positive=$("#opd_positive").val();
+opd_Yield=$("#opd_Yield").val();
+pmtct_tested=$("#pmtct_tested").val();
+pmtct_positive=$("#pmtct_positive").val();
+pmtct_Yield=$("#pmtct_Yield").val();
+index_tested=$("#index_tested").val();
+index_positive=$("#index_positive").val();
+index_yield=$("#index_yield").val();
+self_test=$("#self_test").val();
+Referred_Prep=$("#Referred_Prep").val();
+gbv=$("#gbv").val();
+Total_Tested=$("#Total_Tested").val();
+Total_Positive=$("#Total_Positive").val();
+Total_Yield=$("#Total_Yield").val();
+
+Total_Linked=$("#Total_Linked").val();
+Total_Linkage=$("#Total_Linkage").val();
+
+
+date_tested=$("#enddate").val();
+
+var user="hsdsa"; 
+
+var currentdate = new Date();
     
-    var mn=""+(currentdate.getMonth()+1) ;
-    var dt=""+currentdate.getDate();
+var mn=""+(currentdate.getMonth()+1) ;
+
+var dt=""+currentdate.getDate();
     var hr=""+currentdate.getHours();
     var min=""+currentdate.getMinutes();
     var sc=""+currentdate.getSeconds();
@@ -1880,8 +1915,7 @@ datestartedart=$("#artstartdate").val();
     
      var id=null;
      
-      console.log("Urefu wa CCC Number "+cccno.length); 
-          
+      
      if(facility==='')
      {         
   
@@ -1895,67 +1929,28 @@ datestartedart=$("#artstartdate").val();
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
      
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
+      else if(checktotaltests()===false){
      
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
-      else if (enddate==='')
-     {
-         
-     alert('Select Test Date');
-   $("#enddate").focus();    
-     } 
+     
+     
+ }
+     
+     
+ else if(checktotalpositives()===false){
+     
+     
+     
+ }
      
 
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
 else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-  
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
-else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }
-    
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-
-else if(linked==='Yes' && datestartedart==='') { alert(' Enter date started on ART');  $('#artstartdate').focus(); }
-
-else if(date_tested!=='' && datestartedart!=='' && Date.parse(date_tested) > Date.parse(datestartedart) ) { alert(' Date started on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
-
-
-
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked===''  ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
-
-
     
        else {
      var facilitynameandmfl=facility.split("_");        
@@ -1964,10 +1959,8 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-',''); 
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');
-     
-     // id=facilitynameandmfl[0]+"_"+endd+"_"+cns+"_"+mod;
-      //this should not be cleared
+    
+   
      id=$("#rowid").val();
       
      var facilityname=facilitynameandmfl[1];
@@ -1976,10 +1969,8 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
             //add a variable to distinguish the two
             //use _wk
             
-  insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
-  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@"+datestartedart) ;
-
-
+  insertdailydata(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,pmtct_tested,pmtct_positive,pmtct_Yield,index_tested,index_positive,index_yield,self_test,Referred_Prep,gbv,Total_Tested,Total_Positive,Total_Yield,Total_Linked,Total_Linkage,timestamp,user, syncstatus) ;
+  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+ date_tested+" @ "+opd_t+" @ "+screened+" @ "+screenrate+" @ "+opd_eligible+" @ "+opd_tested+" @ "+opd_positive+" @ "+opd_Yield+" @ "+pmtct_tested+" @ "+pmtct_positive+" @ "+pmtct_Yield+" @ "+index_tested+" @ "+index_positive+" @ "+index_yield+" @ "+self_test+" @ "+Referred_Prep+" @ "+gbv+" @ "+Total_Tested+" @ "+Total_Positive+" @ "+Total_Yield+" @ "+Total_Linked+" @ "+Total_Linkage+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@") ;
 
  //selectsearchdata();
 $("#message").show();
@@ -2105,14 +2096,14 @@ function selectsearchdata()
               //how to reference each column 
               //alert(dat.doc.startdate);
               //dat.doc._id
-              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>*";
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>";
               if(dat.doc.syncstatus==="Yes"){
                  statusicon=""; 
                   
                }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> Modality: <b>"+dat.doc.modality+"</b> serial #: <b>"+dat.doc.serialno+" </b> Register #: <b>"+dat.doc.register_no+" Test result:</b> "+dat.doc.testresult+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> OPD Att: <b>"+dat.doc.opd_t+"</b> Total Tes: <b>"+dat.doc.Total_Tested+" </b> Total Pos#: <b>"+dat.doc.Total_Positive+"Total Linked:</b> "+dat.doc.Total_Linked+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button><a onclick='loadwhatsappdata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'  data-toggle='modal'  href='#whatsappform' class='btn btn-default' ><img src='images/wp.png' style='height:22px;'></a></button></td></tr>";
           	    
                   }
             } //end of for loop
@@ -2273,7 +2264,7 @@ function appendtablecounsellordata( dbdata1 )
 
 function appendtabledata( dbdata ){
     
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date tested</th><th style='width:50%;'>Patient</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date</th><th style='width:50%;'>Summary</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
          
 	   $(document).ready(function() {
                 
@@ -2351,32 +2342,37 @@ function loadsaveddailydata(id,facility,openreportstab ){
     
 $("#facilityname").val(mflanddates[0]+"_"+facility);   
 $("#counsellor").val(doc.counselorname);
-$("#register_no").val(doc.register_no);
-$("#serialno").val(doc.serialno);
-$("#enddate").val(doc.date_tested);
-$("#age").val(doc.age);
-$("#gender").val(doc.gender);
-$("#modality").val(doc.modality);
-$("#testresult").val(doc.testresult);
-$("#linked").val(doc.linked);
-$("#cccno").val(doc.cccno);
-$("#linked_site").val(doc.linked_site);
-$("#other_facility_linked").val(doc.other_facility_linked);
-$("#reason_not_linked").val(doc.reason_not_linked);
-$("#reason_for_death").val(doc.reason_for_death);
-$("#other_reason_for_death").val(doc.other_reason_for_death);
-$("#reason_for_declining").val(doc.reason_for_declining);
-$("#other_reason_for_declining").val(doc.other_reason_for_declining);
-$("#artstartdate").val(doc.datestartedart);
 
+$("#enddate").val(doc.date_tested);
+
+$("#opd_t").val(doc.opd_t);
+$("#screened").val(doc.screened);
+$("#screenrate").val(doc.screenrate);
+$("#opd_eligible").val(doc.opd_eligible);
+$("#opd_tested").val(doc.opd_tested);
+$("#opd_positive").val(doc.opd_positive);
+$("#opd_Yield").val(doc.opd_Yield);
+$("#pmtct_tested").val(doc.pmtct_tested);
+$("#pmtct_positive").val(doc.pmtct_positive);
+$("#pmtct_Yield").val(doc.pmtct_Yield);
+$("#index_tested").val(doc.index_tested);
+$("#index_positive").val(doc.index_positive);
+$("#index_yield").val(doc.index_yield);
+$("#self_test").val(doc.self_test);
+$("#Referred_Prep").val(doc.Referred_Prep);
+$("#gbv").val(doc.gbv);
+$("#Total_Tested").val(doc.Total_Tested);
+$("#Total_Positive").val(doc.Total_Positive);
+$("#Total_Linked").val(doc.Total_Linked);
+$("#Total_Linkage").val(doc.Total_Linkage);
 
    
      //$('#facilityname').select2(); 
-     $('#facilityname').select2();
-     $('#counsellor').select2(); 
-         $("#counsellor").css('width','100%');
-         $("#facilityname").css('width','100%');
-         $(".select2-container").css('width','100%');
+ $('#facilityname').select2();
+ $('#counsellor').select2(); 
+ $("#counsellor").css('width','100%');
+ $("#facilityname").css('width','100%');
+ $(".select2-container").css('width','100%');
      
      
      $("#savebutton").hide();
@@ -2385,12 +2381,12 @@ $("#artstartdate").val(doc.datestartedart);
      //$("#savenewbutton").show();
       checkids();
       
-      asklinkage();
-whichfacility();
-specifyFacilityLinked();
-isshowdiedordeclined();
-isshowdeclinedother();
-isshowdeadother();
+//      asklinkage();
+//whichfacility();
+//specifyFacilityLinked();
+//isshowdiedordeclined();
+//isshowdeclinedother();
+//isshowdeadother();
       
       
  $('#newdatabutton').html("<i class='glyphicon glyphicon-edit'></i>Edit Data");
@@ -2415,6 +2411,58 @@ isshowdeadother();
 
  selectwidth();
 }
+
+
+
+<!-------------------------------------------------------------->
+
+
+function loadwhatsappdata(id,facility){
+     
+      	
+	dailydatadb.get(id).then(function (doc) {
+  
+$('#lbl_date_tested').html(doc.date_tested);
+$('#lbl_facility').html(facility);
+
+
+$('#lbl_opd_t').html(""+doc.opd_t);
+$('#lbl_screened').html(""+doc.screened);
+$('#lbl_screenrate').html(""+doc.screenrate+" ");
+$('#lbl_opd_eligible').html(""+doc.opd_eligible);
+$('#lbl_opd_tested').html(""+doc.opd_tested);
+$('#lbl_opd_positive').html(""+doc.opd_positive);
+$('#lbl_opd_Yield').html(""+doc.opd_Yield);
+$('#lbl_pmtct_tested').html(""+doc.pmtct_tested);
+$('#lbl_pmtct_positive').html(""+doc.pmtct_positive);
+$('#lbl_pmtct_Yield').html(""+doc.pmtct_Yield);
+$('#lbl_index_tested').html(""+doc.index_tested);
+$('#lbl_index_positive').html(""+doc.index_positive);
+$('#lbl_index_yield').html(""+doc.index_yield);
+$('#lbl_self_test').html(""+doc.self_test);
+$('#lbl_Referred_Prep').html(""+doc.Referred_Prep);
+$('#lbl_gbv').html(""+doc.gbv);
+$('#lbl_Total_Tested').html(""+doc.Total_Tested);
+$('#lbl_Total_Positive').html(""+doc.Total_Positive);
+
+$('#lbl_Total_Yield').html(""+doc.Total_Yield);
+$('#lbl_Total_Linked').html(""+doc.Total_Linked);
+$('#lbl_Total_Linkage').html(""+doc.Total_Linkage);
+$('#lbl_counsellor').html(""+doc.counselorname);
+
+
+  
+});
+
+
+}
+
+<!-------------------------------------------------------------->
+
+
+
+
+
 
 $("#refreshpage" ).click(function() 
 {
@@ -2466,34 +2514,38 @@ function updateweeklydata()
 id=$("#rowid").val();
 facility=$("#facilityname").val();
 counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
+
 date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-datestartedart=$("#artstartdate").val();
+
+opd_t=$("#opd_t").val();
+screened=$("#screened").val();
+screenrate=$("#screenrate").val();
+opd_eligible=$("#opd_eligible").val();
+opd_tested=$("#opd_tested").val();
+opd_positive=$("#opd_positive").val();
+opd_Yield=$("#opd_Yield").val();
+pmtct_tested=$("#pmtct_tested").val();
+pmtct_positive=$("#pmtct_positive").val();
+pmtct_Yield=$("#pmtct_Yield").val();
+index_tested=$("#index_tested").val();
+index_positive=$("#index_positive").val();
+index_yield=$("#index_yield").val();
+self_test=$("#self_test").val();
+Referred_Prep=$("#Referred_Prep").val();
+gbv=$("#gbv").val();
+Total_Tested=$("#Total_Tested").val();
+Total_Positive=$("#Total_Positive").val();
+Total_Yield=$("#Total_Yield").val();
+Total_Linked=$("#Total_Linked").val();
+Total_Linkage=$("#Total_Linkage").val();
+
+
 //user=$("#user").val();
 timestamp=$("#timestamp").val();
 
-console.log("Date started ART__"+artstartdate);
-    
-    //var user=$("#username").val(); 
+
     var user="hsdsa"; 
-   // var timestamp = $.now();
-    
-         console.log("Urefu wa CCC Number "+cccno.length); 
-    
+
     var currentdate = new Date();
     
    var mn=""+(currentdate.getMonth()+1) ;
@@ -2530,66 +2582,32 @@ console.log("Date started ART__"+artstartdate);
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
-     
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
-     
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
+ 
       else if (enddate==='')
      {
          
-     alert('Select Test Date');
+     alert('Select Reporting Date');
    $("#enddate").focus();    
      } 
      
-
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
-else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
- else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }
- 
- //else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
- else if(linked==='Yes' && datestartedart==='') { alert(' Enter date started on ART');  $('#artstartdate').focus(); }
-
-else if(date_tested!=='' && datestartedart!=='' && Date.parse(date_tested) > Date.parse(datestartedart) ) { alert(' Date started on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
- 
- 
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked==='' ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='' && linked==='No') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
+   else if(checktotaltests()===false){
+     
+     
+     
+ }
+     
+     
+ else if(checktotalpositives()===false){
+     
+     
+     
+ }
 
    
        else {
@@ -2600,8 +2618,7 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-','');      
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');     
-         
+        
      var facilityname=facilitynameandmfl[1];
             //save data to the db
  // saveweeklyupdates(id,facilitynameandmfl[1],enddate,counselorname,modality, tested,positive_tg,positive,linked_here,linked_else,declined,dead,tca,timestamp,user, syncstatus) ;
@@ -2610,7 +2627,7 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
           
      id=$("#rowid").val();
   
- saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
+ saveweeklyupdates(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,pmtct_tested,pmtct_positive,pmtct_Yield,index_tested,index_positive,index_yield,self_test,Referred_Prep,gbv,Total_Tested,Total_Positive,Total_Yield,Total_Linked,Total_Linkage,timestamp,user, syncstatus) ;
   
             //
             //________________________________
@@ -2636,7 +2653,7 @@ setTimeout(delayedrefresh,1800);
     
 }
    
-function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) {
+function saveweeklyupdates(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,pmtct_tested,pmtct_positive,pmtct_Yield,index_tested,index_positive,index_yield,self_test,Referred_Prep,gbv,Total_Tested,Total_Positive,Total_Yield,Total_Linked,Total_Linkage,timestamp,user, syncstatus) {
  
  
  
@@ -2650,23 +2667,31 @@ function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_
   
 doc.facility=facilityname;
 doc.counselorname=counsellor;
-doc.register_no=register_no;
-doc.serialno=serialno;
 doc.date_tested=date_tested;
-doc.age=age;
-doc.gender=gender;
-doc.modality=modality;
-doc.testresult=testresult;
-doc.linked=linked;
-doc.cccno=cccno;
-doc.linked_site=linked_site;
-doc.other_facility_linked=other_facility_linked;
-doc.reason_not_linked=reason_not_linked;
-doc.reason_for_death=reason_for_death;
-doc.other_reason_for_death=other_reason_for_death;
-doc.reason_for_declining=reason_for_declining;
-doc.other_reason_for_declining=other_reason_for_declining;
-doc.datestartedart=datestartedart;
+
+doc.opd_t=opd_t;
+doc.screened=screened;
+doc.screenrate=screenrate;
+doc.opd_eligible=opd_eligible;
+doc.opd_tested=opd_tested;
+doc.opd_positive=opd_positive;
+doc.opd_Yield=opd_Yield;
+doc.pmtct_tested=pmtct_tested;
+doc.pmtct_positive=pmtct_positive;
+doc.pmtct_Yield=pmtct_Yield;
+doc.index_tested=index_tested;
+doc.index_positive=index_positive;
+doc.index_yield=index_yield;
+doc.self_test=self_test;
+doc.Referred_Prep=Referred_Prep;
+doc.gbv=gbv;
+doc.Total_Tested=Total_Tested;
+doc.Total_Positive=Total_Positive;
+doc.Total_Yield=Total_Yield;
+doc.Total_Linked=Total_Linked;
+doc.Total_Linkage=Total_Linkage;
+
+
 doc.user=user;
 doc.timestamp=timestamp;
 doc.syncstatus=syncstatus; 
@@ -2704,7 +2729,7 @@ var recordsunexported=$("#unexported").val();
     
   $("#exportbutton").hide();
   $("#exportmsg").show();
-   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait response.</b><br/>");
+   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait for response.</b><br/>");
   
   dailydatadb.allDocs({include_docs: true, descending: true}).then( function(doc) { 
  syncstatusarray=[];
@@ -2721,49 +2746,56 @@ var recordsunexported=$("#unexported").val();
 	     // console.log(dat.doc.facility);
               //how to reference each column 
               
-              var idyangu=dat.doc._id;
-		  var num=parseInt(c)-1;
+        var idyangu=dat.doc._id;
+	var num=parseInt(c)-1;
 	var missingcommentid="";
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
         {
 
            
-       var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
+        var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
         
  if(skipexporting===0)
  {
             
-            updatesyncstatus(dat.doc._id,'Yes');
+  updatesyncstatus(dat.doc._id,'Yes');
         
         
             
     $.ajax({
-                         url:'receiveData',                            
+                        url:'importworkload',                            
                         type:'post', 
 data:{
 
 id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
+opd_t:dat.doc.opd_t,
+screened:dat.doc.screened,
+screenrate:dat.doc.screenrate,
+opd_eligible:dat.doc.opd_eligible,
+opd_tested:dat.doc.opd_tested,
+opd_positive:dat.doc.opd_positive,
+opd_Yield:dat.doc.opd_Yield,
+pmtct_tested:dat.doc.pmtct_tested,
+pmtct_positive:dat.doc.pmtct_positive,
+pmtct_Yield:dat.doc.pmtct_Yield,
+index_tested:dat.doc.index_tested,
+index_positive:dat.doc.index_positive,
+index_yield:dat.doc.index_yield,
+self_test:dat.doc.self_test,
+Referred_Prep:dat.doc.Referred_Prep,
+gbv:dat.doc.gbv,
+Total_Tested:dat.doc.Total_Tested,
+Total_Positive:dat.doc.Total_Positive,
+Total_Yield:dat.doc.Total_Yield,
+Total_Linked:dat.doc.Total_Linked,
+Total_Linkage:dat.doc.Total_Linkage,
+
+
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
 },
@@ -2787,6 +2819,15 @@ dataType:'html',
                  $("#exportmsg").hide();
                  if(returnedresponses<1000){
                  $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
+                 
+                 
+                 if(parseInt(recordsunexported)===1)
+                 {     
+                  
+                    $("#screenshotwp").click();                        
+                                            
+                 }
+                 
              //setTimeout(delayedrefresh,2000);
             }
              else {
@@ -2893,7 +2934,7 @@ var recordsunexported=$("#unexported").val();
                $("#exportbutton1").hide();
                $("#exportmsg1").show();
                
-                  $("#exportbutton").hide();
+               $("#exportbutton").hide();
                $("#exportmsg").show();
                
                //a variable to check if all comments are added for percents below 80 percent and not amongest the indicators that can be skipped.
@@ -2922,30 +2963,37 @@ var recordsunexported=$("#unexported").val();
         
             
              $.ajax({
-                         url:'receiveData',                            
+                         url:'importworkload',                            
                         type:'post', 
 data:{
 
 id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
+
+opd_t:dat.doc.opd_t,
+screened:dat.doc.screened,
+screenrate:dat.doc.screenrate,
+opd_eligible:dat.doc.opd_eligible,
+opd_tested:dat.doc.opd_tested,
+opd_positive:dat.doc.opd_positive,
+opd_Yield:dat.doc.opd_Yield,
+pmtct_tested:dat.doc.pmtct_tested,
+pmtct_positive:dat.doc.pmtct_positive,
+pmtct_Yield:dat.doc.pmtct_Yield,
+index_tested:dat.doc.index_tested,
+index_positive:dat.doc.index_positive,
+index_yield:dat.doc.index_yield,
+self_test:dat.doc.self_test,
+Referred_Prep:dat.doc.Referred_Prep,
+gbv:dat.doc.gbv,
+Total_Tested:dat.doc.Total_Tested,
+Total_Positive:dat.doc.Total_Positive,
+Total_Yield:dat.doc.Total_Yield,
+Total_Linked:dat.doc.Total_Linked,
+Total_Linkage:dat.doc.Total_Linkage,
+
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
 },
@@ -3762,55 +3810,9 @@ function autocalculate(indicator){
 
 //this fuction should sum and update the current value of the 
 
-function yearlytotal(indicator){
-  //  
-    var currentvalue=$("#"+indicator).val(); 
-    var previous=$("#"+indicator).attr("data-previous_"+indicator);
-    var newtotal=$("#"+indicator).data(""+indicator);
-    
-    
-    
-   var afteradding=0;
-   if(currentvalue!==''){
-       
-   afteradding=parseInt(previous)+parseInt(currentvalue);
-   
-   }
-   
-        //----update the excel values
-      $("#"+indicator).attr( "data-"+indicator , afteradding);  //data-total_hiv_pos_child
-      //$("#"+indicator).val(afteradding);  //the total that appears on the input field
-      console.log("before adding "+previous+" After adding "+afteradding);  
-        
-}
-
 
 //for PNS supported facilities
 
-function validatemodalities(){
-    
-    
- var ispns= $("#facilityname").find(':selected').data("pns");   
-    //alert("facil "+$("#facilityname").val()+" pns="+ispns);
-    var modalitiesoption="<option value=''>Select Modality</option>";
-        modalitiesoption+="<option value='Optimized Testing IPD'>Optimized Testing IPD</option>";
-        modalitiesoption+="<option value='Optimized Testing OPD'>Optimized Testing OPD</option>";
-        
-   if(ispns===1){
-   modalitiesoption+="<option value='PNS'>PNS</option>";
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";    
-       
-   } 
-   else {
-       
-    
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";   
-   }
-    
-  // $("#modality").html(modalitiesoption); 
-    
-    
-}
 
 
 function validateAge(){
@@ -3832,225 +3834,21 @@ function validateAge(){
 
 
 
-function asklinkage(){
-    
-  var tr=$("#testresult").val();
-   //alert(regni);
-
-   
-        if(tr==='Positive')
-        {
-              
-            $(".linked").show();
-            //$(".linkage").show();
-            
-        }
-        else {
-          
-           $(".linkage").hide();
-           $("#linked").val("");
-           $(".cccno").hide();
-            $("#cccno").val(""); 
-            $("#linked_site").val("");
-            $("#other_facility_linked").val("");
-             
-             }
-    
-    
-}
-
-
-function whichfacility(){
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked").val();
-   //alert(regni);
-
-   
-        if(tr==='Yes')
-        {
-              
-            $(".linked_site").show();
-           // $(".cccno").show();
-            $(".reason_not_linked").val("");
-            $(".reason_not_linked").hide();
-            
-           //hide and clear values for not linked 
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-            
-            
-        }
-        
-        
-          else if(tr==='No') {
-          
-           $(".linked_site").hide();
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").show();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-        
-        else {
-          
-           $(".linked_site").hide();
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").hide();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-    
-    
-}
-
-
-function specifyFacilityLinked()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked_site").val();
- if(tr==='Other Facility')
-        {
-              
-          $(".other_facility_linked").show();
-          $(".cccno").show();
-         
-        }
-        
-        
-        else  if(tr==='This Facility')
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").show();
-           
-           }
-        
-        else 
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").hide();
-           
-           }
-    
-    
-}
 
 
 
-function isshowdiedordeclined()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_not_linked").val();
- if(tr==='Declined')
-        {
-              
-          $(".reason_for_declining").show();
-          $(".reason_for_death").hide();
-          $("#reason_for_death").val("");
-          
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-       }
-        else if(tr==='Died') 
-           {
-            $(".reason_for_death").show();
-            $(".reason_for_declining").hide();
-            $("#reason_for_declining").val("");
-            
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-           else {
-               //if reason not linked is TCA
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-               
-           }
-    
-    
-}
 
 
-
-function isshowdeclinedother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_declining").val();
- if(tr==='Other reason')
-        {
-              
-          $(".other_reason_for_declining").show();
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-    
-    
-}
-
-function isshowdeadother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_death").val();
- if(tr==='Other natural causes')
-        {
-              
-          $(".other_reason_for_death").show();
-          $(".other_reason_for_declining").hide();
-          $("#other_reason_for_declining").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_death").hide();
-            $("#other_reason_for_death").val("");
-           }
-    
-    
-}
 
 function setrowid(){
     var id="";
     
     var f=$("#facilityname").val();
     var mfl=f.split("_")[0];
-    var sn=$("#serialno").val();
-    var rn=$("#register_no").val();
-    var md=$("#modality").val();
+    var dt=$("#enddate").val();
+    dt=dt.replace('-','');
     
-    var id=mfl+"_"+sn+"_"+rn+"_"+md;
+    var id=mfl+"_"+dt;
     
     $("#rowid").val(id);
     
@@ -4230,7 +4028,8 @@ $('#clearcachebtn').click(function() {
 
 
 
-function cleardata(){
+function cleardata()
+{
     
     if(ConfirmDeleteever()===true){
     
@@ -4250,47 +4049,6 @@ function cleardata(){
 }
 
 
-function validatemodalities()
-{
-    var miaka=$("#age").val();
-    
- if(miaka>5){  
-$("#modality option[value='malnutrition']").attr("disabled", true); 
-$("#modality option[value='pediatrics']").attr("disabled", true); 
-
-$("#modality option[value='anc1']").attr("disabled",false); 
-$("#modality option[value='anc2']").attr("disabled",false); 
-$("#modality option[value='ld']").attr("disabled",false); 
-$("#modality option[value='pnc']").attr("disabled",false);
-
-
- }
- else if (miaka<9){
-     //deactivate
-$("#modality option[value='anc1']").attr("disabled", true); 
-$("#modality option[value='anc2']").attr("disabled", true); 
-$("#modality option[value='ld']").attr("disabled", true); 
-$("#modality option[value='pnc']").attr("disabled", true);
-//activate
-$("#modality option[value='malnutrition']").removeAttr("disabled"); 
-$("#modality option[value='pediatrics']").removeAttr("disabled"); 
-     
- }
- else {
-     
-$("#modality option[value='malnutrition']").attr("disabled",false);
-$("#modality option[value='pediatrics']").attr("disabled",false);   
- 
- 
-$("#modality option[value='anc1']").attr("disabled",false); 
-$("#modality option[value='anc2']").attr("disabled",false);
-$("#modality option[value='ld']").removeAttr("disabled"); 
-$("#modality option[value='pnc']").removeAttr("disabled");
-     
- }
-    
-    
-}
 
 
 function validatemodalitiesbygender(){
@@ -4315,9 +4073,6 @@ $("#modality option[value='ld']").attr("disabled",false);
 $("#modality option[value='pnc']").attr("disabled",false);  
         
                   }
-  
-
-  
     
 }
 
@@ -4394,7 +4149,276 @@ function savezeroreport()
 //           .register('sw1.js')
 //           .then(function() { console.log("Service Worker Registered"); });
 //}
-</script>
 
+if($("#toolid").is(":visible")){
+                    $("#refreshpage").hide();
+                } else{
+                   $("#refreshpage").show();
+                }
+                
+                
+                
+                
+                 function percent(num,den,destination){
+           
+         var rptd=$("#"+num).val();
+         var vrfd=$("#"+den).val();
+           
+           if(rptd!=='' && rptd!==null && vrfd!=='' && vrfd!==null && !isNaN(rptd) && !isNaN(vrfd)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           rptd=parseInt(rptd);
+           vrfd=parseInt(vrfd);
+         
+            if(vrfd===0){vrfd=1;}
+            
+            var conc= Math.round(((rptd/vrfd)*100));
+            if(isNaN(conc)){
+                
+               conc=0; 
+            }
+            
+            
+            $("#"+destination).val(conc+"%");
+             //alert(conc);
+           }
+           
+           
+           
+       }
+       
+       //percent removeFirstZero
+       // var difference = function (val1, val2) { return Math.abs(val1 - val2); };
+       
+       function removeFirstZero(elem){
+           
+           
+           var vl=$("#"+elem).val();
+           
+           if(vl.length>=2 && vl.startsWith("0"))
+           {
+               
+               vl=vl.replace("0","");
+               $("#"+elem).val(vl);
+                  // alert(vl);
+           }
+           
+       
+           
+       }
+       
+       
+     function runValidation(num,den,destination){
+           
+         var nume=$("#"+num).val();
+         var denom=$("#"+den).val();
+           
+           if(nume!=='' && nume!==null && denom!=='' && denom!==null && !isNaN(nume) && !isNaN(denom)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           nume=parseInt(nume);
+           denom=parseInt(denom);
+         var haserror=false;
+            if(nume>denom){haserror=true;
+                
+            $("#"+destination).focus();
+             $("#"+num).css({"border-color": "red"});
+             $("#"+den).css({"border-color": "red"});
+            $("#utumani").html("<font color='red' style='height:45px;'>"+num+" cannot be greater than "+den+"</font>");
+            
+            }
+            else {
+                
+              $("#"+num).css({"border-color": "#337ab7"});
+             $("#"+den).css({"border-color": "#337ab7"});  
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             
+            }
+            
+         
+          
+            
+             //alert(conc);
+           }
+           
+           
+          
+           
+           
+       }  
+       
+     
+    function checktotaltests()
+    {        
+     
+     var retvl=true;
+     
+            var opdts=$("#opd_tested").val();
+            var pmtctts=$("#pmtct_tested").val();   
+//            var vctts=$("#vct_tested").val();   
+            var pnsts=$("#index_tested").val();  
+            var totalts=$("#Total_Tested").val();  
+             
+//            if(opdts===""){}
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+//          else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+             $("#Total_Tested").focus();
+             $("#Total_Tested").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Tested cannot be less than Tested for Index, OPD and PMTCT Modalities</font>");
+            alert("Total Tested cannot be less than sum of Clients tested under PMTCT , OPD , PNS Tested");
+            retvl=false;
+            }
+            else {
+                
+              $("#Total_Tested").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          retvl=true;
+             
+            }
+               //compare with sum of all tests
+               return retvl;
+           
+    }
+    
+     function checktotalpositives()
+    {        
+     var retvl=true;
+            var opdts=$("#opd_positive").val();
+            var pmtctts=$("#pmtct_positive").val();   
+           // var vctts=$("#vct_positive").val();   
+            var pnsts=$("#index_positive").val();  
+            var totalts=$("#Total_Positive").val();  
+             
+            
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+         // else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+                   console.log("totalts "+totalts+" vs opdts ("+opdts+") + pmtctts ("+pmtctts+") + pnsts ("+pnsts+")");
+                   
+             $("#Total_Positive").focus();
+             $("#Total_Positive").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS </font>");
+            alert("Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS ");
+            
+            retvl=false;
+            
+            }
+            else {
+                
+              $("#Total_Positive").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             retvl=true;
+            }
+               //compare with sum of all tests
+           return retvl;
+    }
+     
+  
+    
+// $(function() { 
+    $("#tumawp").click(function() { 
+    
+        html2canvas(document.querySelector('body')).then(canvas => {
+    document.body.appendChild(canvas);
+});
+        
+//        getScreenshotOfElement($("#whatsappform"), 0, 0, 100, 100, function(data) {
+//    // in the data variable there is the base64 image
+//    // exmaple for displaying the image in an <img>
+//     saveAs(data, "Facility_Workload.png");
+//    $("#pisa").attr("src", "data:image/png;base64,"+data);
+//});
+        
+        
+//        html2canvas($("#whatsappform"), {
+//            onrendered: function(canvas) {
+//                var theCanvas = canvas;
+//                canvas.toBlob(function(blob) {
+//                    saveAs(blob, "Facility_Workload.png"); 
+//                });
+//            }
+//        });
+    });
+//});
+    
+  
+function getScreenshotOfElement(element, posX, posY, width, height, callback) {
+    html2canvas(element, {
+        onrendered: function (canvas) {
+            var context = canvas.getContext('2d');
+            var imageData = context.getImageData(posX, posY, width, height).data;
+            var outputCanvas = document.createElement('canvas');
+            var outputContext = outputCanvas.getContext('2d');
+            outputCanvas.width = width;
+            outputCanvas.height = height;
+
+            var idata = outputContext.createImageData(width, height);
+            idata.data.set(imageData);
+            outputContext.putImageData(idata, 0, 0);
+            callback(outputCanvas.toDataURL().replace("data:image/png;base64,", ""));
+        },
+        width: width,
+        height: height,
+        useCORS: true,
+        taintTest: false,
+        allowTaint: false
+    });
+}
+
+function rateperformance(perf){
+
+
+}
+
+
+</script>
+ <!--
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
+
+pmtct_tested
+pmtct_positive
+pmtct_Yield
+
+
+
+index_tested
+index_positive
+index_yield
+
+self_test
+Referred_Prep
+gbv
+Total_Tested
+Total_Positive
+Total_Yield
+Total_Linked
+Total_Linkage
+ 
+ vct_tested
+vct_positive
+vct_Yield
+ 
+-->
 	</body>
 </html>

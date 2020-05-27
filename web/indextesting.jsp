@@ -986,7 +986,7 @@ ul li a.toggle:hover {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                    url:'sites1.json',                            
+                    url:'sites2.json',                            
                     type:'get',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1918,13 +1918,12 @@ alert("No loaded list of counsellors");
 
 
 function savePns(ct,ep,epid,elementid,elem){
-    //setrowid();
+    setrowid(ct,epid,elementid);
     
     //receive all the fields from the weekly data from
 id=$("#rowid").val();
 facility=$("#facilityname").val();
 counsellor=$("#counsellor").val();
-
 date_tested=$("#enddate").val();
 
 
@@ -1932,45 +1931,49 @@ date_tested=$("#enddate").val();
    entrypoint=ep; 
    indicatorid=elementid; 
    indicator=elem; 
-  if(ct==='Biological Children')
+  if(ct==='Biological_Children')
    {
-   pns_1f=null; 
-   pns_1m=null; 
-   pns_4f=null; 
-   pns_4m=null; 
-   pns_9f=null; 
-   pns_9m=null; 
+       //Biological_Children_New_Pos_1_pns_1f
+   pns_1f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_1m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_4f=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_4m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_9f=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_9m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
    
    }
-  else {
-            
-            
-            
+  else {   
+   pns_1f=''; 
+   pns_1m='';
+   pns_4f='';
+   pns_4m='';
+   pns_9f='';
+   pns_9m='';    
         }
    
-   pns_14f=null; 
-   pns_14m=null;
+   pns_14f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_14m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
    
    if(ct==='Sexual Contacts')
    {
-   pns_ukf=null; 
-   pns_ukm=null; 
-   pns_19f=null; 
-   pns_19m=null; 
-   pns_24f=null; 
-   pns_24m=null; 
-   pns_29f=null; 
-   pns_29m=null; 
-   pns_34f=null; 
-   pns_34m=null; 
-   pns_39f=null; 
-   pns_39m=null; 
-   pns_44f=null; 
-   pns_44m=null; 
-   pns_49f=null; 
-   pns_49m=null; 
-   pns_50f=null; 
-   pns_50m=null;
+   pns_ukf=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_ukm=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_19f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_19m=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_24f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_24m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_29f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_29m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_34f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_34m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_39f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_39m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_44f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_44m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_49f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_49m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_50f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_50m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
    }
    else {
        
@@ -4168,17 +4171,17 @@ function isshowdeadother()
     
 }
 
-function setrowid()
+function setrowid(ct,ep,elementid)
 {
     var id="";
     
     var f=$("#facilityname").val();
     var mfl=f.split("_")[0];
-    var sn=$("#serialno").val();
-    var rn=$("#register_no").val();
-    var md=$("#modality").val();
+    var dt=$("#enddate").val();
+    var cns=$("#counsellor").val();
+   
     
-    var id=mfl+"_"+sn+"_"+rn+"_"+md;
+    var id=mfl+"_"+cns+"_"+dt+"_"+ct+"_"+ep+"_"+elementid+"_"+cns;
     
     $("#rowid").val(id);
     

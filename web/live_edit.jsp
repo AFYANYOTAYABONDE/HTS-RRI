@@ -448,6 +448,8 @@ input:focus {
                                  <option value='Declined'>Declined</option>
                                  <option value='Died'>Died</option>
                                  <option value='TCA'>TCA</option>
+                                 <option value='On Treatment preparation'>On Treatment preparation</option>
+                                 <option value='Started TB Treatment'>Started TB Treatment</option>
                                  </select>
                                  </div>
                                  </div>
@@ -1016,7 +1018,7 @@ input:focus {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                    url:'sites1.json',                            
+                    url:'sites2.json',                            
                     type:'get',  
                     dataType: 'json',  
                     success: function(data) {

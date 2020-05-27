@@ -114,6 +114,10 @@
         <servlet-name>getPnsIndicators</servlet-name>
         <servlet-class>getters.getPnsIndicators</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importworkload</servlet-name>
+        <servlet-class>workload.importworkload</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -225,6 +229,10 @@
     <servlet-mapping>
         <servlet-name>getPnsIndicators</servlet-name>
         <url-pattern>/getPnsIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importworkload</servlet-name>
+        <url-pattern>/importworkload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

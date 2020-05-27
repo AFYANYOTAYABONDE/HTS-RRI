@@ -64,7 +64,8 @@ public class getcancellors extends HttpServlet {
 "FROM aphiaplus_moi.counsellor where active='1' order by RRI_Name";
             
             conn.rs=conn.st.executeQuery(getcns);
-            while (conn.rs.next()){
+            while (conn.rs.next())
+            {
                  JSONObject jobj= new JSONObject();
             jobj.put("code",conn.rs.getString("code"));
             jobj.put("gender",conn.rs.getString("gender"));
