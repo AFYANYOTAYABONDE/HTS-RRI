@@ -280,7 +280,7 @@ conn.pst1.setString(26,user);
                         
                         if(conn.pst1.executeUpdate()==1){
                              if(!id.contains("annual")){
-                            txtresponse="<font color='green'> Data added succesfully for date "+date_tested+"  </font> <a class='screenshotwp' onclick='loadwhatsappdata(\""+id+"\",\""+facility+"\")'  data-toggle='modal'  href='#whatsappform' class='btn btn-default' >Share Results to <img src='images/wp.png' style='height:22px;'> </a></button>";
+                            txtresponse="<font color='green'> Data added succesfully for date "+date_tested+"  </font> <a id='screenshotwp' onclick='loadwhatsappdata(\""+id+"\",\""+facility+"\")'  data-toggle='modal'  href='#whatsappform' class='btn btn-default' >Share Results to <img src='images/wp.png' style='height:22px;'> </a></button>";
                            
                             //check if counsellor name is select counsellor
                             
