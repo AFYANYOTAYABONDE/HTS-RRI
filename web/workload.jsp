@@ -13,7 +13,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Facility WorkLoad</title>
+		<title>DWL</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -968,19 +968,19 @@ Total_Linkage
 
 
 
-<div class="modal" id="whatsappform">
+<div class="modal" id="whatsappform" style='height:99%;'>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+<!--            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
-                <!--<label id='tumawp' class='btn btn-info'>Share <i class='glyphicon glyphicon-share'></i></label>-->
-            </div>
+            <label id='tumawp' class='btn btn-info'>Share <i class='glyphicon glyphicon-share'></i></label>
+            </div>-->
             <div class="modal-body">
               
-              <form id="whatsapp">
+            <form id="whatsapp">
                
-                  <table border='0px' class='table table-condensed' style='font-size:11px;'>
-<tr style='color:white;background-color:gray;'><th colspan='4' style='font-size:15px;text-align:center;'> <b><label id='lbl_facility' ></label></b> Workload summary for date <label id='lbl_date_tested'></label></th></tr>
+                  <table border='0px' class='table table-condensed' style='font-size:9px;'>
+<tr style='color:white;background-color:gray;'><th colspan='4' style='font-size:11px;text-align:center;'> <b><label id='lbl_facility' ></label></b> : <label id='lbl_date_tested'></label></th></tr>
 
 <tr><td style='border:1px solid gray;' rowspan='7'><b>OPD</b></td><td style='text-align:left;'><b>Attendance:</b> </td><td><label id='lbl_opd_t'></label></td><td></td></tr>
 <tr><td style='text-align:left;'><b>No. screened:</b> </td><td><label id='lbl_screened'></label></td><td></td></tr>
@@ -1007,7 +1007,7 @@ Total_Linkage
 
 
   
-  <tr><td><img alt='' id='pisa' /></td></tr>
+  <tr><td><div alt='' id='pisa' ></div></td></tr>
 
 
 </table>
@@ -1051,6 +1051,7 @@ Total_Linkage
                 <script type="text/javascript" src="js/datatables.min.js"></script>
                 <script type="text/javascript" src="js/html2canvas.js"></script>
                 <script type="text/javascript" src="js/FileSaver.js"></script>
+                <!--<script type="text/javascript" src="js/screenshot.js"></script>-->
                 
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
@@ -4331,10 +4332,14 @@ if($("#toolid").is(":visible")){
 // $(function() { 
     $("#tumawp").click(function() { 
     
-        html2canvas(document.querySelector('body')).then(canvas => {
-    document.body.appendChild(canvas);
+    html2canvas(document.querySelector('#whatsappform')).then(canvas => {
+    $('#visa').html(canvas);
 });
-        
+
+
+
+
+    
 //        getScreenshotOfElement($("#whatsappform"), 0, 0, 100, 100, function(data) {
 //    // in the data variable there is the base64 image
 //    // exmaple for displaying the image in an <img>
@@ -4353,10 +4358,10 @@ if($("#toolid").is(":visible")){
 //        });
     });
 //});
-    
+   
   
-function getScreenshotOfElement(element, posX, posY, width, height, callback) {
-    html2canvas(element, {
+function getScreenshotOfElement(elem, posX, posY, width, height, callback) {
+    html2canvas(elem, {
         onrendered: function (canvas) {
             var context = canvas.getContext('2d');
             var imageData = context.getImageData(posX, posY, width, height).data;
@@ -4378,10 +4383,8 @@ function getScreenshotOfElement(element, posX, posY, width, height, callback) {
     });
 }
 
-function rateperformance(perf){
 
 
-}
 
 
 </script>
