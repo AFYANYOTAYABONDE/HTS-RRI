@@ -8,9 +8,10 @@
 
 
 <!DOCTYPE html>
-<html  manifest="htsrriv1.appcache">
+<!--<html  manifest="htsrriv1.appcache">-->
 <!--<html  >-->
 	<head>
+              <meta http-equiv="origin-trial" content="Agd7fSYxSHE+4XwOTgC99LrjXP6QGFdDlXTkV9oERCmy/PEBD9mT1nCfoZGZYe0zQGCqJW/TG+avQgB9nbuyWg0AAABteyJvcmlnaW4iOiJodHRwczovL2hzZHNhY2x1c3RlcjIuZmhpMzYwLm9yZzo0NDMiLCJmZWF0dXJlIjoiQXBwQ2FjaGUiLCJleHBpcnkiOjE2MTc3NTM1OTksImlzU3ViZG9tYWluIjp0cnVlfQ==">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<title>HTS RRI</title>
@@ -118,13 +119,13 @@ input:focus {
 
             
             
-            <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5>
+           
 
      
           <div class="row">
                 <!-- center left-->
                 
-          <div class="col-md-12">
+          <div class="col-md-12" style="padding-left:3px;padding-right:3px;">
                     
 
                   
@@ -172,7 +173,7 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Enter Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
                             <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
@@ -181,13 +182,13 @@ input:focus {
                             <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="dataentry">
+                            <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
                                 
                                 
                               <!--Data entry code-->
                     <div class="panel panel-default">
                        
-                        <div class="panel-body" style="width:100%;">
+                        <div class="panel-body" style="width:100%;padding:2px;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
@@ -297,7 +298,7 @@ input:focus {
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);'  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
+                                        <input type="text" onkeypress='return numbers(event);validateInp(this);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
                                   
                                     </div>
                                 </div>
@@ -362,7 +363,7 @@ input:focus {
                                  <tr><td class="col-xs-12"> -->
                                              
                                              <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTC Test Results</label>
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Test Results</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
                                             <option value="">Select Results</option>
@@ -465,6 +466,8 @@ input:focus {
                                  <option value='Declined'>Declined</option>
                                  <option value='Died'>Died</option>
                                  <option value='TCA'>TCA</option>
+                                 <option value='On Treatment preparation'>On Treatment preparation</option>
+                                 <option value='Started TB Treatment'>Started TB Treatment</option>
                                  </select>
                                  </div>
                                  </div>
@@ -670,14 +673,14 @@ input:focus {
     </div>
 
 <!-- /Main -->
-
+ <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5>
 <footer class="text-center"> &copy; HSDSA USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">Ã</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true"x</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -716,7 +719,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
                 <h4 class="modal-title">Data Re-Export</h4>
             </div>
             <div class="modal-body">
@@ -747,7 +750,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true"x</button>
                 <h4 class="modal-title">Submit zero report</h4>
             </div>
             <div class="modal-body">
@@ -796,7 +799,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
+                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 class="modal-title">Counsellor Activation</h4>
             </div>
             <div class="modal-body">
@@ -869,7 +872,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
             </div>
             <div class="modal-body">
@@ -965,7 +968,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
@@ -1074,7 +1077,7 @@ input:focus {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                    url:'sites1.json',                            
+                    url:'sites2.json',                            
                     type:'get',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1355,7 +1358,7 @@ function getcounsellorslist(){
    
               $.ajax({
                     url:'getcancellors',                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -1408,7 +1411,7 @@ $('#exportbutton').hide();
    
               $.ajax({
              url:'validateAccess',                            
-            type:'post',  
+            type:'get',  
             dataType: 'html',  
            
     success: function(data) {
@@ -1724,7 +1727,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>Ã</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'x</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -2739,7 +2742,7 @@ var recordsunexported=$("#unexported").val();
             
     $.ajax({
                          url:'receiveData',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -2921,7 +2924,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
                          url:'receiveData',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -3810,6 +3813,24 @@ function validatemodalities(){
     
 }
 
+
+function validateAge(){
+    
+     var miakangapi=$("#age").val();
+     
+     if(miakangapi.startsWith("0")){
+     $("#age").val("");    
+         
+                                   }
+     else if(isNaN(parseInt(miakangapi))){
+     $("#age").val("");    
+      // alert("Enter whole numbers only");   
+     }
+    //isN
+    
+    
+                      }
+
 //validatemodalities();
 
 //$("#counsellorfacil").show();
@@ -4328,7 +4349,7 @@ function savezeroreport()
         else{
     $.ajax({
         url:'submitZero',
-        type:'post',
+        type:'get',
         data:{ 
             date:datee,
             facil:facilitii },
@@ -4370,15 +4391,30 @@ function savezeroreport()
 }
 
 
+function validateInp(elem) {
+                var validChars = /[0-9]/;
+                var strIn = elem.value;
+                var strOut = '';
+                for(var i=0; i < strIn.length; i++) {
+                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
+                }
+                elem.value = strOut;
+            }
+
 </script>
 
 <script>
-//if('serviceWorker' in navigator) 
-//{
-//  navigator.serviceWorker
-//           .register('sw1.js')
-//           .then(function() { console.log("Service Worker Registered"); });
-//}
+           if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw1.js').then(function(registration) {
+      // Registration was successful
+      console.log('HTS_ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>
 
 	</body>

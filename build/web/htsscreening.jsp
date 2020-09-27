@@ -13,7 +13,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HTS RRI Live</title>
+		<title>HTS SCREENING</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -41,6 +41,7 @@ input:focus {
   table-layout: fixed;
 }
 
+
 @media screen and (min-width: 600px) and (max-width: 1199px)  {
   #weeklydataform {
     margin-left:20%;
@@ -55,8 +56,9 @@ input:focus {
   }
 }
 
+
 </style>
-<% if(session.getAttribute("user")!=null){} else {response.sendRedirect("login.jsp");} %>
+
                 
 	</head>
 	<body>
@@ -84,9 +86,11 @@ input:focus {
                 </li>
           
                 
-                 <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>-->
-                  <!--<li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>-->
-                 <li ><a  title="Add Widget"   href="logout.jsp"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>
+                  <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
+                  <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
+                 <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>
+                 <li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
@@ -114,37 +118,50 @@ input:focus {
 
             
             
-          <h5 id="feedbacklabel" style="text-align: center;color:blue;font-family: sans-serif;">HTS RRI Live</h5>
+            
 
-      
-      
-  
-
-            <div class="row">
+     
+          <div class="row">
                 <!-- center left-->
-                <div class="col-md-12">
+                
+          <div class="col-md-12" style="padding-left:3px;padding-right:3px;">
                     
 
                   
 
-
-                    
-                    
-                    
-                    
-                    
-  <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-6"> <font color="red"><b>*</b></font>  Facility</label>
-                                    <div class="controls col-xs-6" style="padding-bottom: 15px;">
-                                    <select  onchange="appendtabledata();" style='width:100%;'   name="searchfacilityname" id="searchfacilityname" class="form-control" >
-                                    <option>Select Facility Name</option>
-                                    </select>
-                                    </div>
-                                </div>                    
-                    
-                    
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" id='refreshpage' class="btn btn-primary col-sm-2">
+                            <i id="testingsign" class="glyphicon glyphicon-ok-sign"></i>
+                             Testing Guide
+                        </a>
+                       
+                         
+                            
+                            <a  class="btn btn-primary col-sm-2" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
+                                <i class="glyphicon glyphicon-cloud-upload"></i>
+                                <br/>Export Data 
+                                <span id="unexportedno" style="color:yellow;">(0 records )</span>
+                            </a>
+<!--                                                 <a href="live_edit.jsp" class="btn btn-primary col-sm-2">
+                            <i class="glyphicon glyphicon-link"></i>
+                            <br>HTS Live
+                        </a>-->
+                       
+<!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
+                            <i class="glyphicon glyphicon-link"></i>
+                            <br>Index Testing <br/>/ PNS
+                        </a>-->
+                        
+                        <!--<a href="#" class="btn btn-primary col-sm-3">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            <br> Settings
+                        </a>-->
                       
-                     
+                        
+<!--                        <a class="btn btn-primary col-sm-2" title="Excel report" href="https://hsdsacluster2.fhi360.org:8443/Reports/rri.jsp">
+                            <i class="glyphicon glyphicon-stats"></i>
+                            <br> Excel Report
+                        </a> -->
                     </div>
 
                     <hr>
@@ -153,30 +170,31 @@ input:focus {
                    
 
                     <!--tabs-->
-                    <div class="panel">
+                    <div class="panel" style="height:100vh;overflow-y:scroll;" >
+                        <div style="overflow-y: scroll;">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
-                            <li class=' active col-xs-4'><a href="#searchdata" id="searchdatabutton" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
+                            <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                            
-                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class=""></i>Possible Duplicates</a></li>
+                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane well col-md-12" id="dataentry">
+                            <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
                                 
                                 
                               <!--Data entry code-->
                     <div class="panel panel-default">
                        
-                        <div class="panel-body" style="width:100%;">
+                        <div class="panel-body" style="width:100%;padding:2px;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
                                 <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
-                                <tr><th class="col-xs-12" style="text-align:center"><b>Enter HTS Data</b></th></tr>
+                                <tr><th class="col-xs-12" style="text-align:center" id="headerid"><b>Enter HTS Data</b></th></tr>
                                 </table>
 <!--                                <tr><td class="col-xs-12">
                                 <div class="control-group">
@@ -209,7 +227,7 @@ input:focus {
                                 
                               
                                 
-          <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+                                  <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
                                     <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select  onchange="checkids();validatemodalities();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
@@ -230,40 +248,15 @@ input:focus {
                                 <!--<tr><td class="col-xs-12">--> 
 
                                         <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
+                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Screener</label>
                                             <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                                 <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
-                                                    <option value=''>Select Counsellor</option>
+                                                    <option value=''>Select Screener</option>
 
                                                 </select>
                                             </div>
                                         </div>
 
-
-                                    <!--</td></tr>-->
-                                    
-                                
-                                
-                                
-                                
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                -->
-                                
-                                 
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
@@ -280,7 +273,7 @@ input:focus {
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);'  onblur="" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
+                                        <input type="text" onkeypress='return numbers(event);'  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
                                   
                                     </div>
                                 </div>
@@ -294,7 +287,7 @@ input:focus {
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Sex</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select type="text"   onblur="" name="gender" id="gender"  autocomplete="off"  class="form-control" >
+                                        <select type="text"   onblur="validatemodalitiesbygender();" name="gender" id="gender"  autocomplete="off"  class="form-control" >
                                             <option value=''>select sex</option>
                                             <option value='Female'>Female</option>
                                             <option value='Male'>Male</option>
@@ -313,7 +306,7 @@ input:focus {
                                 
                                 <tr><td class="col-xs-12"> -->
                                              
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+<!--                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select  onchange=""   name="modality" id="modality" class="form-control" >
@@ -333,11 +326,11 @@ input:focus {
                                             <option value='ld'>Initial test at Labour & Delivery</option>
                                             <option value='pnc'>Initial test at PNC < 6 wks</option>
                                             
-                                            <!--<option value="Others">Others</option>-->
+                                            <option value="Others">Others</option>
                                            
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
                                              
                                              
 <!--                                             </td></tr>
@@ -345,17 +338,55 @@ input:focus {
                                  <tr><td class="col-xs-12"> -->
                                              
                                              <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTC Test Results</label>
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>Have you ever Tested Positive For HIV</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
+                                        <select     name="testedpositive" id="testedpositive" class="form-control" >
                                             <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
+                                            <option  value='Yes'>Yes</option>
+                                            <option value='No'>No</option>
                                           </select>
                                     </div>
                                 </div>
                                              
-                                             
+                                                     <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>When was the last time you tested for HIV?</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select     name="lasttest" id="lasttest" class="form-control" >
+                                            <option value="">Select Results</option>
+                                            <option data-testaction='Counsel'  value='Less 3 months'>Less than 3 months ago</option>
+                                            <option data-testaction='continue' value='Above 3 months'>More than 3 months ago</option>
+                                            <option data-testaction='continue' value='Never tested'>Never Tested</option>
+                                          </select>
+                                    </div>
+                                </div>  
+
+
+
+    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>Is any of below status true?</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select multiple    name="riskybehaviour" id="riskybehaviour" class="form-control" >
+                                            
+<option data-testaction='Counsel'  value='Multiple sex partners'>Client with Multiple sex partners</option>
+<option data-testaction='continue' value='Unprotected sex ukp partner'>Client who has had Unprotected sex with a partner with unknown status</option>
+<option data-testaction='continue' value='Unprotected sex with a known positive'>Client who has had Unprotected sex with a known positive</option>
+<option data-testaction='continue' value='drug user sharing needles (IOU)'>drug user sharing needles (IOU)</option>
+<option data-testaction='continue' value='FSW'>FSW with frequent exposure to unprotected sex</option>
+<option data-testaction='continue' value='MSM'>MSM with multiple partners or partner with unknown status</option>
+<option data-testaction='continue' value='Truck drivers'>Truck drivers - with frequent exposure to unprotected sex</option>
+<option data-testaction='continue' value='Fisher folk'>Fisher folk with multiple sex partners or exposure to unprotected sex with partners of unknown status</option>
+                                          </select>
+                                    </div>
+                                </div>  
+
+<!--Individuals with Risk behavior, e.g.:
+
+g)
+h) Fisher folk with multiple sex partners or exposure to unprotected sex with
+partners of unknown status-->
+
+
+
 <!--                                             </td></tr>
                                  
                                  
@@ -402,7 +433,7 @@ input:focus {
                                 <div class="control-group  linkage linked_site col-xs-12" style="display:none;border: 0.5px dotted #2e6da4;">
                                 <label class="col-xs-12"><font color="red"><b>*</b></font>Date Started on ART</label>
                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input  type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                <input type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
                                 </div>
                                 </div>
                                              
@@ -615,16 +646,16 @@ input:focus {
                                <!--- Data export---->
                             </div>
                             
-                            <div class="tab-pane  active well" id="searchdata">
+                            <div class="tab-pane well" id="searchdata">
                                  <button id="btnDeleteRow" style='display:none;' value="cancel">Delete selected Row</button>
-                                <div style="text-align: center;" id="searchtablediv">
-                                    <img style="" src="images/ajax_loader.gif" />
+                                <div id="searchtablediv">
+                                  
                                 </div>    
                                <!--- Data export---->
                             </div>
                             
                             <div class="tab-pane well" id="viewcounsellors">
-                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected record</button>
+                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected counselor</button>
                                 <div id="searchtabledivcns">
                                   
                                 </div>    
@@ -633,6 +664,7 @@ input:focus {
                             
                             
                             </div>
+                        </div>
                         </div>
 
                     </div>
@@ -656,13 +688,13 @@ input:focus {
 
 <!-- /Main -->
 
-<footer class="text-center"> &copy; HSDSA USAID </footer>
+<footer class="text-center"> &copy; HSDSA USAID <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5></footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -701,7 +733,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Data Re-Export</h4>
             </div>
             <div class="modal-body">
@@ -728,6 +760,47 @@ input:focus {
 
 
 
+<div class="modal" id="zeroreportmodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">Ã</button>
+                <h4 class="modal-title">Submit zero report</h4>
+            </div>
+            <div class="modal-body">
+              <form id="zeroreportform">
+                  <div class="control-group col-xs-12" >
+               <label class="col-xs-12"> <font color="red"><b>*</b></font>  Date:</label>
+               <div class="controls col-xs-12" style="padding-bottom: 15px;">
+              <input type="text" onchange="" onblur="" name="zeroreportdate" id="zeroreportdate" data-date-end-date="0d" autocomplete="off" class="form-control dates" readonly="" placeholder="datepicker" style="border-color: rgb(51, 122, 183);">
+                </div>
+                </div>
+               <div class="control-group col-xs-12" >
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select  onchange="" style='width:100%;'   name="facilityname_zerorpt" id="facilityname_zerorpt" class="form-control" >
+                                        <option>Select Facility Name</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+              
+              <button class=" btn-sm btn-success" style="text-align: center;" id="savezeroreportbutton" onclick="savezeroreport();">Submit</button>
+              
+              
+              <button class=" btn-lg btn-info" style="display:none;text-align: center;"   > Exporting Data..</button>
+              <p id="savezeromsg"> </p>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
 
 
 
@@ -740,7 +813,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Counsellor Activation</h4>
             </div>
             <div class="modal-body">
@@ -813,7 +886,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
             </div>
             <div class="modal-body">
@@ -909,7 +982,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã</button>
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
@@ -969,7 +1042,6 @@ input:focus {
 		<script src="js/bootstrap.js"></script>
 		<script src="js/scripts.js"></script>
                 <script src="js/bootstrap-datepicker.min.js"></script>
-                <script src="js/table-edits.min.js"></script>
                 
 <!--                <script type="text/javascript" src="select/selectstyle.js"></script>  
                 <link href="select/selectstyle.css" rel="stylesheet">-->
@@ -977,7 +1049,7 @@ input:focus {
           
                 
                 <script src="js/select2.js"></script>
-                <script src="js/pouchdb-4.0.1.js"></script>
+                <script src="js/pouchdb-7.1.1.js"></script>
                  
                 <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
                 <script type="text/javascript" src="js/datatables.min.js"></script>
@@ -1014,7 +1086,8 @@ input:focus {
 //load data from the cloud server 
    function getFacilitiesJson(){
        
- 
+      
+       
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
@@ -1034,15 +1107,15 @@ input:focus {
                      }
                      //alert(facilities);
                       $("#facilityname").html(facilities);
-                      $("#searchfacilityname").html(facilities);
                       $("#counsellorfacil").html(facilities);
+                      $("#facilityname_zerorpt").html(facilities);
                       
                       
                    $(document).ready(function() {
             //$('#lyricstable').DataTable();
               $('#facilityname').select2();
-              $('#searchfacilityname').select2();
               $('#counsellorfacil').select2(); 
+              $('#facilityname_zerorpt').select2(); 
               
             //   $('#facilityname').chosen();
             //  $('#facilityname').trigger("chosen:updated");
@@ -1104,7 +1177,7 @@ function adduser(code,cname,cfacil,fullname) {
    {
       
     adduser(code,counsname,counsfacil,fullname); 
-   //showuser();   
+   showuser();   
        
    }
    
@@ -1115,7 +1188,7 @@ function adduser(code,cname,cfacil,fullname) {
 userdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
 if(da.total_rows===0){
     //activatecounsellors();
-$("#usernamelabel").html("Load a Counsellor");
+$("#usernamelabel").html("Activate a Counsellor");
 $("#usernamelabel").click();
 $("#usernamelabel").click();
 
@@ -1134,8 +1207,10 @@ $("#usernamelabel").click();
                 if(da.total_rows===1){
           counsellors="<option value='"+dat.cname+"'>"+dat.cname+"</option>";
            $("#facilityname").val(dat.cfacil);
+           $("#facilityname_zerorpt").val(dat.cfacil);
         
             $('#facilityname').select2();
+            $('#facilityname_zerorpt').select2();
            
            // validatemodalities();
                                      
@@ -1160,11 +1235,11 @@ $("#usernamelabel").click();
      }//end of row
 
         }
-});
+}).catch(function (err){console.log("makosa ni :"+err.reason);   if(err.reason==='QuotaExceededError'){alert("Your device has run out of space.Please create space by deleting unwanted videos,photos or large documents");}  });
 	} //end of function
         
         
-     //showuser();
+     showuser();
      
    function loaduser()
    {
@@ -1297,7 +1372,7 @@ function getcounsellorslist(){
    
               $.ajax({
                     url:'getcancellors',                            
-                    type:'get',  
+                    type:'post',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -1350,14 +1425,16 @@ $('#exportbutton').hide();
    
               $.ajax({
              url:'validateAccess',                            
-            type:'get',  
+            type:'post',  
             dataType: 'html',  
            
     success: function(data) {
                              //alert('offline');
 	$('#exportbutton').show();
+	$('#savezeroreportbutton').show();
        // alert("failed");
         $("#exportresponse").html("");
+        $("#savezeromsg").html("");
    
     }
                                            
@@ -1366,8 +1443,10 @@ $('#exportbutton').hide();
     {
         //alert('offline');
 	$('#exportbutton').hide();
+	$('#savezeroreportbutton').hide();
        // alert("failed");
         $("#exportresponse").html("<b><font color='orange'>Connect to internet to export data </b><br/>");
+        $("#savezeromsg").html("<b><font color='orange'>Connect to internet to submit zero report</b><br/>");
     }
                         
                          });
@@ -1420,11 +1499,22 @@ syncstatus:syncstatus,
 completed: false
   };
   dailydatadb.put(dailydata, function callback(err, result) {
+      
+      console.log("Result:  "+result+" error: "+err);
+      
     if (!err) 
     {
       console.log('daily data added succesfully');
       
     }
+    else {
+        
+       $("#headerid").html("<font color='red'><b>Record Not Saved. You have already entered another record with similar serial number, register no. and modality</b></font>");
+         alert("Duplicate Error!.You have already entered another record with similar serial number, register no. and modality");
+        
+            console.log('Saving Error: Another Record exists with a similar serial number, register no. and modality ');   
+        
+         }
   });
 }	
 
@@ -1651,7 +1741,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>×</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>Ã</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -1729,12 +1819,10 @@ alert("No loaded list of counsellors");
      
            
            $("#counsellorreg").html(counsellors);
-           $("#counsellor").html(counsellors);
-           $('#counsellorreg').select2(); 
-           $('#counsellor').select2(); 
-           $('#counsellorreg').css('width','100%'); 
+          $('#counsellorreg').select2(); 
+          $('#counsellorreg').css('width','100%'); 
 
-           $(".select2-container").css('width','100%');
+        
             }
             else {
              //alert("");
@@ -1782,7 +1870,7 @@ other_reason_for_declining=$("#other_reason_for_declining").val();
 //timestamp=$("#timestamp").val();
 datestartedart=$("#artstartdate").val();
 
-    
+    console.log("Date started ART__"+datestartedart);
     //var user=$("#username").val(); 
     var user="hsdsa"; 
       var currentdate = new Date();
@@ -1853,7 +1941,7 @@ datestartedart=$("#artstartdate").val();
      alert('Select Test Date');
    $("#enddate").focus();    
      } 
-    
+     
 
 else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
 else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
@@ -1902,71 +1990,25 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
             //we are now saving both weekly totals and annual cumulatives on the db
             //add a variable to distinguish the two
             //use _wk
-      
-             var ymp=date_tested.replace("-","").substring(0,6);
-     
-             id+=ymp;
             
-            
-  //insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
+  insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
   console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@"+datestartedart) ;
 
 
 
-  $.ajax({
-url:'receive_live_data',                            
-type:'get', 
-data:{
-id:id,
-facility:facilityname,
-counselorname:counsellor,
-register_no:register_no,
-serialno:serialno,
-date_tested:date_tested,
-age:age,
-gender:gender,
-modality:modality,
-testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-user:user,
-timestamp:timestamp,newid:id
-},
-dataType:'html',  
-                    success: function(data) {
-                        
-                  $("#feedbacklabel").html(data); 
-                  
-//                 $('#searchdatabutton').click();      
-
  //selectsearchdata();
 $("#message").show();
-$("#actiondone").html(data);
-cleardailyfields();
-
-        }});
-
-
-
-
+$("#actiondone").html("Data Saved Successfully");
 //call the function that loads entered data
 //$("#message").hide().delay(800).fade(400);
 
 
-console.log('daily data entered');
+//console.log('daily data entered');
 //open reports tab
  //$('#reportsbutton').click();
  //$('#inpatient_uptake_cmts').focus();
  window.scrollTo(0,0);
-//setTimeout(delayedrefresh,1500);
+setTimeout(delayedrefresh,1500);
  // delayedrefresh
  //delayedrefresh();
        }
@@ -2050,7 +2092,63 @@ var dbdata1="";
 
 //===================================================VIEW WEEKLY DATA============================================================
 //a function to select a few search data that should appear in a data table
+function selectsearchdata()
+{
+    
+    
+    
+    //rread from weekly data db
+    
 
+  
+    
+  dailydatadb.allDocs({include_docs: true, ascending: true}).then( function(doc) { 
+ 
+     
+	   //console.log(doc);
+	   for(b=0;b<doc.total_rows;b++)
+           {
+             
+               var dat={};
+               dat=doc.rows[b];
+               
+                 var myid=dat.doc._id;
+               if(myid.indexOf("annual")===-1){
+	   
+	       
+	      //console.log(dat.doc.facility);
+              //how to reference each column 
+              //alert(dat.doc.startdate);
+              //dat.doc._id
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>*";
+              if(dat.doc.syncstatus==="Yes"){
+                 statusicon=""; 
+                  
+               }
+	     
+		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
+		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> Modality: <b>"+dat.doc.modality+"</b> serial #: <b>"+dat.doc.serialno+" </b> Register #: <b>"+dat.doc.register_no+" Test result:</b> "+dat.doc.testresult+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+          	    
+                  }
+            } //end of for loop
+                    
+	appendtabledata(dbdata);
+			
+  }).catch(function (err){console.log(err)});
+    
+
+    
+    
+    
+    
+    
+    
+    //read data from the db
+    
+  	  
+    
+    
+}
 
 
 
@@ -2096,7 +2194,7 @@ function selectconsdata()
                   }
             } //end of for loop
                     
-	//appendtablecounsellordata(dbdata1);
+	appendtablecounsellordata(dbdata1);
 			
   }).catch(function (err){console.log(err)});
     
@@ -2122,55 +2220,26 @@ selectconsdata();
 
 //--------------------------------------------------------------------------------------------------------------------------------
 //
-function appendtableduplicatedata( facil ) 
+function appendtablecounsellordata( dbdata1 ) 
 {
     
-     var tbdata2="";
-    
-     tbdata2="<table id='searchtablecns' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Date Entered</th></tr></thead><tbody>";
-    
-    
-//   #searchtablecns
-     $("#searchtabledivcns").html("<img style='' src='images/ajax_loader.gif' />");
-     
-     
-      $.ajax({
-                    url:'getDuplicates?mfl='+facil,                            
-                    type:'get',  
-                    dataType: 'json',  
-                    success: function(data) {
-                        
-                          if(data.length===0){
-                       
-                    $("#searchtabledivcns").html("<h4 class='well' style='color:green;text-align:center;'>Selected Facility has no Possible duplicates. Please select another facility</h4>");    
-                       
-                   }
-                   
-                   
-                 //alert(data[0].facility_name);    
-                     for(var i=0;i<data.length;i++)
-                     {
-                         tbdata2+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].lastsynced+"</td><td>"+data[i].timestamp+"</td></tr>";
-     
-                 
-                       // console.log(data[i].facility_name) 
-                        
-//                        addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        updatecounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        
-                      if(i===data.length-1){
+     $("#searchtabledivcns").html("<table id='searchtablecns' class='table table-striped table-bordered'><thead><tr><th style='width:50%;'>Facility</th><th style='width:50%;'>Counsellor Name</th></tr></thead><tbody>"+dbdata1+"</tbody></table>");
+         
+	   $(document).ready(function() {
                 
-                
-                       tbdata2+="</tbody></table>";
-                
-                 $("#searchtabledivcns").html(tbdata2);
-                 
-                 
-                 var table2 = $('#searchtablecns').DataTable({"autoWidth": true,
+         /* $('#searchtable').DataTable({              
+              "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": true,  
-              "order": [[3,'desc']]});
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+   var table2 = $('#searchtablecns').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
  
     $('#searchtablecns tbody').on( 'click', 'tr', function () {
         if ($(this).hasClass('selected') ) {
@@ -2185,118 +2254,59 @@ function appendtableduplicatedata( facil )
     } );
  
     $('#btnDeleteRowcns').click( function () {
-    
-     var tablerowid=table2.$('tr.selected').attr('id');
-     var serialno=table2.$('tr.selected').find("td:eq(3)").text();
-     var facil=table2.$('tr.selected').find("td:eq(0)").text();
+       
+     var tablerowid1=table2.$('tr.selected').attr('id');
+      
         
-        if(ConfirmDelete()===true){
+        if(ConfirmDeletecns()===true){
         
-     deletedata(tablerowid);
+        deletecnsdata(tablerowid1);
         
-        $("#feedbacklabel").html("Duplicate Serial No <b>"+serialno+"</b> for <b>"+facil+"</b> deleted successfully");
-        
-        table2.row('.selected').remove().draw(false);
+        table2.row('.selected').remove().draw( false );
     }
-    
-    
         //call the delete function now
     } );
-                 
-                 
-                 
-     
-            }}
-    }
-      });
-       
-   
-
 
           
           
           
           
             
-                                   
+                                     } ); 
     
                                                           }
                                                           
                                                          // appendtablecounsellordata( dbdata1 );
-      $("#searchtabledivcns").html("<h3 class='well' style='color:green;'>Select facility name above to load its data</h3>");                                                     
+                                                          
 //
 //
 //--------------------------------------------------------------------------------------------------------------------------------
 
-//appendtabledata('15156');
-appendtabledata();
+
 
 //call the function that displays the data
 
-function appendtabledata(){
+function appendtabledata( dbdata ){
     
-        var facili=$("#searchfacilityname").val();
-        
-        console.log(" Loaded facility name "+facili);
-        
-        if(facili!=='' && facili!=='Select Facility Name'){
-        
-        var facdetails=facili.split("_");
-        
-        
-    var tbdata="";
-    
-     tbdata="<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Edit</th></tr></thead><tbody>";
-        //id	 facility	 counsellor	 register_no	 serialno	 date_tested	 age	 gender	 modality	 testresult	 linked	 cccno	 linked_site	 other_facility_linked	 reason_not_linked	 reason_for_death	 other_reason_for_death	 reason_for_declining	 other_reason_for_declining	 user	 timestamp	 lastsynced	 datestartedart
-    
-    appendtableduplicatedata(facdetails[1]);
-    
-    $("#searchtablediv").html("<img style='' src='images/ajax_loader.gif' />");
-        
-              $.ajax({
-                    url:'getrawdata?mfl='+facdetails[1],                            
-                    type:'get',  
-                    dataType: 'json',  
-                    success: function(data) {
-                   
-                   console.log(data.length);
-                   
-                    if(data.length===0)
-                   {
-                       
-                   $("#searchtablediv").html("<h4class='well' style='color:green;text-align:center;'>Selected Facility has no Data. Please select another facility</h4>");    
-                       
-                   }
-                   
-                 //alert(data[0].facility_name);    
-                     for(var i=0;i<data.length;i++)
-                   {
-                         tbdata+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].lastsynced+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+data[i].id+"\",\""+data[i].facility+"\",\"no\",\""+data[i].counsellor+"\",\""+data[i].register_no+"\",\""+data[i].serialno+"\",\""+data[i].date_tested+"\",\""+data[i].age+"\",\""+data[i].gender+"\",\""+data[i].modality+"\",\""+data[i].testresult+"\",\""+data[i].linked+"\",\""+data[i].cccno+"\",\""+data[i].linked_site+"\",\""+data[i].other_facility_linked+"\",\""+data[i].reason_not_linked+"\",\""+data[i].reason_for_death+"\",\""+data[i].other_reason_for_death+"\",\""+data[i].reason_for_declining+"\",\""+data[i].other_reason_for_declining+"\",\""+data[i].user+"\",\""+data[i].timestamp+"\",\""+data[i].lastsynced+"\",\""+data[i].datestartedart+"\",\""+data[i].positive_verified+"\",\""+data[i].linkage_verified+"\")'>Edit</button></td></tr>";
-     
-                 
-                        console.log(data[i].id) 
-                        
-//                        addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        updatecounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        
-                      if(i===data.length-1)
-                      {
-                       tbdata+="</tbody>\n\
-       <tfoot><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Edit</th></tr></tfoot></table>";
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date tested</th><th style='width:50%;'>Patient</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+         
+	   $(document).ready(function() {
                 
-                 $("#searchtablediv").html(tbdata); 
-                 
-                  $('#searchtable tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" style=\'width:100%;font-size:9px;\' title="Search '+title+'" placeholder="search '+title+'" />' );
-    });
-                 
-                 
-                   var table = $('#searchtable').DataTable({"autoWidth": true,
+         /* $('#searchtable').DataTable({              
+              "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": true,  
-              "order": [[4,'desc']]});
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+          
+     
+    var table = $('#searchtable').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
  
     $('#searchtable tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
@@ -2309,141 +2319,80 @@ function appendtabledata(){
              $('#btnDeleteRow').show();
         }
     } );
-    
-    
-     // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-    
-    
  
     $('#btnDeleteRow').click( function () {
         
      var tablerowid=table.$('tr.selected').attr('id');
-     var serialno=table.$('tr.selected').find("td:eq(3)").text();
-     var facil=table.$('tr.selected').find("td:eq(0)").text();
         
         if(ConfirmDelete()===true){
         
-     deletedata(tablerowid);
+        deletedata(tablerowid);
         
-        $("#feedbacklabel").html("Serial No <b>"+serialno+"</b> for <b>"+facil+"</b> deleted successfully");
-        
-        table.row('.selected').remove().draw(false);
+        table.row('.selected').remove().draw( false );
     }
         //call the delete function now
     } );
-    
-    
-     
-    
-                 
-                 
-                      } 
-                     }
-                     
-                     
-                     
-                       
-                   
-        
-                                           }
-                                           
-                                              ,
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                      
-        alert('error loading data');
-	
-    }
-                        
-                         });
-       
-       }
-       else {
-           
-           
-           $("#searchtablediv").html("<h3 class='well' style='color:green;text-align:center;'>Select facility name above to load its data</h3>"); 
-           
-       }
-       
-  
 
           
           
           
           
             
-                                    
+                                     } ); 
     
                                                           }
 
-function showreports()
-{
- $("#reportsbutton").show();
+ selectsearchdata();
+
+function showreports(){
+    
+     $("#reportsbutton").show();
 }
 
 
-function loadsaveddailydata(id,facility,openreportstab,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,lastsynced,datestartedart,positive_verified,linkage_verified )
-
-    {
+function loadsaveddailydata(id,facility,openreportstab ){
     $("#reportsbutton").show();
- //  alert(id);
+    
+  //  alert(id);
  //load from weekly db where id is as selected   
- 
- 
- 
   var mflanddates=id.split('_');
         	
-//	 $.ajax({
-//                    url:'loadclient?id='+id,                            
-//                    type:'post',  
-//                    dataType: 'json',  
-//                    success: function(data) {
+	dailydatadb.get(id).then(function (doc) {
     var rowid=id;    
     //populate div with respective content
     $("#rowid").val(id);
-    var mflid=mflanddates[0];
-     if(mflid==="17799"){ mflid='18087';  }
     
-$("#facilityname").val(mflid+"_"+facility);   
-$("#counsellor").val(counsellor);
-$("#register_no").val(register_no);
-$("#serialno").val(serialno);
-$("#enddate").val(date_tested);
-$("#age").val(age);
-$("#gender").val(gender);
-$("#modality").val(modality);
-$("#testresult").val(testresult);
-$("#linked").val(linked);
-$("#cccno").val(cccno);
-$("#linked_site").val(linked_site);
-$("#other_facility_linked").val(other_facility_linked);
-$("#reason_not_linked").val(reason_not_linked);
-$("#reason_for_death").val(reason_for_death);
-$("#other_reason_for_death").val(other_reason_for_death);
-$("#reason_for_declining").val(reason_for_declining);
-$("#other_reason_for_declining").val(other_reason_for_declining);
-$("#artstartdate").val(datestartedart);
+    
+    
+$("#facilityname").val(mflanddates[0]+"_"+facility);   
+$("#counsellor").val(doc.counselorname);
+$("#register_no").val(doc.register_no);
+$("#serialno").val(doc.serialno);
+$("#enddate").val(doc.date_tested);
+$("#age").val(doc.age);
+$("#gender").val(doc.gender);
+$("#modality").val(doc.modality);
+$("#testresult").val(doc.testresult);
+$("#linked").val(doc.linked);
+$("#cccno").val(doc.cccno);
+$("#linked_site").val(doc.linked_site);
+$("#other_facility_linked").val(doc.other_facility_linked);
+$("#reason_not_linked").val(doc.reason_not_linked);
+$("#reason_for_death").val(doc.reason_for_death);
+$("#other_reason_for_death").val(doc.other_reason_for_death);
+$("#reason_for_declining").val(doc.reason_for_declining);
+$("#other_reason_for_declining").val(doc.other_reason_for_declining);
+$("#artstartdate").val(doc.datestartedart);
 
 
    
      //$('#facilityname').select2(); 
      $('#facilityname').select2();
      $('#counsellor').select2(); 
-   
          $("#counsellor").css('width','100%');
          $("#facilityname").css('width','100%');
          $(".select2-container").css('width','100%');
-         
+     
      
      $("#savebutton").hide();
      
@@ -2477,7 +2426,7 @@ isshowdeadother();
                    
                }
   
-//}});
+});
 
  selectwidth();
 }
@@ -2490,6 +2439,11 @@ $("#refreshpage" ).click(function()
 });
 
 $("#exportdataanchor1" ).click(function() 
+{
+    checkinternet();
+   
+});
+$("#zeroreportanchor" ).click(function() 
 {
     checkinternet();
    
@@ -2521,14 +2475,11 @@ function updateweeklydata()
  //this id will be used to update the entered data
    var id=$("#rowid").val();
    
-   var newid="";
   // var annualid=id.replace(/weekly/g,"annual");
    
- //receive all the fields from the weekly data from
-//id=$("#rowid").val();
+        //receive all the fields from the weekly data from
+id=$("#rowid").val();
 facility=$("#facilityname").val();
-var mf=facility.split("_");
-
 counsellor=$("#counsellor").val();
 register_no=$("#register_no").val();
 serialno=$("#serialno").val();
@@ -2550,7 +2501,7 @@ datestartedart=$("#artstartdate").val();
 //user=$("#user").val();
 timestamp=$("#timestamp").val();
 
-newid=mf[0]+"_"+serialno+"_"+register_no+"_"+modality+""+(date_tested.replace("-","").substring(0,6));
+console.log("Date started ART__"+artstartdate);
     
     //var user=$("#username").val(); 
     var user="hsdsa"; 
@@ -2673,51 +2624,9 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
             //________________________________
           
      id=$("#rowid").val();
-     
-     
   
-  //saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked
-  //,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
+ saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
   
-  
-  
-  $.ajax({
-url:'receive_live_data',                            
-type:'get', 
-data:{
-    id:id,
-facility:facilityname,
-counselorname:counsellor,
-register_no:register_no,
-serialno:serialno,
-date_tested:date_tested,
-age:age,
-gender:gender,
-modality:modality,
-testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-user:user,
-timestamp:timestamp,newid:newid
-},
-dataType:'html',  
-                    success: function(data) {
-                        
-                  $("#feedbacklabel").html(data); 
-                  
-                 $('#searchdatabutton').click();       
-        }});
-  
-  
- 
             //
             //________________________________
             
@@ -2735,7 +2644,7 @@ console.log('weekly data updated');
 
 //$('#reportsbutton').click();
 //$('#inpatient_uptake_cmts').focus();
-//setTimeout(delayedrefresh,1800);
+setTimeout(delayedrefresh,1800);
 //delayedrefresh();
        }
        
@@ -2786,11 +2695,6 @@ doc.syncstatus=syncstatus;
 });
  
  
- //daily data
- 
- 
- 
- 
 } 
     
   
@@ -2836,24 +2740,26 @@ var recordsunexported=$("#unexported").val();
 		  var num=parseInt(c)-1;
 	var missingcommentid="";
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
-                        {
+        {
 
            
-              var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
+       var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
         
-        if(skipexporting===0){
+ if(skipexporting===0)
+ {
             
             updatesyncstatus(dat.doc._id,'Yes');
         
         
             
-             $.ajax({
-url:'receiveData',                            
-type:'get', 
+    $.ajax({
+                         url:'receiveData',                            
+                        type:'post', 
 data:{
-    id:dat.doc._id,
+
+id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
 register_no:dat.doc.register_no,
@@ -2896,7 +2802,7 @@ dataType:'html',
                  $("#exportmsg").hide();
                  if(returnedresponses<1000){
                  $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
-             setTimeout(delayedrefresh,2000);
+             //setTimeout(delayedrefresh,2000);
             }
              else {
                       $("#exportresponse").append("<b><font color='orange'>Exporting did not complete successfully.</b>"); 
@@ -3032,7 +2938,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
                          url:'receiveData',                            
-                        type:'get', 
+                        type:'post', 
 data:{
 
 id:dat.doc._id,
@@ -3081,7 +2987,7 @@ dataType: 'html',
             {
              $("#exportresponse1").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
              $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
-             setTimeout(delayedrefresh,2000);
+             //setTimeout(delayedrefresh,2000);
             }
              else 
              {
@@ -3560,6 +3466,9 @@ $("#reportsform").submit(function(e){
 $("#excelreportsfom").submit(function(e){
     return false;
 });
+$("#zeroreportform").submit(function(e){
+    return false;
+});
 
  $('input').css('border-color','#337ab7');
 
@@ -3749,31 +3658,29 @@ function ConfirmDeletecns()
     }
 
 
+function ConfirmDeleteever()
+    {
+      var y = confirm("Are you sure you want to delete all the data from this device ?");
+      if (y)
+          return true;
+      else
+        return false;
+    }
 
 
 
 function deletedata(id){
     
-  $.ajax({
-             url:'deletedata?id='+id,                            
-            type:'get',  
-            dataType: 'html',  
-           
-    success: function(data) {
-                             //alert('offline');
-	
-      //  $("#exportresponse").html("");
-   
-    }
-                                           
-    ,
-    error: function(XMLHttpRequest, textStatus, errorThrown) 
-    {
-        //alert('offline');
-	
-    }
-                        
-                         });
+    //a function to delete entered data
+console.log("______"+id);
+dailydatadb.get(id).then(function(doc) {
+  return dailydatadb.remove(doc);
+}).then(function (result) {
+    unsynceddata();
+  // handle result
+}).catch(function (err) {
+  console.log(err);
+});
 
   
     
@@ -4321,6 +4228,163 @@ $('#clearcachebtn').click(function() {
         }
     }); 
 });
+
+
+
+
+function cleardata(){
+    
+    if(ConfirmDeleteever()===true){
+    
+    dailydatadb.destroy(function (err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log ("Data Database Deleted");
+     // $("#resetdbbtn").hide();
+      $("#cleardatabtn").html("Data deleted successful!");
+      window.location.reload();
+      
+   }
+                                        });
+    
+        }
+}
+
+
+function validatemodalities()
+{
+    var miaka=$("#age").val();
+    
+ if(miaka>5){  
+$("#modality option[value='malnutrition']").attr("disabled", true); 
+$("#modality option[value='pediatrics']").attr("disabled", true); 
+
+$("#modality option[value='anc1']").attr("disabled",false); 
+$("#modality option[value='anc2']").attr("disabled",false); 
+$("#modality option[value='ld']").attr("disabled",false); 
+$("#modality option[value='pnc']").attr("disabled",false);
+
+
+ }
+ else if (miaka<9){
+     //deactivate
+$("#modality option[value='anc1']").attr("disabled", true); 
+$("#modality option[value='anc2']").attr("disabled", true); 
+$("#modality option[value='ld']").attr("disabled", true); 
+$("#modality option[value='pnc']").attr("disabled", true);
+//activate
+$("#modality option[value='malnutrition']").removeAttr("disabled"); 
+$("#modality option[value='pediatrics']").removeAttr("disabled"); 
+     
+ }
+ else {
+     
+$("#modality option[value='malnutrition']").attr("disabled",false);
+$("#modality option[value='pediatrics']").attr("disabled",false);   
+ 
+ 
+$("#modality option[value='anc1']").attr("disabled",false); 
+$("#modality option[value='anc2']").attr("disabled",false);
+$("#modality option[value='ld']").removeAttr("disabled"); 
+$("#modality option[value='pnc']").removeAttr("disabled");
+     
+ }
+    
+    
+}
+
+
+function validatemodalitiesbygender(){
+    
+  var sex=$("#gender").val();
+  
+  if(sex==='Male'){  
+$("#modality option[value='anc1']").attr("disabled",true); 
+$("#modality option[value='anc2']").attr("disabled",true);
+$("#modality option[value='ld']").attr("disabled",true); 
+$("#modality option[value='pnc']").attr("disabled",true); 
+
+$("#modality option[value='vmmc']").attr("disabled",false);
+                  }
+  else if(sex==='Female')
+                  {  
+$("#modality option[value='vmmc']").attr("disabled",true);
+  
+$("#modality option[value='anc1']").attr("disabled",false); 
+$("#modality option[value='anc2']").attr("disabled",false);
+$("#modality option[value='ld']").attr("disabled",false); 
+$("#modality option[value='pnc']").attr("disabled",false);  
+        
+                  }
+  
+
+  
+    
+}
+
+
+
+
+
+   var zeroreportdb = new PouchDB('htszeroreports');
+var remoteCouch = false;
+var blankreportde;
+
+//receive the artist, song title and lyrics text
+function savezeroreport()
+{
+    
+    var datee=$("#zeroreportdate").val();
+    var facilitii=$("#facilityname_zerorpt").val();
+    
+    
+        if(facilitii===''){ alert("Select Facilty");}
+        else if(datee===''){ alert("Select Date");}
+        
+        else{
+    $.ajax({
+        url:'submitZero',
+        type:'post',
+        data:{ 
+            date:datee,
+            facil:facilitii },
+        dataType:'html',
+        success: function(data) {
+        {
+    
+        $("#savezeromsg").html(data);
+            
+        }
+        
+        
+                                 }
+
+});
+}
+    
+//blankreportde = 
+//           {
+//            _id:""+datee+facilit, //this is static since we cant have two users using the same phone
+//	    date:datee,
+//        facility:facilit,
+//            zero:0,        
+//       completed:false
+//           };
+//  zeroreportdb.put(blankreportde, function callback(err, result) {
+//    if (!err) {
+//      console.log('zero report submitted succesfully');
+//              }
+//          else{
+//        console.log(err);
+//              }
+//    
+//    //setTimeout(delayedrefresh,1500);
+//  });
+  
+  
+  
+}
 
 
 </script>

@@ -448,6 +448,8 @@ input:focus {
                                  <option value='Declined'>Declined</option>
                                  <option value='Died'>Died</option>
                                  <option value='TCA'>TCA</option>
+                                 <option value='On Treatment preparation'>On Treatment preparation</option>
+                                 <option value='Started TB Treatment'>Started TB Treatment</option>
                                  </select>
                                  </div>
                                  </div>
@@ -1016,7 +1018,7 @@ input:focus {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                    url:'sites1.json',                            
+                    url:'sites2.json',                            
                     type:'get',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1295,7 +1297,7 @@ function getcounsellorslist(){
    
               $.ajax({
                     url:'getcancellors',                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -1348,7 +1350,7 @@ $('#exportbutton').hide();
    
               $.ajax({
              url:'validateAccess',                            
-            type:'post',  
+            type:'get',  
             dataType: 'html',  
            
     success: function(data) {
@@ -1913,7 +1915,7 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
 
   $.ajax({
 url:'receive_live_data',                            
-type:'post', 
+type:'get', 
 data:{
 id:id,
 facility:facilityname,
@@ -2134,7 +2136,7 @@ function appendtableduplicatedata( facil )
      
       $.ajax({
                     url:'getDuplicates?mfl='+facil,                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                         
@@ -2253,7 +2255,7 @@ function appendtabledata(){
         
               $.ajax({
                     url:'getrawdata?mfl='+facdetails[1],                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -2681,7 +2683,7 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
   
   $.ajax({
 url:'receive_live_data',                            
-type:'post', 
+type:'get', 
 data:{
     id:id,
 facility:facilityname,
@@ -2849,7 +2851,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
 url:'receiveData',                            
-type:'post', 
+type:'get', 
 data:{
     id:dat.doc._id,
 facility:dat.doc.facility,
@@ -3030,7 +3032,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
                          url:'receiveData',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -3754,7 +3756,7 @@ function deletedata(id){
     
   $.ajax({
              url:'deletedata?id='+id,                            
-            type:'post',  
+            type:'get',  
             dataType: 'html',  
            
     success: function(data) {

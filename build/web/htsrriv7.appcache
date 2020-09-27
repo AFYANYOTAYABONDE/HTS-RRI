@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# 2019-05-16 v1.2.2.4
+# 2019-05-16 v1.2.2.31
 progressbar.json
 htsrri.png
 indicators.json
-sites1.json
+sites2.json
 css/dataTables.bootstrap.min.css
 css/jquery.dataTables.min.css
 css/bootstrap.css
@@ -17,6 +17,8 @@ js/bootstrap-datepicker.min.js
 js/select2.js
 js/pouchdb-7.1.1.js
 js/datatables.min.js
+js/html2canvas.js
+js/FileSaver.js
 
 
 js/jquery.fileDownload.js
@@ -27,6 +29,8 @@ images/sort_asc_disabled.png
 images/sort_both.png
 images/sort_desc.png
 images/sort_desc_disabled.png
+images/wp.png
+images/fwl.png
 
 
 

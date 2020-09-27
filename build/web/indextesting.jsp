@@ -57,6 +57,91 @@ input:focus {
 }
 
 
+
+/*adding accordoin style*/
+
+
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+p {
+  font-size: 1.1em;
+  margin: 1em 0;
+}
+.description {
+  margin: 1em auto 2.25em;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  font-size: 2.5em;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul .inner {
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+ul .inner.show {
+  /*display: block;*/
+}
+ul li {
+  margin: 0.5em 0;
+}
+li a.toggle {
+  width: 100%;
+  display: block;
+  background-color:gray;
+  color: #fefefe;
+  padding: 0.75em;
+  border-radius: 0.15em;
+  transition: background 0.3s ease;
+}
+
+ li a.toggle {
+  width: 100%;
+  /*display: block;*/
+  border: #337ab7 solid 1px;
+
+  background: rgba(46, 109, 164, 0.78);
+  color: #ffffff;
+  padding: 0.75em;
+  border-radius: 0.15em;
+  transition: background 0.3s ease;
+  font-weight: bold;
+}
+
+
+ul li a.toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+  color:#ffffff;
+}
+
+
+/*freeze pane*/
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky  {
+  padding-top: 102px;
+}
+
+
+
 </style>
 
                 
@@ -124,7 +209,7 @@ input:focus {
           <div class="row">
                 <!-- center left-->
                 
-          <div class="col-md-12">
+          <div class="col-md-12" style="padding-left:3px;padding-right: 3px;">
                     
 
                   
@@ -176,13 +261,13 @@ input:focus {
                             <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="dataentry">
+                            <div class="tab-pane active well col-md-12" style="width:100%;padding:0px;" id="dataentry">
                                 
                                 
                               <!--Data entry code-->
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" style="padding:0px;">
                        
-                        <div class="panel-body" style="width:100%;">
+                        <div class="panel-body" style="width:100%;padding:0px;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
@@ -192,7 +277,7 @@ input:focus {
                                 </table>
 <!--    
                                     <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
+                                   <div class="control-group col-xs-12" >
                                     <label class="col-xs-12"><font color="red"><b>*</b></font> Date Test Conducted </label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
@@ -211,7 +296,7 @@ input:focus {
                                 
                               
                                 
-                                  <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+                                  <div class="control-group col-xs-12"  >
                                     <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select  onchange="checkids();validatemodalities();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
@@ -231,7 +316,7 @@ input:focus {
                                 <!--counsellor-->
                                 <!--<tr><td class="col-xs-12">--> 
 
-                                        <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+                                        <div class="control-group col-xs-12"  >
                                             <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
                                             <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                                 <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
@@ -250,7 +335,7 @@ input:focus {
                                 
 <!--                                <tr>
                                     <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+<!--                                   <div class="control-group col-xs-12"  >
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Contacts Entry point <span class='badge' title='Register No.' data-toggle='popover' data-trigger='hover' data-content='Group the contacts as listed below.'>?</span> </label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                        <select class='form-control' name="contacts_modality" id='contacts_modality'> 
@@ -263,7 +348,7 @@ input:focus {
                                         <option value="Discordant Couple">Discordant Couple</option>
                                   </select>
                                     </div>
-                                </div>
+                                </div>-->
                                         
                                         
 <!--                                </td>
@@ -271,30 +356,30 @@ input:focus {
                                 -->
                                 
                                 
-                                <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
+<!--                                <div class="control-group col-xs-12"  >
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Contacts Category <span class='badge' title='Contacts' data-toggle='popover' data-trigger='hover' data-content='Specify if you want to do entries for sexual contacts and or Biological cildren'>?</span> </label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
                                         <select multiple="true" class='form-control' name="category" style='height:100%;' id='category'> 
-                                        <option value="Sexual Contacts">Sexual Contacts</option>
-                                        <option value="Biological Children">Biological Children</option>
+                                        <option selected value="Sexual Contacts">Sexual Contacts</option>
+                                        <option selected value="Biological Children">Biological Children</option>
                                         </select>
                                     </div>
-                                </div>
-                                                               
-                                  
-                                  </section>
+                                </div>-->
+                                      
+                                <div class="control-group col-xs-12"  >
+                                  <div id="pnsformcontent1"></div>
+                                  </div>
+<!--                                  </section>-->
                                      
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note:Please enter data for all input fields.</div>
-                                   <br/>
+                                       
                                     <div class="controls">
-                                         <button type="submit" id='next' onclick="nextelement();" style="margin-left: 0%;" class="btn-sm btn-success active">
-                                            Next >>
-                                        </button>
+                                        <!--<a class="btn-lg btn-info" style="width: 100%;"  title="Add Widget" data-toggle="modal"  id="enterpnsdataanchor" href="#enterpnsdata"><i class="glyphicon glyphicon-new-window "></i>  Next</a>-->
                                         
-                                        <button style='display:none;' type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        
+                                        <button style='display:block;margin-left: 35%;' type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();"  class="btn-lg btn-success active col-lg-4">
                                             SAVE
                                         </button>
                                     </div>
@@ -741,6 +826,89 @@ input:focus {
 
 
 
+<!-----Data entry------>
+
+
+
+<div class="modal" id="enterpnsdata">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="text-align:center;">Data Entry</h4>
+            </div>
+            <div class="modal-body">
+                <form id="pnsform">
+              
+                    <div id='pnsformcontent'>
+                    
+        <ul class="accordion">
+ 
+  
+  <li>
+    <a class="toggle" href="javascript:void(0);">New Kp Contacts</a>
+    <ul class="inner">
+      <li>
+        <a href="#" class="toggle">Index Clients Screened</a>
+        <div class="inner">
+          <p>
+            elements and input fields fall here
+          </p>
+        </div>
+      </li>
+	   <li>
+        <a href="#" class="toggle">Contacts Elicited</a>
+        <div class="inner">
+          <p>
+            elements and input fields fall here
+          </p>
+        </div>
+      </li>
+     
+    </ul>
+  </li>
+  
+  
+   <li>
+    <a class="toggle" href="javascript:void(0);">Known Positive Contacts</a>
+    <ul class="inner">
+      <li>
+        <a href="#" class="toggle">Index Clients Screened</a>
+        <div class="inner">
+          <p>
+            elements and input fields fall here
+          </p>
+        </div>
+      </li>
+	   <li>
+        <a href="#" class="toggle">Contacts Elicited</a>
+        <div class="inner">
+          <p>
+            elements and input fields fall here
+          </p>
+        </div>
+      </li>
+     
+    </ul>
+  </li>
+  
+</ul>                  
+                </div>    
+                    <p id="savepnsresponse"> </p>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
+<!-- /.modal -->
+
+
 
 	<!-- script references -->
                 <script src="js/jquery.min.js"></script>
@@ -787,6 +955,28 @@ input:focus {
    
   var user="hsdsa";  
 //load data from the cloud server 
+
+
+ var selected_categories=["Biological Children","Sexual Contacts"];
+ var selected_categories_id=["Biological_Children","Sexual_Contacts"];
+    
+    //biological children
+    var ages_id_bc=["pns_1","pns_4","pns_9","pns_14"];
+    //sexual contacts 
+    var ages_id_sc=["pns_uk","pns_14","pns_19","pns_24","pns_29","pns_34","pns_39","pns_44","pns_49","pns_50"];
+    //var age_arr=["Unknown Age","Unknown Age","<1","<1","1-4","1-4","5-9","5-9","10-14","10-14","15-19","15-19","20-24","20-24","25-29","25-29","30-34","30-34","35-39","35-39","40-44","40-44","45-49","45-49","50","50","total"];
+    var age_arr_bc=["<1","1-4","5-9","10-14"];
+    var age_arr_sc=["Unknown Age","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50"];
+    
+    var sex_arr=["Male","Female"];
+    
+    var buildform="<ul class='accordion'>";
+    var entrypoints_values=["New Pos","PMTCT","STF","TB","Other KPs","Disc. Couple"];
+    var entrypoints_ids=["New_Pos","PMTCT","STF","TB","Other_KPs","Disc_Couple"];
+    var entrypoints_labels=["New Positive Contacts","PMTCT Contacts","STF Contacts","TB Contacts","Other KP Contacts","Discordant Couple"];
+    
+
+
    
 //load data from the cloud server 
    function getFacilitiesJson(){
@@ -796,7 +986,7 @@ input:focus {
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
-                    url:'sites1.json',                            
+                    url:'sites2.json',                            
                     type:'get',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1007,9 +1197,182 @@ function updatefacilities(mflcode,county,subcounty,facility,longitude,latitude,s
 }
 
 
-//a function to load facilities data from the 
+
+   
+//This is a document to save all facilities for offline use 
+var element_db = new PouchDB('pnselements');
+var remoteCouch = false;
+var receivedelements;
+
+//add facility details here
+function setElements(elementid,elementname,subsection,section) {
+   receivedelements = {
+        _id: elementid,
+	elementname:elementname,
+        subsection:subsection,
+        section:section,	
+        completed: false
+                  };
+  element_db.put(receivedelements, function callback(err, result) {
+    if (!err) {
+      console.log('elements added succesfully');
+    }
+  });
+}
 
 
+//a function to load elements from the database
+
+
+function loadElements(){
+    
+     $.ajax({
+              url:'getPnsIndicators',                            
+              type:'get',  
+              dataType: 'json',  
+ success: function(data) {
+     
+      for(var i=0;i<data.length;i++){
+         
+setElements(data[i].id,data[i].indicator,'','');
+          
+          
+      }
+     
+ }
+ });
+    
+    
+}
+
+loadElements();
+
+
+function buildformsindicators(){
+    var indics="";
+    
+   
+    
+    
+     element_db.allDocs({include_docs: true, ascending: true}).then( function(data) { 
+     
+     for(var categ=0;categ<selected_categories.length;categ++){
+         
+          buildform+="<li style='text-align:center;'><a class='toggle' href='javascript:void(0);'>"+selected_categories[categ]+"</a>";
+          buildform+="<ul class='inner'>";
+     
+     //Loop through the entry points
+     
+ for(var h=0;h<entrypoints_values.length;h++){
+    
+  buildform+="<li style='text-align:center;'><a class='toggle' href='javascript:void(0);'>"+entrypoints_labels[h]+"</a>";
+  buildform+="<ul class='inner'>";
+            
+ for(var i=0;i<data.total_rows;i++){
+     
+     var dat={};
+      dat=data.rows[i];
+                       
+ //Here we are building a table that is dropping downwards
+
+ buildform+="<li ><a href='#' class='toggle' >"+dat.doc._id+". "+dat.doc.elementname+"</a><div class='inner' style='height:auto;'>";
+ 
+          //buildform+="<p>elements and input fields fall here</p>";
+        
+        
+//        Biological Children Section
+        
+        
+ if(selected_categories[categ]==='Biological Children'){
+ for(var rows=0;rows<age_arr_bc.length;rows++)
+ {
+  
+                    if(rows===0)
+                    {  buildform+="<table class='table table-responsive'>";
+                    buildform+="<tr style='background-color:#3bc2ff;height:35px;' class='myHeader' id='myHeader"+rows+"'><th style='text-align:center;'></th><th style='text-align:center;'><b>Age</b></th><th style='text-align:center;'><b>Female</b></th><th style='text-align:center;'><b>Male</b></th></tr>";
+                    buildform+="<tr><td rowspan='"+ages_id_bc.length+"' style='width:8px;background-color:#3bc2ff; '><label style='writing-mode:vertical-rl;text-orientation:upright;color:black;'><b>"+entrypoints_values[h]+" "+dat.doc.elementname+"</b></label></td><td>"+age_arr_bc[rows]+" Yrs</td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+entrypoints_ids[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' onkeypress='return numbers(event);' class='form-control' style='width:95%;'  id='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"f' name='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"f'/></td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+entrypoints_ids[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' class='form-control' style='width:95%;' id='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"m' name='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"m'/></td></tr>";
+                    }
+                    else 
+                    {
+                    buildform+="<tr><td>"+age_arr_bc[rows]+" Yrs</td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+entrypoints_ids[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' onkeypress='return numbers(event);' class='form-control' style='width:95%;'  id='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"f' name='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"f'/></td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+entrypoints_ids[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' class='form-control' style='width:95%;' id='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"m' name='"+selected_categories_id[categ]+"_"+entrypoints_ids[h]+"_"+dat.doc._id+"_"+ages_id_bc[rows]+"m'/></td></tr>";
+ if(rows===age_arr_bc.length-1){  buildform+="</table>"; }
+                    }
+     
+ }
+ 
+                }
+                
+                
+//                Sexual Contacts Section
+                
+                else if(selected_categories[categ]==='Sexual Contacts')
+                {
+ for(var rows=0;rows<age_arr_sc.length;rows++)
+ {
+  
+                    if(rows===0){  buildform+="<table class='table table-responsive'>";
+                    buildform+="<tr style='background-color:#3bc2ff;height:35px;' class='myHeader' id='myHeader"+rows+"'><th></th><th style='text-align:center;'><b>Age</b></th><th style='text-align:center;'><b>Female</b></th><th style='text-align:center;'><b>Male</b></th></tr>";
+                    buildform+="<tr><td rowspan='"+ages_id_sc.length+"' style='width:8px;background-color:#3bc2ff; '><label style='writing-mode:vertical-rl;text-orientation:upright;color:black;'><b>"+entrypoints_values[h]+" "+dat.doc.elementname+"</b></label></td><td>"+age_arr_sc[rows]+" Yrs</td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' onkeypress='return numbers(event);' class='form-control' style='width:95%;'  id='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"f' name='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"f'/></td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' class='form-control' style='width:95%;' id='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"m' name='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"m'/></td></tr>";
+                    }
+                    else 
+                    {
+                    buildform+="<tr><td>"+age_arr_sc[rows]+" Yrs</td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' onkeypress='return numbers(event);' class='form-control' style='width:95%;'  id='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"f' name='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"f'/></td><td><input onblur=\"savePns('"+selected_categories_id[categ]+"','"+entrypoints_labels[h]+"','"+dat.doc._id+"','"+dat.doc.elementname+"');\" type='text' class='form-control' style='width:95%;' id='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"m' name='"+selected_categories_id[categ]+"_"+entrypoints_values[h]+"_"+dat.doc._id+"_"+ages_id_sc[rows]+"m'/></td></tr>";
+ if(rows===age_arr_sc.length-1){  buildform+="</table>"; }
+                    }
+     
+ }
+ 
+                }
+ 
+ 
+ buildform+="</div></li>";
+            
+                //indics+="<option data-pns='"+data[i].pns+"' value='"+data[i].mflcode+"_"+data[i].facility_name+"'>"+data[i].facility_name+"</option>"; 
+                               
+          
+              
+              
+                        
+                     }
+                     //end entry points accordion
+                 buildform+="</ul>";    
+                 buildform+="</li>";    
+                     
+                 }
+                 //end category accordion
+                 buildform+="</ul>";    
+                 buildform+="</li>";  
+             
+ }
+                 
+                 buildform+="</ul>";
+                     //alert(facilities);
+                     $("#pnsformcontent1").html(buildform);
+                      //console.log(buildform);
+                      
+                      
+                      $('.toggle').click(function(e) {
+  	e.preventDefault();
+  
+    var $this = $(this);
+  
+    if ($this.next().hasClass('show')) {
+        $this.next().removeClass('show');
+        $this.next().slideUp(150);
+    } else {
+        $this.parent().parent().find('li .inner').removeClass('show');
+        $this.parent().parent().find('li .inner').slideUp(150);
+        $this.next().toggleClass('show');
+        $this.next().slideToggle(150);
+    }
+});
+         
+                     
+ });
+    
+}
+
+buildformsindicators();
 
 //========================SAVE TARGETS============================
 //========================SAVE TARGETS============================
@@ -1221,25 +1584,47 @@ completed: false
 var id=null;
 var facility=null;
 var counsellor=null;
-var register_no=null;
-var serialno=null;
+
 var date_tested=null;
-var age=null;
-var gender=null;
-var modality=null;
-var testresult=null;
-var linked=null;
-var cccno=null;
-var linked_site=null;
-var other_facility_linked=null;
-var reason_not_linked=null;
-var reason_for_death=null;
-var other_reason_for_death=null;
-var reason_for_declining=null;
-var other_reason_for_declining=null;
+
 var user=null;
 var timestamp=null;
-var datestartedart=null;
+
+
+  var contacttype=null; 
+  var entrypoint=null; 
+  var indicator=null; 
+  var pns_ukf=null; 
+  var pns_ukm=null; 
+  var pns_1f=null; 
+  var pns_1m=null; 
+  var pns_4f=null; 
+  var pns_4m=null; 
+  var pns_9f=null; 
+  var pns_9m=null; 
+  var pns_14f=null; 
+  var pns_14m=null; 
+  var pns_19f=null; 
+  var pns_19m=null; 
+  var pns_24f=null; 
+  var pns_24m=null; 
+  var pns_29f=null; 
+  var pns_29m=null; 
+  var pns_34f=null; 
+  var pns_34m=null; 
+  var pns_39f=null; 
+  var pns_39m=null; 
+  var pns_44f=null; 
+  var pns_44m=null; 
+  var pns_49f=null; 
+  var pns_49m=null; 
+  var pns_50f=null; 
+  var pns_50m=null; 
+  var counsellor=null; 
+  var facility=null; 
+  var mflcode=null; 
+
+  var timestamp=null;
 
 //var viralload_tg=null; 
 //var viralload=null; 
@@ -1252,7 +1637,7 @@ var datestartedart=null;
    
    //added 201605 
     var progressbarstoskip=[];
-     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining"];
+     var allindicatorsarray=["rowid","facilityname","counsellor","enddate","pns_ukf","pns_ukm","pns_1f","pns_1m","pns_4f","pns_4m","pns_9f","pns_9m","pns_14f","pns_14m","pns_19f","pns_19m","pns_24f","pns_24m","pns_29f","pns_29m","pns_34f","pns_34m","pns_39f","pns_39m","pns_44f","pns_44m","pns_49f","pns_49m","pns_50f","pns_50m"];
      var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
@@ -1261,13 +1646,8 @@ function createdynamicinputs(){
     
     
      $(document).ready(function(){
-         
-       
-   
          $.getJSON("indicators.json",function(result){
-             
-             
-             
+            
              var table="";
              var row1="";
              var row2="";
@@ -1537,37 +1917,91 @@ alert("No loaded list of counsellors");
 
 
 
-function validateweeklydata(){
-    setrowid();
+function savePns(ct,ep,epid,elementid,elem){
+    setrowid(ct,epid,elementid);
     
     //receive all the fields from the weekly data from
 id=$("#rowid").val();
 facility=$("#facilityname").val();
 counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
 date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-//user=$("#user").val();
-//timestamp=$("#timestamp").val();
-datestartedart=$("#artstartdate").val();
 
-    console.log("Date started ART__"+datestartedart);
-    //var user=$("#username").val(); 
-    var user="hsdsa"; 
-      var currentdate = new Date();
+
+   contacttype=ct; 
+   entrypoint=ep; 
+   indicatorid=elementid; 
+   indicator=elem; 
+  if(ct==='Biological_Children')
+   {
+       //Biological_Children_New_Pos_1_pns_1f
+   pns_1f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_1m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_4f=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_4m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_9f=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_9m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   
+   }
+  else {   
+   pns_1f=''; 
+   pns_1m='';
+   pns_4f='';
+   pns_4m='';
+   pns_9f='';
+   pns_9m='';    
+        }
+   
+   pns_14f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_14m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   
+   if(ct==='Sexual Contacts')
+   {
+   pns_ukf=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_ukm=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_19f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_19m=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_24f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_24m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_29f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_29m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_34f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_34m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_39f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_39m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_44f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_44m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_49f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_49m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   pns_50f=$("#"+ct+"_"+epid+"_"+elementid+"_").val(); 
+   pns_50m=$("#"+ct+"_"+epid+"_"+elementid+"_").val();
+   }
+   else {
+       
+   pns_ukf=''; 
+   pns_ukm=''; 
+   pns_19f=''; 
+   pns_19m=''; 
+   pns_24f=''; 
+   pns_24m=''; 
+   pns_29f=''; 
+   pns_29m=''; 
+   pns_34f=''; 
+   pns_34m=''; 
+   pns_39f=''; 
+   pns_39m=''; 
+   pns_44f=''; 
+   pns_44m=''; 
+   pns_49f=''; 
+   pns_49m=''; 
+   pns_50f=''; 
+   pns_50m='';    
+       
+   }
+
+console.log("Date started ART__"+datestartedart);
+ 
+var user="hsdsa"; 
+var currentdate = new Date();
     
     var mn=""+(currentdate.getMonth()+1) ;
     var dt=""+currentdate.getDate();
@@ -1702,7 +2136,7 @@ console.log('daily data entered');
  //$('#reportsbutton').click();
  //$('#inpatient_uptake_cmts').focus();
  window.scrollTo(0,0);
-setTimeout(delayedrefresh,1500);
+//setTimeout(delayedrefresh,1500);
  // delayedrefresh
  //delayedrefresh();
        }
@@ -3737,16 +4171,17 @@ function isshowdeadother()
     
 }
 
-function setrowid(){
+function setrowid(ct,ep,elementid)
+{
     var id="";
     
     var f=$("#facilityname").val();
     var mfl=f.split("_")[0];
-    var sn=$("#serialno").val();
-    var rn=$("#register_no").val();
-    var md=$("#modality").val();
+    var dt=$("#enddate").val();
+    var cns=$("#counsellor").val();
+   
     
-    var id=mfl+"_"+sn+"_"+rn+"_"+md;
+    var id=mfl+"_"+cns+"_"+dt+"_"+ct+"_"+ep+"_"+elementid+"_"+cns;
     
     $("#rowid").val(id);
     
@@ -4076,9 +4511,153 @@ function savezeroreport()
 //    //setTimeout(delayedrefresh,1500);
 //  });
   
+  // When the user scrolls the page, execute myFunction
+$(".modal-content").scroll(function() {myFunction();});
+
+// Get the header
+var header = document.getElementById("myHeader0");
+
+// Get the offset position of the navbar
+var sticky = header.offsetTop; 
+console.log("sticky ni "+sticky);
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() 
+{
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
   
   
 }
+
+
+
+  
+    //PouchDB.debug.enable('*');
+    //PouchDB.debug.disable();
+var pnsdata_db = new PouchDB('pnsdata');
+var remoteCouch = false;
+var pnsdetails;
+
+//receive the artist, song title and lyrics text
+function insertPns(id,date,contacttype,entrypoint,indicator,pns_ukf,pns_ukm,pns_1f,pns_1m,pns_4f,pns_4m,pns_9f,pns_9m,pns_14f,pns_14m,pns_19f,pns_19m,pns_24f,pns_24m,pns_29f,pns_29m,pns_34f,pns_34m,pns_39f,pns_39m,pns_44f,pns_44m,pns_49f,pns_49m,pns_50f,pns_50m,counsellor,facility,mflcode,value,timestamp) {
+    
+    var syncstatus='No'; 
+    
+   pnsdata_db = {
+_id: ""+id //this is static since we cant have two users using the same phone
+,weekend:date
+,contacts_type:contacttype
+,contacts_modality:entrypoint
+,indicator:indicator
+,counsellor:counsellor
+,mflcode:mflcode
+,facility:facility
+,pns_ukf:pns_ukf
+,pns_ukm:pns_ukm
+,pns_1f:pns_1f
+,pns_1m:pns_1m
+,pns_4f:pns_4f
+,pns_4m:pns_4m
+,pns_9f:pns_9f
+,pns_9m:pns_9m
+,pns_14f:pns_14f
+,pns_14m:pns_14m
+,pns_19f:pns_19f
+,pns_19m:pns_19m
+,pns_24f:pns_24f
+,pns_24m:pns_24m
+,pns_29f:pns_29f
+,pns_29m:pns_29m
+,pns_34f:pns_34f
+,pns_34m:pns_34m
+,pns_39f:pns_39f
+,pns_39m:pns_39m
+,pns_44f:pns_44f
+,pns_44m:pns_44m
+,pns_49f:pns_49f
+,pns_49m:pns_49m
+,pns_50f:pns_50f
+,pns_50m:pns_50m
+,timestamp:timestamp
+,status:syncstatus
+,completed: false
+  };
+  pnsdata_db.put(pnsdetails, function callback(err, result) {
+    if (!err) 
+    {
+      console.log('record added succesfully');
+    }
+    else{
+        console.log(err);
+        
+    }
+    
+    //setTimeout(delayedrefresh,1500);
+  });
+}
+
+
+//update code 
+
+
+
+
+
+function updatePns(id,date,contacttype,entrypoint,indicator,pns_ukf,pns_ukm,pns_1f,pns_1m,pns_4f,pns_4m,pns_9f,pns_9m,pns_14f,pns_14m,pns_19f,pns_19m,pns_24f,pns_24m,pns_29f,pns_29m,pns_34f,pns_34m,pns_39f,pns_39m,pns_44f,pns_44m,pns_49f,pns_49m,pns_50f,pns_50m,counsellor,facility,mflcode,value,timestamp){
+    
+    var syncstatus='No'; 
+    
+pnsdata_db.get(id).then(function (doc) {
+        
+ 
+   if(id!=='null' && id!=='' ){
+//doc._id=id;
+doc.weekend=date;
+doc.contacts_type=contacttype;
+doc.contacts_modality=entrypoint;
+doc.indicator=indicator;
+doc.counsellor=counsellor;
+doc.mflcode=mflcode;
+doc.facility=facility;
+doc.pns_ukf=pns_ukf;
+doc.pns_ukm=pns_ukm;
+doc.pns_1f=pns_1f;
+doc.pns_1m=pns_1m;
+doc.pns_4f=pns_4f;
+doc.pns_4m=pns_4m;
+doc.pns_9f=pns_9f;
+doc.pns_9m=pns_9m;
+doc.pns_14f=pns_14f;
+doc.pns_14m=pns_14m;
+doc.pns_19f=pns_19f;
+doc.pns_19m=pns_19m;
+doc.pns_24f=pns_24f;
+doc.pns_24m=pns_24m;
+doc.pns_29f=pns_29f;
+doc.pns_29m=pns_29m;
+doc.pns_34f=pns_34f;
+doc.pns_34m=pns_34m;
+doc.pns_39f=pns_39f;
+doc.pns_39m=pns_39m;
+doc.pns_44f=pns_44f;
+doc.pns_44m=pns_44m;
+doc.pns_49f=pns_49f;
+doc.pns_49m=pns_49m;
+doc.pns_50f=pns_50f;
+doc.pns_50m=pns_50m;
+doc.timestamp=timestamp;
+doc.status=syncstatus;
+  return pnsdata_db.put(doc);
+   }
+});
+    
+}
+
 
 
 </script>

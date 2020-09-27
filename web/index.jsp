@@ -8,9 +8,10 @@
 
 
 <!DOCTYPE html>
-<html  manifest="htsrriv1.appcache">
+<!--<html  manifest="htsrriv1.appcache">-->
 <!--<html  >-->
 	<head>
+              <meta http-equiv="origin-trial" content="Agd7fSYxSHE+4XwOTgC99LrjXP6QGFdDlXTkV9oERCmy/PEBD9mT1nCfoZGZYe0zQGCqJW/TG+avQgB9nbuyWg0AAABteyJvcmlnaW4iOiJodHRwczovL2hzZHNhY2x1c3RlcjIuZmhpMzYwLm9yZzo0NDMiLCJmZWF0dXJlIjoiQXBwQ2FjaGUiLCJleHBpcnkiOjE2MTc3NTM1OTksImlzU3ViZG9tYWluIjp0cnVlfQ==">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<title>HTS RRI</title>
@@ -172,7 +173,7 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Enter Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
                             <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
@@ -297,7 +298,7 @@ input:focus {
                                    <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
                                     <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
                                     <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
+                                        <input type="text" onkeypress='return numbers(event);validateInp(this);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
                                   
                                     </div>
                                 </div>
@@ -1357,7 +1358,7 @@ function getcounsellorslist(){
    
               $.ajax({
                     url:'getcancellors',                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -1410,7 +1411,7 @@ $('#exportbutton').hide();
    
               $.ajax({
              url:'validateAccess',                            
-            type:'post',  
+            type:'get',  
             dataType: 'html',  
            
     success: function(data) {
@@ -2741,7 +2742,7 @@ var recordsunexported=$("#unexported").val();
             
     $.ajax({
                          url:'receiveData',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -2923,7 +2924,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
                          url:'receiveData',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -3820,8 +3821,13 @@ function validateAge(){
      if(miakangapi.startsWith("0")){
      $("#age").val("");    
          
+                                   }
+     else if(isNaN(parseInt(miakangapi))){
+     $("#age").val("");    
+      // alert("Enter whole numbers only");   
      }
-     //alert(miakangapi);
+    //isN
+    
     
                       }
 
@@ -4343,7 +4349,7 @@ function savezeroreport()
         else{
     $.ajax({
         url:'submitZero',
-        type:'post',
+        type:'get',
         data:{ 
             date:datee,
             facil:facilitii },
@@ -4385,15 +4391,30 @@ function savezeroreport()
 }
 
 
+function validateInp(elem) {
+                var validChars = /[0-9]/;
+                var strIn = elem.value;
+                var strOut = '';
+                for(var i=0; i < strIn.length; i++) {
+                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
+                }
+                elem.value = strOut;
+            }
+
 </script>
 
 <script>
-//if('serviceWorker' in navigator) 
-//{
-//  navigator.serviceWorker
-//           .register('sw1.js')
-//           .then(function() { console.log("Service Worker Registered"); });
-//}
+           if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw1.js').then(function(registration) {
+      // Registration was successful
+      console.log('HTS_ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>
 
 	</body>

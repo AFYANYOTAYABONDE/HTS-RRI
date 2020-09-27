@@ -1,63 +1,57 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-     http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-*/
+ */
 
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = 'precache-v37';
-const RUNTIME = 'runtime';
+const PRECACHE = 'hts_precache-v9';
+const RUNTIME = 'hts_runtimev9';
 
 // A list of local resources we always want to be cached.
-//
-const PRECACHE_URLS = [
-   '/',
-'index.jsp',
-'progressbar.json',
-'htsrri.png',
-'indicators.json',
-'sites1.json',
-'css/dataTables.bootstrap.min.css',
-'css/jquery.dataTables.min.css',
-'css/bootstrap.css',
-'css/bootstrap-datepicker.min.css',
-'css/select2.css',
-'css/styles.css',
-'js/jquery.min.js',
-'js/bootstrap.js',
-'js/scripts.js',
-'js/bootstrap-datepicker.min.js',
-'js/select2.js',
-'js/pouchdb-4.0.1.js',
-'js/datatables.min.js',
-'js/jquery.fileDownload.js',
-'images/ajax_loader.gif',
-'images/favicon.ico',
-'images/sort_asc.png',
-'images/sort_asc_disabled.png',
-'images/sort_both.png',
-'images/sort_desc.png',
-'images/sort_desc_disabled.png',
-'fonts/glyphicons-halflings-regular.woff2',
-'fonts/glyphicons-halflings-regular.woff',
-'fonts/glyphicons-halflings-regular.ttf'
-];
+const PRECACHE_URLS=[
+    'progressbar.json'
+    ,'htsrri.png'
+    ,'indicators.json'
+    ,'sites2.json'
+    ,'css/dataTables.bootstrap.min.css'
+    ,'css/jquery.dataTables.min.css'
+    ,'css/bootstrap.css'
+    ,'css/bootstrap-datepicker.min.css'
+    ,'css/select2.css'
+    ,'css/styles.css'
+    ,'js/jquery.min.js'
+    ,'js/bootstrap.js'
+    ,'js/scripts.js'
+    ,'js/bootstrap-datepicker.min.js'
+    ,'js/select2.js'
+    ,'js/pouchdb-7.1.1.js'
+    ,'js/datatables.min.js'
+    ,'js/html2canvas.js'
+    ,'js/FileSaver.js'
+    ,'js/jquery.fileDownload.js'
+    ,'images/ajax_loader.gif'
+    ,'images/favicon.ico'
+    ,'images/sort_asc.png'
+    ,'images/sort_asc_disabled.png'
+    ,'images/sort_both.png'
+    ,'images/sort_desc.png'
+    ,'images/sort_desc_disabled.png'
+    ,'images/wp.png'
+    ,'images/fwl.png'
+    ,'fonts/glyphicons-halflings-regular.woff2'
+    ,'fonts/glyphicons-halflings-regular.woff'
+    ,'fonts/glyphicons-halflings-regular.ttf'];
+
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
