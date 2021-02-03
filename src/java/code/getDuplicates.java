@@ -49,7 +49,8 @@ public class getDuplicates extends HttpServlet {
             
             String getdata=" select  `ID` as id,  `Facility Name` as facility, `Counsellor` as counsellor, `Register No.` as register_no, `Patient Serial no` as serialno, `Date Tested` as date_tested, "
                     + "`Age` as age, `Gender` as gender,`modality`,`Test Result` as testresult,`Linked` as linked,`Cccno` as cccno,`Linked site` as linked_site,"
-                    + "`Reason Not Linked` as reason_not_linked,`Reason for death` as reason_for_death,`Reason for declining` as reason_for_declining ,`timestamp`, ( lastsynced + INTERVAL 3 HOUR) as lastsynced, `mflcode`,ifnull(datestartedart,'') as datestartedart FROM aphiaplus_moi.hts_duplicates "
+                    + "`Reason Not Linked` as reason_not_linked,`Reason for death` as reason_for_death,`Reason for declining` as reason_for_declining ,`timestamp`, ( lastsynced + INTERVAL 3 HOUR) as lastsynced, `mflcode`,ifnull(datestartedart,'') as datestartedart "
+                    + " ,linkagedate ,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx FROM aphiaplus_moi.hts_duplicates "
                     + " where  Replace(`Facility Name`,\"'\",\"\") in ('"+facilitymfl+"')  ";
           //SUBSTR(`daily_raw`.`id`, 1, 5) in ('"+facilitymfl+"')
             
@@ -89,6 +90,18 @@ jobj.put("reason_for_declining",conn.rs.getString("reason_for_declining"));
 jobj.put("timestamp",conn.rs.getString("timestamp"));
 jobj.put("lastsynced",conn.rs.getString("lastsynced"));
 jobj.put("datestartedart",conn.rs.getString("datestartedart"));
+
+jobj.put("linkagedate",conn.rs.getString("linkagedate"));
+jobj.put("started_on_art",conn.rs.getString("started_on_art"));
+jobj.put("reason_not_started_art",conn.rs.getString("reason_not_started_art"));
+jobj.put("other_reason_not_started_on_treatment",conn.rs.getString("other_reason_not_started_on_treatment"));
+jobj.put("started_tx_site",conn.rs.getString("started_tx_site"));
+jobj.put("other_facility_started_art",conn.rs.getString("other_facility_started_art"));
+jobj.put("reason_for_declining_art",conn.rs.getString("reason_for_declining_art"));
+jobj.put("other_reason_for_declining_art",conn.rs.getString("other_reason_for_declining_art"));
+jobj.put("reason_for_death_tx",conn.rs.getString("reason_for_death_tx"));
+jobj.put("other_reason_for_death_tx",conn.rs.getString("other_reason_for_death_tx"));
+
 
 
             jarr.put(jobj);

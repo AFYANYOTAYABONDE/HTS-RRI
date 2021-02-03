@@ -4,25 +4,26 @@
     Author     : Emmanuel E
 --%>
 
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 <!--<html  manifest="htsrriv1.appcache">-->
-<html  >
+<!--<html  >-->
 	<head>
-              <meta http-equiv="origin-trial" content="Agd7fSYxSHE+4XwOTgC99LrjXP6QGFdDlXTkV9oERCmy/PEBD9mT1nCfoZGZYe0zQGCqJW/TG+avQgB9nbuyWg0AAABteyJvcmlnaW4iOiJodHRwczovL2hzZHNhY2x1c3RlcjIuZmhpMzYwLm9yZzo0NDMiLCJmZWF0dXJlIjoiQXBwQ2FjaGUiLCJleHBpcnkiOjE2MTc3NTM1OTksImlzU3ViZG9tYWluIjp0cnVlfQ==">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HTS RRI</title>
+		<title>HTS SELF</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                  <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
-                  <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
-                    <link rel="stylesheet" href="css/select2.css">
-                    <link rel="shortcut icon" href="htsrri.png">
+                <link rel="stylesheet" href="css/select2.css">
+                <link rel="shortcut icon" href="images/htsself.png">
                   
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,6 +58,13 @@ input:focus {
   }
 }
 
+.form-control input {
+border-color: #5cb85c; 
+border:#5cb85c;
+    
+}
+
+
 
 </style>
 
@@ -66,8 +74,9 @@ input:focus {
 <!-- header -->
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
+        
         <div class="navbar-header">
-            <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" > <%@include file="version.html" %> </button>
+            <button id="toolid" style="float:left;color:white;" class="navbar-toggle btn btn-default" > <i class="glyphicon glyphicon-stats"></i> HTS Test Kits Distribution</button>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -88,13 +97,11 @@ input:focus {
                 </li>
           
                 
-                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>
-                 <li><a title="Add Widget" id="adduserbutton"  href="http://hsdsacluster2.fhi360.org:8080/htsrri/live_edit.jsp"><i class="glyphicon glyphicon-bookmark"></i><span > HTS LIVE</span></a></li>
+                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Update user</span></a></li>
                   <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
                   <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
                  <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>
-                 <li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>
-                 <li ><a  onclick='loadCounsellorSummaryFromServer();' title="Add Widget" data-toggle="modal"  id="summaryreportanchor" href="#dailysummary"><i class="glyphicon glyphicon-check"></i>Exported Summary</a></li>
+                 <!--<li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>-->
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
@@ -112,12 +119,11 @@ input:focus {
      <div class="well well-sm" style="display:none" >
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
    <strong>Note!</strong> Targets have been hidden from the screen. To show targets for each site, un check the button besides. <b>Hide targets </b> <input type="checkbox" onclick="togglehidding();" checked id="hidetargets" />
- 
-     </div>
+  </div>
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-         <input type='hidden' id='uniquecns'>
+        
         <!-- /col-3 -->
         <div class="col-sm-12">
 
@@ -135,27 +141,18 @@ input:focus {
                   
 
                     <div class="btn-group btn-group-justified">
-                        
-                        <a  onclick='loadCounsellorSummaryFromServer();' title="Add Widget" data-toggle="modal"  id="summaryreportanchor4" href="#dailysummary" class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-download"></i> 
-                            <span  style="color:white;"><br/>Summary</span>
-                        </a>
                         <a href="#" id='refreshpage' class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-refresh"></i> 
-                             <span  style=""><br/>Refresh</span>
+                            <i class="glyphicon glyphicon-adjust"></i>
+                          HTS Test Kits Distribution
                         </a>
                        
                          
                             
                             <a  class="btn btn-primary col-sm-2" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
-                                <i class="glyphicon glyphicon-cloud-upload"></i>
-                                <br/>Export 
-                                <span id="unexportedno" style="color:yellow;">(0 records )</span>
+                                <i class="glyphicon glyphicon-cloud-upload"></i> Export Data 
+                                <label id="unexportedno" style="color:yellow;">(0 records )</label>
                             </a>
-                                                 <a href="hts_self.jsp" class="btn btn-primary col-sm-2">
-                            <i class="glyphicon glyphicon-link"></i>
-                           <span style='color:yellow;'><br/>HTS SELF</span>
-                        </a>
+                             
                        
 <!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
                             <i class="glyphicon glyphicon-link"></i>
@@ -175,20 +172,23 @@ input:focus {
                     </div>
 
                     <hr>
-
-
-                   
+        <div class="btn-group btn-group-justified" style='border-color: blue ;'>
+ <a href="index.jsp"  class="btn btn-default col-sm-2">
+                            <i class="glyphicon glyphicon-backward"></i>
+                          Return to HTS RRI
+                        </a>
+                   </div>
 
                     <!--tabs-->
                     <div class="panel">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Enter Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
                             <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                            
-                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Counsellors</a></li>
+                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Users</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
@@ -201,10 +201,10 @@ input:focus {
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
-                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
+<!--                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
                                 <tr><th class="col-xs-12" style="text-align:center" id="headerid"><b>Enter HTS Data</b></th></tr>
-                                </table>
+                                </table>-->
 <!--                                <tr><td class="col-xs-12">
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Date </label>
@@ -217,29 +217,21 @@ input:focus {
                                 
 <!--                                <tr>
                                     <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Date Test Conducted </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+
+                           <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: solid; border-right-style: solid; border-bottom-style: none; border-left-style: solid;">
+                                    <label  class="col-xs-4" style="padding-top:20px;padding-left:2px;">Date </label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:20px;">
+                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" required="true" readonly placeholder="e.g yyyy-mm-dd">
                                    <input type="hidden"  name ="rowid" id="rowid"  />
                                    <input type="hidden"  name ="unexported" id="unexported"  />
                                     </div>
                                 </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>-->
-                                
-                                  <!--<tr><td class="col-xs-12">-->
-                                
-                                
-                                
-                              
-                                
-                                  <div class="control-group col-xs-12" style="" >
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="checkids();validatemodalities();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
+
+      
+                                  <div class="control-group col-xs-12" style="background-color:#EBEBEB ;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Facility</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="checkids();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
                                             <option>Select Facility Name</option>
                                            
                                         </select>
@@ -247,538 +239,66 @@ input:focus {
                                 </div>
                                 
                                 
-                               
+ 
                                 
-                               
                                 
-                                          <!--</td></tr>-->
-                                  
-                                <!--counsellor-->
-                                <!--<tr><td class="col-xs-12">--> 
+                                <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Uploaded By</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
+                                            <option value=''>Select user</option>
 
-                                        <div class="control-group col-xs-12" style="" >
-                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
-                                            <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                                <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
-                                                    <option value=''>Select Counsellor</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                    <!--</td></tr>-->
-                                    
-                                
-                                
-                                
-                                
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                -->
-                                
-                                 
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="serialno" id="serialno"  autocomplete="off"  class="form-control"  placeholder="e.g 0001 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);validateInp(this);' onkeyup="validateAge();"  onblur="validatemodalities();" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Sex</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select type="text"   onblur="validatemodalitiesbygender();" name="gender" id="gender"  autocomplete="off"  class="form-control" >
-                                            <option value=''>select sex</option>
-                                            <option value='Female'>Female</option>
-                                            <option value='Male'>Male</option>
-                                            </select>
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                
-                                HTS Testing Modality
-                                
-                                
-                                <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange=""   name="modality" id="modality" class="form-control" >
-                                            <option value="">Select Modality</option>
-                                            <option value='index_testing'>Index Testing</option>
-                                            <option value='malnutrition'>PITC Malnutrition</option>
-                                            <option value='pediatrics'>PITC Pediatrics</option>
-                                            <option value='tb_clinics'>PITC TB</option>
-                                            <option value='other_pitc'>Other PITC</option>
-                                            <option value='vmmc'>VMMC Services</option>
-                                            <option value='vct'>VCT</option>
-                                            <option value='inpatient'>PITC Inpatient</option>
-                                            <option value='sti'>PITC STI</option>
-                                            <option value='emergency'>PITC Emergency</option>
-                                            <option value='anc1'>Initial test at ANC 1</option>
-                                            <option value='anc2'>Initial test at ANC 2</option>
-                                            <option value='ld'>Initial test at Labour & Delivery</option>
-                                            <option value='pnc'>Initial test at PNC < 6 wks</option>
-                                            
-                                            <!--<option value="Others">Others</option>-->
-                                           
                                         </select>
                                     </div>
                                 </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                
-                                 <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Test Results</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
-                                            <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
-                                          </select>
-                                    </div>
-                                </div>
-                                             
-   
-<!--                                             </td></tr>
-                                 
-
-
-                                 
-                                 <tr class="" >
-                                     <td class="col-xs-12"> -->
-
-
-
-                               <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Offered Index Testing</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange=""   name="offered_Index_Testing" id="offered_Index_Testing" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-
-                                <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font># of Contacts Elicited</label>
-                                 <div class="controls col-xs-12" >
-                                 <input type="text"    name="elicited_contacts" id="elicited_contacts" class="form-control" >
-                                
-                                
-                                 </div>
-                                 </div>
-
-                                             
-                                 <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Is the Patient Enrolled?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange="whichfacility();"   name="linked" id="linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-  
-
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-                                 
-<!--                                  <tr class='' >
-                                      <td class="col-xs-12"> -->
-                                          
-                                 <div class="control-group  linkage linked_site col-xs-12"  style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Linked in this facility?</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="specifyFacilityLinked();"   name="linked_site" id="linked_site" class="form-control" >
-                                 <option value='' >Select Results</option>
-                                 <option value='This Facility'>Yes</option>
-                                 <option value='Other Facility'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-								 
-								 
-								 <!--                                 </td>
-                                 </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_facility_linked" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Facility Linked</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="other_facility_linked" id="other_facility_linked"  autocomplete="off"  class="form-control"  placeholder="e.g Kabarnet District Hospital ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>-->
-								 
-								 
-								 
-
-                                <div class="control-group  linkage linked_site col-xs-12" style="display:none;">
-                                <label class="col-xs-12"><font color="red"><b>*</b></font>Date Linked</label>
-                                <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input type="text"  onblur="" name="linkagedate" id="linkagedate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                </div>
-                                </div>
-                                             
-                                             
-
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage cccno" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>CCC Number (mflcode-patient no)</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onclick="setmflcode();" onkeypress="setmflcode();" name="cccno" id="cccno"  autocomplete="off"  class="form-control"  placeholder="e.g 55555-23232 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>  -->
-                                 
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 linkage reason_not_linked" style="display:none;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Not Linked</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdiedordeclined();"   name="reason_not_linked" id="reason_not_linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Declined'>Declined</option>
-                                 <option value='Died'>Died before Enrollment</option>
-                                 <option value='TCA'>To come again</option>
-                                 <option value='Asked For More Time'>Requires More Time</option>
-                                 <option value='Other Reason'>Other Reason</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                    
-
-                                <div class="control-group col-xs-12 linkage other_reason_not_started_on_Treatment" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason not Linked</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_not_started_on_treatment" id="other_reason_not_started_on_treatment"  autocomplete="off"  class="form-control"  >
-                                  
-                                </div>
-                                </div>
-
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_declining" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Declined</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdeclinedother();"   name="reason_for_declining" id="reason_for_declining" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='To consult spouse'>To consult spouse</option>
-                                 <option value='Not ready to start'>Not ready to start</option>
-                                 <option value='Religious reasons'>Religious reasons</option>
-                                 <option value='Associated costs '>Associated costs</option>
-                                 <option value='Relocated to other area'>Relocated to other area</option>
-                                 <option value='Distance to health facility'>Distance to health facility</option>
-                                 <option value='Guardian declined RX for child'>Guardian declined RX for child</option>
-                                 <option value='No reason given'>No reason given</option>
-                                 <option value='Other reason'>Other reason</option>
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                             </td>
-                                 </tr>
-                                 
-                                 
-                                 <tr class='' >
-                                    <td class="col-xs-12">-->
-                                    <div class="control-group col-xs-12 linkage other_reason_for_declining" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Declined</label>
-                                    <div class="controls col-xs-12">
-                                    <input type="text"  onblur="" name="other_reason_for_declining" id="other_reason_for_declining"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>                                      
-                                        
-<!--                                </td>
-                                </tr> -->
-                                
-                                
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 linkage reason_for_death" style="display:none;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Died</label>
-                                 <div class="controls col-xs-12">
-                                 <select  onchange="isshowdeadother();"   name="reason_for_death" id="reason_for_death" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='HIV disease resulting in TB'>HIV disease resulting in TB</option>
-                                 <option value='HIV disease resulting in other infectious and parasitic disease'>HIV disease resulting in other infectious and parasitic disease</option>
-                                 <option value='HIV disease resulting in cancer'>HIV disease resulting in cancer</option>
-                                 <option value='HIV disease, resulting in other diseases or conditions leading to death'>HIV disease, resulting in other diseases or conditions leading to death</option>
-                                 <option value='Other natural causes'>Other natural causes</option>
-                                 <option value='Non-natural causes'>Non-natural causes</option>
-                                 <option value='Unknown Cause'>Unknown Cause</option>
-
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-<!--                                  <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_death" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Died</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_death" id="other_reason_for_death"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr> -->
-                                 
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->                                 
-<!---------------------------------------Started_on_ART----------------------------------------------------------------------------------->
-
-
- 
-<!--                                             </td></tr>
-                                 
-                                 
-                                 <tr class="" >
-                                     <td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 class_started_art started_on_tx" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Is the Patient Started on ART?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange="whichfacility_tx();"   name="started_on_art" id="started_on_art" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                    
-
-
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-                                 
-<!--                                  <tr class='' >
-                                      <td class="col-xs-12"> -->
-
 
                                
+  <div class="control-group col-xs-12" style="background-color:#EBEBEB ; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style=" padding-left:1px;" class="col-xs-6">HTS Self Test Kits Distributed <span class='badge' title='Hts Test Kits' data-toggle='popover' data-trigger='hover' data-content='# of Test Kits distributed '>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="removeFirstZero('self_test');" required="true" name="self_test" id="self_test"  autocomplete="off"  class="form-control" title="enter # Self Tested on the date above"  placeholder="# Test Kits distributed">
+ </div>
+ </div>  
 
-                                             
-                                 <div class="control-group  class_started_art class_started_art_site col-xs-12"  style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Started art in this Facility?</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="specifyFacilityStartedTx();"   name="started_tx_site" id="started_tx_site" class="form-control" >
-                                 <option value='' >Select Results</option>
-                                 <option value='This Facility'>Yes</option>
-                                 <option value='Other Facility'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
+                                
+<!--
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
 
-                                <div class="control-group  class_started_art class_started_art_site col-xs-12" style="display:none;">
-                                <label class="col-xs-12"><font color="red"><b>*</b></font>Date Started on ART</label>
-                                <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                </div>
-                                </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 class_started_art other_facility_startedart" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Facility Started on ART</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="other_facility_started_art" id="other_facility_started_art"  autocomplete="off"  class="form-control"  placeholder="e.g Kabarnet District Hospital ">
-                                  
-                                    </div>
-                                </div>
-                                        
+pmtct_tested
+pmtct_positive
+pmtct_Yield
 
-                                        
+vct_tested
+vct_positive
+vct_Yield
+
+index_tested
+index_positive
+index_yield
+
+self_test
+Referred_Prep
+
+Total_Tested
+Total_Positive
+Total_Linked
+Total_Linkage
+-->
+
+                                      
                                         
 <!--                                </td>
-                                </tr>  -->
-                                 
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 class_started_art class_reason_not_started_art" style="display:none;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Not started on ART</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdiedordeclined_art();"   name="reason_not_started_art" id="reason_not_started_art" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Declined'>Declined</option>
-                                 <option value='Died'>Died before ART</option>
-                                 <option value='TCA'>To come again</option>
-                                 <option value='On Treatment preparation'>On Treatment preparation Sessions</option>
-                                 <option value='Started TB Treatment'>On TB Treatment</option>
-                                 <option value='Meningitis'>Meningitis</option>
-                                 <option value='Other Reason'>Other Reason</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                    
-
-                                <div class="control-group col-xs-12 class_started_art other_reason_not_started_on_Treatment" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason not Started on ART</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_not_started_on_treatment" id="other_reason_not_started_on_treatment"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 class_started_art class_reason_for_declining_art" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Declined ART</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdeclined_art_other();"   name="reason_for_declining_art" id="reason_for_declining_art" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='To consult spouse'>To consult spouse</option>
-                                 <option value='Not ready to start'>Not ready to start</option>
-                                 <option value='Religious reasons'>Religious reasons</option>
-                                 <option value='Associated costs '>Associated costs</option>
-                                 <option value='Relocated to other area'>Relocated to other area</option>
-                                 <option value='Distance to health facility'>Distance to health facility</option>
-                                 <option value='Guardian declined RX for child'>Guardian declined RX for child</option>
-                                 <option value='No reason given'>No reason given</option>
-                                 <option value='Other reason'>Other reason</option>
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
+                                </tr> -->
                                  
                                  
-                                 <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 class_started_art class_other_reason_for_declining_art" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Declined</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_declining_art" id="other_reason_for_declining_art"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-
-
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                 <div class="control-group col-xs-12 class_started_art reason_for_death_tx" style="display:none;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Died</label>
-                                 <div class="controls col-xs-12">
-                                 <select  onchange="isshowdeadother_tx();"   name="reason_for_death_tx" id="reason_for_death_tx" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='HIV disease resulting in TB'>HIV disease resulting in TB</option>
-                                 <option value='HIV disease resulting in other infectious and parasitic disease'>HIV disease resulting in other infectious and parasitic disease</option>
-                                 <option value='HIV disease resulting in cancer'>HIV disease resulting in cancer</option>
-                                 <option value='HIV disease, resulting in other diseases or conditions leading to death'>HIV disease, resulting in other diseases or conditions leading to death</option>
-                                 <option value='Other natural causes'>Other natural causes</option>
-                                 <option value='Non-natural causes'>Non-natural causes</option>
-                                 <option value='Unknown Cause'>Unknown Cause</option>
-
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-<!--                                  <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 class_started_art other_reason_for_death_tx" style="display:none;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Died</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_death_tx" id="other_reason_for_death_tx"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                
-
-
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->                                 
                                  
                                 
 <!--                                    </table>
@@ -792,10 +312,10 @@ input:focus {
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note: Please enter data for all input fields.</div>
+                               <div id="utumani" class="alert-info">Note: Please enter data for all input fields.</div>
                                    <br/>
                                     <div class="controls">
-                                        <button type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <button type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-primary active">
                                             SAVE
                                         </button>
                                      </div>
@@ -864,7 +384,7 @@ input:focus {
                             </div>
                             
                             <div class="tab-pane well" id="viewcounsellors">
-                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected counselor</button>
+                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected User</button>
                                 <div id="searchtabledivcns">
                                   
                                 </div>    
@@ -895,14 +415,14 @@ input:focus {
     </div>
 
 <!-- /Main -->
- <h5 style="text-align: center;color:blue;"><%@include file="version.html" %></h5>
-<footer class="text-center"> &copy; HSDSA USAID </footer>
+
+<footer class="text-center"> &copy; AfyaNyota | USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">x</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -972,7 +492,7 @@ input:focus {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true"x</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
                 <h4 class="modal-title">Submit zero report</h4>
             </div>
             <div class="modal-body">
@@ -1022,17 +542,15 @@ input:focus {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Counselor Activation</h4>
+                <h4 class="modal-title">System User Details</h4>
             </div>
             <div class="modal-body">
                 <form action="#" id="userform" method="post">
                  <div class="control-group">
-                                    <label><font color="red"><b>*</b></font>Counselor Name</label>
+                                    <label><font color="red"><b>*</b></font>Enter  Full Name</label>
                                     <div class="controls">
-                                        <select  maxlength='30' placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" >
+                                        <input  maxlength='30' placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" />
                                     
-                                        <option value=''>loading.Please wait</option>
-                                        </select>
                                     </div>
                                 </div> 
                     
@@ -1053,7 +571,7 @@ input:focus {
                                 </div>
                     
                     <div class="control-group" >
-                                    <label>Current Facility:</label>
+                                    <label>Facility Name</label>
                                     <div class="controls">
                                         <select  name="counsellorfacil" id="counsellorfacil" style="width:100%;" class="form-control">
                                             <option value="">Select Facility</option>
@@ -1071,7 +589,7 @@ input:focus {
                                     <label></label>
                                     <div class="controls">
                                         <button onclick=" updateuser();"  type="submit" style="margin-left: 50%;"  class="btn-lg btn-success active">
-                                            Activate
+                                            Update
                                         </button>
                                     </div>
                                 </div>   
@@ -1194,9 +712,9 @@ input:focus {
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting patient level data for the HTS RRI.</p>
-                    <h3>Activating HTS counselors</h3>
-                 <p> The first time of installing/running the application,You should specify the name of the HTS counselor from the availed list.</p>
+                <p>This  application is created for aiding users in collecting Facility Attendance Tool</p>
+                    <h3>Activating User</h3>
+                 <p> The first time of installing/running the application,You should specify the name of the system users from the availed list.</p>
                 
                 <h3>Data Elements</h3>
                 <p>The specific elements that we are interested in are;</p>
@@ -1204,7 +722,7 @@ input:focus {
 
 <li> Date Test Conducted </li>
 <li> Facility Name </li>
-<li> Name of Counselor- Name of HTS Counselor</li>
+<li> Name of Counsellor- Name of HTS Counsellor</li>
 <li> Register Number - <i>Refers to the number allocated to the HTS register, e.g. 01, 02, 03 etc. Meaning each HTS register being used at the facility should be allocated a number different from the other</i></li>
 <li> Patient Serial Number -<i>Is the number given to the client in the HTS register based on annual serialization system in the HTS register (column a).</i> </li>
 <li> Age </li>
@@ -1213,7 +731,7 @@ input:focus {
 <li> HTS Test Results <i>(Positive/Negative)</i> </li>
 <li> Is the Patient Linked </li> 
 <li> The Facility where the patient is linked in </li>
-<li> The Patient CCC number</li>
+<li> Number of HTS Self Test kits distributed</li>
 <li>Reason why Patient is not linked</li>
 <li> If patient Declined to be linked, give reason</li>
 <li> If Patient was not linked because of death, give reason for death</li>
@@ -1249,33 +767,45 @@ input:focus {
 
 
 
-
-
-<div class="modal" id="dailysummary">
+<div class="modal" id="whatsappform" style='height:99%;'>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title" style='color:green;'>Summary of your Data on the server</h4>
-            </div>
+<!--            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
+            <label id='tumawp' class='btn btn-info'>Share <i class='glyphicon glyphicon-share'></i></label>
+            </div>-->
             <div class="modal-body">
+              
+            <form id="whatsapp">
                
-                   
-                  <div id="summarytabledivcns">
-                      <img src='images/ajax_loader.gif'>    
-                      <label><b>Note: This requires internet connection</b></label>
-                                </div>   
-         
-           </div>
+                  <table border='0px' class='table table-condensed' style='font-size:9px;'>
+<tr style='color:white;background-color:gray;'><th colspan='4' style='font-size:11px;text-align:center;'> <b><label id='lbl_facility' ></label></b> : <label id='lbl_date_tested'></label></th></tr>
+
+<tr><td style='border:1px solid gray;' rowspan='2'><b>OVERALL</b></td><td style='text-align:left;'><b>HTS SELF Tests:</b> </td><td><label id='lbl_self_test'></label></td><td></td></tr>
+<tr style='border:1px solid gray;'><td style='text-align:left;'><b>Submitted By:</b> </td><td><label id='lbl_counsellor'></label></td><td></td></tr>
+
+
+  
+  <tr><td><div alt='' id='pisa' ></div></td></tr>
+
+
+</table>
+              
+              </form>
+            
+            </div>
             <div class="modal-footer">
-                <a href="#" data-dismiss="modal" class="btn">Close</a>
-               
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
             </div>
         </div>
+        
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dalog -->
 </div>
+
+
 
 
 
@@ -1298,6 +828,10 @@ input:focus {
                  
                 <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
                 <script type="text/javascript" src="js/datatables.min.js"></script>
+                <script type="text/javascript" src="js/html2canvas.js"></script>
+                <script type="text/javascript" src="js/FileSaver.js"></script>
+                <!--<script type="text/javascript" src="js/screenshot.js"></script>-->
+                
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
               //var hostname="https://hsdsacluster2.fhi360.org:8443/htsrri/";
@@ -1397,7 +931,7 @@ function adduser(code,cname,cfacil,fullname) {
   };
   userdb.put(userdetails, function callback(err, result) {
     if (!err) {
-      console.log('counselor added succesfully');
+      console.log('counsellor added succesfully');
     }
     else{
         console.log(err);
@@ -1433,7 +967,7 @@ function adduser(code,cname,cfacil,fullname) {
 userdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
 if(da.total_rows===0){
     //activatecounsellors();
-$("#usernamelabel").html("Activate a Counsellor");
+$("#usernamelabel").html("Activate a User");
 $("#usernamelabel").click();
 $("#usernamelabel").click();
 
@@ -1457,6 +991,8 @@ $("#usernamelabel").click();
             $('#facilityname').select2();
             $('#facilityname_zerorpt').select2();
            
+           $("#usernamelabel").html("Hi "+dat.cname);
+           
            // validatemodalities();
                                      
                                      }
@@ -1472,7 +1008,7 @@ $("#usernamelabel").click();
            user=dat.cname;
             }
             else {
-             counsellors="<option value=''>Activate a Counsellor</option>";
+             counsellors="<option value=''>Activate a User</option>";
              $("#counsellor").html(counsellors);
      }
    
@@ -1653,7 +1189,7 @@ function getcounsellorslist(){
     
 }
 
-getcounsellorslist();
+//getcounsellorslist();
 
 
 
@@ -1709,51 +1245,24 @@ $('#exportbutton').hide();
 
  
 //This is a document to save all tables 
-var dailydatadb = new PouchDB('client_data_rrisep',{auto_compaction: true});
+var dailydatadb = new PouchDB('htsself_data',{auto_compaction: true});
 var remoteCouch = false;
 var weeklydata;
 
 //receive the artist, song title and lyrics text
-function insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user,syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) {
+function insertdailydata(id,facilityname,counsellor,date_tested,self_test,timestamp,user, syncstatus) {
    
    
         dailydata = {
-        _id:id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
-	facility:facilityname,
-       counselorname:counsellor,
-       register_no:register_no,
-       serialno:serialno,
+       _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
+       facility:facilityname,
+       counselorname:counsellor,      
        date_tested:date_tested,
-       age:age,
-       gender:gender,
-       modality:modality,
-       testresult:testresult,
-       linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-
-linkagedate:linkagedate,
-started_on_art:started_on_art,
-reason_not_started_art:reason_not_started_art,
-other_reason_not_started_on_treatment:other_reason_not_started_on_treatment,
-started_tx_site:started_tx_site,
-other_facility_started_art:other_facility_started_art,
-reason_for_declining_art:reason_for_declining_art,
-other_reason_for_declining_art:other_reason_for_declining_art,
-reason_for_death_tx:reason_for_death_tx,
-other_reason_for_death_tx:other_reason_for_death_tx,
-
-timestamp:timestamp,
-user:user,
-syncstatus:syncstatus,        
-completed: false
+       self_test:self_test,
+       timestamp:timestamp,
+       user:user,
+       syncstatus:syncstatus,        
+       completed: false
   };
   dailydatadb.put(dailydata, function callback(err, result) {
       
@@ -1767,45 +1276,14 @@ completed: false
     else {
         
        $("#headerid").html("<font color='red'><b>Record Not Saved. You have already entered another record with similar serial number, register no. and modality</b></font>");
-         alert("Duplicate Error!.You have already entered another record with similar serial number, register no. and modality");
+         alert("Duplicate Error!.You have already entered data for that date. Consider editing the data");
         
-            console.log('Saving Error: Another Record exists with a similar serial number, register no. and modality ');   
+            console.log('Saving Error: Data for that data has been entered ');   
         
          }
   });
 }	
 
-
-function weekdaysBetween(startDate, endDate) {
-   if (startDate < endDate) 
-   {
-      var s = new Date(startDate);
-      var e = new Date(endDate);
-   } 
-   else 
-   {
-      var s = new Date(endDate);
-      var e = new Date(startDate);
-   }
-   var diffDays = Math.floor((e - s) / 86400000);
-   var weeksBetween = Math.floor(diffDays / 7);
-   if (s.getDay() === e.getDay()) {
-      var adjust = 0;
-   } else if (s.getDay() === 0 && e.getDay() === 6) {
-      var adjust = 5;
-   } else if (s.getDay() === 6 && e.getDay() === 0) {
-      var adjust = 0;
-   } else if (e.getDay() === 6 || e.getDay() === 0) {
-      var adjust = 5-s.getDay();
-   } else if (s.getDay() === 0 || s.getDay() === 6) {
-      var adjust = e.getDay();
-   } else if (e.getDay() > s.getDay() ) {
-      var adjust = e.getDay()-s.getDay();
-   } else {
-      var adjust = 5+e.getDay()-s.getDay();
-   }
-   return (weeksBetween * 5) + adjust;
-}
 
 
 //prepare form data
@@ -1815,51 +1293,20 @@ function weekdaysBetween(startDate, endDate) {
 var id=null;
 var facility=null;
 var counsellor=null;
-var register_no=null;
-var serialno=null;
+
 var date_tested=null;
-var age=null;
-var gender=null;
-var modality=null;
-var testresult=null;
-var linked=null;
-var cccno=null;
-var linked_site=null;
-var other_facility_linked=null;
-var reason_not_linked=null;
-var reason_for_death=null;
-var other_reason_for_death=null;
-var reason_for_declining=null;
-var other_reason_for_declining=null;
+
 var user=null;
 var timestamp=null;
 var datestartedart=null;
 
 
 
-var linkagedate=null;
-var started_on_art=null;
-var reason_not_started_art=null;
-var other_reason_not_started_on_treatment=null;
-var started_tx_site=null;
-var other_facility_started_art=null;
-var reason_for_declining_art=null;
-var other_reason_for_declining_art=null;
-var reason_for_death_tx=null;
-var other_reason_for_death_tx=null;
+var self_test=null;
 
-//var viralload_tg=null; 
-//var viralload=null; 
-//var viralload_mothers=null; 
-
-   
-//var newart=null;
-//var newpos_pmtct=null;
-//var art_pmtct=null;
-   
    //added 201605 
     var progressbarstoskip=[];
-     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining","linkagedate","started_on_art","reason_not_started_art","other_reason_not_started_on_treatment","started_tx_site","other_facility_started_art","reason_for_declining_art","other_reason_for_declining_art","reason_for_death_tx","other_reason_for_death_tx"];
+     var allindicatorsarray=["rowid","facilityname","enddate","counsellor","self_test"];
      var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
@@ -2042,7 +1489,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'x</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>x</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -2090,53 +1537,53 @@ function sumofindicators(sourceindicators,destinationindicator){
 //=========================================set targets================================
 
 //function settargets(facilitymfl){
-function activatecounsellors(){
-
-counsellorslistdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
-if(da.total_rows===0){
-//getcounsellorslist();
-alert("No loaded list of counsellors");
-
-                      }
-     else {
-       
-            var counsellors="<option value=''>select  Counsellor(s)</option>";
-            var a;
-     for(a=0;a<da.total_rows;a++){
-                var dat={}; 
-           
-	       dat=da.rows[a].doc;
-                
-            if(dat.RRI_Name!==''){
-                if(1===1){
-               // if(dat.isactive===1){
-                    
-           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+"</option>"
-           
-           
-         
-                                     
-                          }
-     
-           
-           $("#counsellorreg").html(counsellors);
-          $('#counsellorreg').select2(); 
-          $('#counsellorreg').css('width','100%'); 
-
-        
-            }
-            else {
-             //alert("");
-             console.log("Skipped Counsellor without rri name "+dat.RRI_Name);
-     }
-   
-
-     }//end of row
-
-        }
-});
-
-}
+//function activatecounsellors(){
+//
+//counsellorslistdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
+//if(da.total_rows===0){
+////getcounsellorslist();
+////alert("No loaded list of counsellors");
+//
+//                      }
+//     else {
+//       
+//            var counsellors="<option value=''>select  Counsellor(s)</option>";
+//            var a;
+//     for(a=0;a<da.total_rows;a++){
+//                var dat={}; 
+//           
+//	       dat=da.rows[a].doc;
+//                
+//            if(dat.RRI_Name!==''){
+//                if(1===1){
+//               // if(dat.isactive===1){
+//                    
+//           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+" ["+dat.Currentfacility+"]</option>"
+//           
+//           
+//         
+//                                     
+//                                     }
+//     
+//           
+//           $("#counsellorreg").html(counsellors);
+//          $('#counsellorreg').select2(); 
+//          $('#counsellorreg').css('width','100%'); 
+//
+//        
+//            }
+//            else {
+//             //alert("");
+//             console.log("Skipped Counsellor without rri name "+dat.RRI_Name);
+//     }
+//   
+//
+//     }//end of row
+//
+//        }
+//});
+//
+//}
 
 
 
@@ -2149,49 +1596,22 @@ function validateweeklydata(){
     
     //receive all the fields from the weekly data from
 id=$("#rowid").val();
+
 facility=$("#facilityname").val();
+
 counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
+
+self_test=$("#self_test").val();
+
 date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-//user=$("#user").val();
-//timestamp=$("#timestamp").val();
-datestartedart=$("#artstartdate").val();
 
-linkagedate=$('#linkagedate').val();
-started_on_art=$('#started_on_art').val();
-reason_not_started_art=$('#reason_not_started_art').val();
-other_reason_not_started_on_treatment=$('#other_reason_not_started_on_treatment').val();
-started_tx_site=$('#started_tx_site').val();
-other_facility_started_art=$('#other_facility_started_art').val();
-reason_for_declining_art=$('#reason_for_declining_art').val();
-other_reason_for_declining_art=$('#other_reason_for_declining_art').val();
-reason_for_death_tx=$('#reason_for_death_tx').val();
-other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
+var user="hsdsa"; 
 
+var currentdate = new Date();
+    
+var mn=""+(currentdate.getMonth()+1) ;
 
-    console.log("Date started ART__"+datestartedart);
-    
-    //var user=$("#username").val(); 
-    var user="hsdsa";
-    
-    var currentdate = new Date();
-    
-    var mn=""+(currentdate.getMonth()+1) ;
-    var dt=""+currentdate.getDate();
+var dt=""+currentdate.getDate();
     var hr=""+currentdate.getHours();
     var min=""+currentdate.getMinutes();
     var sc=""+currentdate.getSeconds();
@@ -2210,8 +1630,7 @@ other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
     
      var id=null;
      
-      console.log("Urefu wa CCC Number "+cccno.length); 
-          
+      
      if(facility==='')
      {         
   
@@ -2225,130 +1644,34 @@ other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
      
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
+    
      
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
-      else if (enddate==='')
-     {
-         
-     alert('Select Test Date');
-   $("#enddate").focus();    
-     } 
-     
-
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
-else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }  
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
-else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }    
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-
-else if(linked==='Yes' && linkagedate==='') { alert(' Enter date patient was linked to ART');  $('#linkagedate').focus(); }
-
-else if(date_tested!=='' && linkagedate!=='' && Date.parse(date_tested) > Date.parse(linkagedate) ) { alert(' Date linked on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
-
-
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked===''  ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
-//________vaa
-
-else if(linked==='Yes' && started_on_art==='') { alert(' specify if patient is started on ART');  $('#started_on_art').focus(); }
-else if(started_on_art==='Yes' && started_tx_site==='') { alert('specify started on ART site');  $('#linked_site').focus(); }
-
-
-else if(date_tested!=='' && datestartedart!=='' && Date.parse(date_tested) > Date.parse(datestartedart) ) { alert(' Date started on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
-
-
-
-else if(started_on_art==='Yes' && datestartedart===''   ) 
-{ alert('Enter date started on ART'); 
-    $('#started_on_art').focus();  }
-
-else if(linkagedate!=='' && datestartedart!=='' && Date.parse(linkagedate) > Date.parse(datestartedart) ) 
-{ alert(' Date started on ART cannot be less than date linked to ART');  $('#artstartdate').focus(); }
  
+     
+
+else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
+
+else if(self_test==='') { alert(' Enter number of test kits distributed');  $('#self_test').focus(); }
 
 
-
-else if(started_tx_site==='Other Facility' && other_facility_started_art==='') { alert(' Specify the name of other facility started on art');  $('#other_facility_linked').focus(); }
-else if(started_on_art==='No' && reason_not_started_art===''  ) { alert('Specify reason not started ART'); 
-    $('#reason_not_started_art').focus();  }
-else if(  reason_not_started_art==='Died' && reason_for_death_tx==='' && started_on_art==='No') { alert('Specify reason for death ');  
-    $('#reason_for_death_tx').focus();  }
-else if( reason_for_death_tx==='Other natural causes' && other_reason_for_death_tx==='' && started_on_art==='No') 
-{ alert('Specify  other reason for death');  
-    $('#other_reason_for_death_tx').focus(); }
-else if(reason_not_started_art==='Declined' && reason_not_started_art==='' && started_on_art==='No') { alert(' Select reason for declining art'); 
-    $('#reason_for_declining_art').focus();  }
-else if(reason_for_declining_art==='Other reason' && other_reason_for_declining_art==='') 
-{ alert(' Specify the other reason for declining art initiation');  $('#other_reason_for_declining_art').focus(); }
-
-
-
-//validations for newly added elements
-
-/**
- * 
- * @type jQuery
- * 
- * 
-started_on_art
-reason_not_started_art
-other_reason_not_started_on_treatment
-started_tx_site
-other_facility_started_art
-reason_for_declining_art
-other_reason_for_declining_art
-reason_for_death_tx
-other_reason_for_death_tx
-njia mapema
- * 
- */
-
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
     
        else {
+           
      var facilitynameandmfl=facility.split("_");        
     // var startd=startdate.replace('-','');      
     // var startd=startd.replace('-','');      
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-',''); 
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');
-     
-     // id=facilitynameandmfl[0]+"_"+endd+"_"+cns+"_"+mod;
-      //this should not be cleared
+    
+   
      id=$("#rowid").val();
       
      var facilityname=facilitynameandmfl[1];
@@ -2357,10 +1680,8 @@ else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focu
             //add a variable to distinguish the two
             //use _wk
             
-  insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) ;
-  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+" @ "+linkagedate+" @ "+datestartedart+" @ "+started_on_art+" @ "+reason_not_started_art+" @ "+other_reason_not_started_on_treatment+" @ "+started_tx_site+" @ "+other_facility_started_art+" @ "+reason_for_declining_art+" @ "+other_reason_for_declining_art+" @ "+reason_for_death_tx+" @ "+other_reason_for_death_tx) ;
-
-
+  insertdailydata(id,facilityname,counsellor,date_tested,self_test,timestamp,user, syncstatus) ;
+  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+ date_tested+" @ "+self_test+" @ "+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@") ;
 
  //selectsearchdata();
 $("#message").show();
@@ -2486,14 +1807,14 @@ function selectsearchdata()
               //how to reference each column 
               //alert(dat.doc.startdate);
               //dat.doc._id
-              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>*";
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>";
               if(dat.doc.syncstatus==="Yes"){
                  statusicon=""; 
                   
                }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> Modality: <b>"+dat.doc.modality+"</b> serial #: <b>"+dat.doc.serialno+" </b> Register #: <b>"+dat.doc.register_no+" Test result:</b> "+dat.doc.testresult+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> Self Test kits: <b>"+dat.doc.self_test+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></button></td></tr>";
           	    
                   }
             } //end of for loop
@@ -2525,7 +1846,7 @@ function selectconsdata()
     
     //rread from weekly data db
     
-var uncns="";
+
   
     
   userdb.allDocs({include_docs: true, ascending: true}).then( function(doc) { 
@@ -2556,9 +1877,8 @@ var uncns="";
              
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
 		 dbdata1+="<tr id=\""+dat.doc._id+"\"><td> "+fcar[1]+" </td><td>"+dat.doc.cname+"</td></tr>";
-          	 uncns+=dat.doc.cname+",";
-                 $("#uniquecns").val(uncns);
-            }
+          	    
+                  }
             } //end of for loop
                     
 	appendtablecounsellordata(dbdata1);
@@ -2577,76 +1897,6 @@ var uncns="";
   	  
     
     
-}
-
-
-function loadCounsellorSummaryFromServer(){
-    
-    var allcns=$("#uniquecns").val();
-    
-    var rn=Math.random();
-     $.ajax({
-        url:'counsellor_summary',
-        type:'get',
-        data:{cns:allcns,rn:rn},
-        dataType:'json',
-        success: function(data) {
-        {
-            var dbdata="";
-            console.log("Leo ni "+TodayYMD());
-            var sikuzajuma=weekdaysBetween('2021-01-18', TodayYMD());
-            
-            var cumtarget=15*parseInt(sikuzajuma);
-            
-    for( var s=0;s<data.length;s++){
-        
-       
-                
-        
-        console.log('siku za juma'+sikuzajuma)
-        
-        var Det=data[s].Date;
-        var Tes=data[s].Tested;
-        var pos=data[s].Positive;
-        var lin=data[s].linked;
-        var cns=data[s].Counsellor;
-        var fac=data[s].Facility;
-        var status="";
-        if(Tes>0){
-            var tgt=15;
-        if(Det==='Surge Total'){tgt=cumtarget;}
-        var stat=Math.round(parseInt(Tes)/parseInt(tgt)*100)+"%";
-        
-        
-        if((parseInt(Tes)/parseInt(tgt)*100)>=100){
-        status="<label style='color:green;'>"+stat+"</label>";
-       
-    }
-     else {status="<label style='color:red;'>"+stat+"</label>";}
-    }
-         if(Det==='Surge Total'){Det="<label style='color:blue;'>"+Det+"</label>";}
-        
-        var res="<b>Date</b>: "+Det+"<br/> <b>Tested</b>: "+Tes+"<br/><b>Positive</b>: "+pos+"<br/><b>linked</b>: "+lin+"<br/> <b>Achieved:</b>"+status;
-      dbdata+="<tr ><td> "+cns+" </td><td> "+fac+" </td><td>"+res+"</td></tr>";  
-    
-          //if(){}
-        if(s===data.length-1){
-            appendcnssummary(dbdata);
-            
-        }
-    }
-      
-            
-        }
-        
-        
-                                 }
-
-});
-    
-    
-    // 
-    //appendcnssummary
 }
 
 
@@ -2725,7 +1975,7 @@ function appendtablecounsellordata( dbdata1 )
 
 function appendtabledata( dbdata ){
     
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date tested</th><th style='width:50%;'>Patient</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date</th><th style='width:50%;'>Summary</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
          
 	   $(document).ready(function() {
                 
@@ -2780,66 +2030,12 @@ function appendtabledata( dbdata ){
                                                           }
 
  selectsearchdata();
- 
- 
- 
- 
- 
- 
-//--------------------------------------------------------------------------------------------------------------------------------
-//
-function appendcnssummary( dbdata1 ) 
-{
-    
-     $("#summarytabledivcns").html("<table id='dailycnstable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Name</th><th style='width:30%;'>Facility</th><th style='width:40%;'>Results</th></tr></thead><tbody>"+dbdata1+"</tbody></table>");
-         
-	   $(document).ready(function() {
-                
-         /* $('#searchtable').DataTable({              
-              "autoWidth": true,
-              "paging": true,
-              "pagingType": "full",
-              "lengthChange": false,  "order": [[0,'desc']]                    
-          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
-          **/
-          //new code
-   var table2 = $('#dailycnstable').DataTable({"autoWidth": true,
-              "paging": true,
-              "pagingType": "full",
-              "lengthChange": false,  
-              "order": [[0,'desc']]});
- 
-    $('#summarytabledivcns tbody').on( 'click', 'tr', function () {
-        if ($(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-             $('#btnDeleteRowcns').hide();  
-        }
-        else {
-            table2.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-           //$('#btnDeleteRowcns').show();  
-            }
-    } );
- 
-    
-
-          
-          
-          
-          
-            
-                                     } ); 
-    
-                                                          }
- 
- 
- 
- 
 
 function showreports(){
     
      $("#reportsbutton").show();
-}
+     
+                      }
 
 
 function loadsaveddailydata(id,facility,openreportstab ){
@@ -2858,43 +2054,18 @@ function loadsaveddailydata(id,facility,openreportstab ){
     
 $("#facilityname").val(mflanddates[0]+"_"+facility);   
 $("#counsellor").val(doc.counselorname);
-$("#register_no").val(doc.register_no);
-$("#serialno").val(doc.serialno);
-$("#enddate").val(doc.date_tested);
-$("#age").val(doc.age);
-$("#gender").val(doc.gender);
-$("#modality").val(doc.modality);
-$("#testresult").val(doc.testresult);
-$("#linked").val(doc.linked);
-$("#cccno").val(doc.cccno);
-$("#linked_site").val(doc.linked_site);
-$("#other_facility_linked").val(doc.other_facility_linked);
-$("#reason_not_linked").val(doc.reason_not_linked);
-$("#reason_for_death").val(doc.reason_for_death);
-$("#other_reason_for_death").val(doc.other_reason_for_death);
-$("#reason_for_declining").val(doc.reason_for_declining);
-$("#other_reason_for_declining").val(doc.other_reason_for_declining);
-$("#artstartdate").val(doc.datestartedart);
 
-$('#linkagedate').val(doc.linkagedate);
-$('#started_on_art').val(doc.started_on_art);
-$('#reason_not_started_art').val(doc.reason_not_started_art);
-$('#other_reason_not_started_on_treatment').val(doc.other_reason_not_started_on_treatment);
-$('#started_tx_site').val(doc.started_tx_site);
-$('#other_facility_started_art').val(doc.other_facility_started_art);
-$('#reason_for_declining_art').val(doc.reason_for_declining_art);
-$('#other_reason_for_declining_art').val(doc.other_reason_for_declining_art);
-$('#reason_for_death_tx').val(doc.reason_for_death_tx);
-$('#other_reason_for_death_tx').val(doc.other_reason_for_death_tx);
+$("#enddate").val(doc.date_tested);
+
+$("#self_test").val(doc.self_test);
 
    
      //$('#facilityname').select2(); 
-     $('#facilityname').select2();
-     $('#counsellor').select2(); 
-     
-         $("#counsellor").css('width','100%');
-         $("#facilityname").css('width','100%');
-         $(".select2-container").css('width','100%');
+ $('#facilityname').select2();
+ $('#counsellor').select2(); 
+ $("#counsellor").css('width','100%');
+ $("#facilityname").css('width','100%');
+ $(".select2-container").css('width','100%');
      
      
      $("#savebutton").hide();
@@ -2903,26 +2074,12 @@ $('#other_reason_for_death_tx').val(doc.other_reason_for_death_tx);
      //$("#savenewbutton").show();
       checkids();
       
- asklinkage();
- askstartageonart();
-      
-whichfacility();
-whichfacility_tx();
-
-specifyFacilityLinked();
-specifyFacilityStartedTx();
-
-
-isshowdiedordeclined();
-isshowdiedordeclined_art();
-
-isshowdeclinedother();
-isshowdeclined_art_other();
-
-isshowdeadother();
-isshowdeadother_tx();
-
-
+//      asklinkage();
+//whichfacility();
+//specifyFacilityLinked();
+//isshowdiedordeclined();
+//isshowdeclinedother();
+//isshowdeadother();
       
       
  $('#newdatabutton').html("<i class='glyphicon glyphicon-edit'></i>Edit Data");
@@ -2947,6 +2104,38 @@ isshowdeadother_tx();
 
  selectwidth();
 }
+
+
+
+<!-------------------------------------------------------------->
+
+
+function loadwhatsappdata(id,facility){
+     
+      	
+	dailydatadb.get(id).then(function (doc) {
+  
+$('#lbl_date_tested').html(doc.date_tested);
+$('#lbl_facility').html(facility);
+
+
+
+$('#lbl_self_test').html(""+doc.self_test);
+$('#lbl_counsellor').html(""+doc.counselorname);
+
+
+  
+});
+
+
+}
+
+<!-------------------------------------------------------------->
+
+
+
+
+
 
 $("#refreshpage" ).click(function() 
 {
@@ -2994,51 +2183,22 @@ function updateweeklydata()
    
   // var annualid=id.replace(/weekly/g,"annual");
    
-//receive all the fields from the weekly data from
-
+        //receive all the fields from the weekly data from
 id=$("#rowid").val();
 facility=$("#facilityname").val();
 counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
-date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-datestartedart=$("#artstartdate").val();
 
-linkagedate=$('#linkagedate').val();
-started_on_art=$('#started_on_art').val();
-reason_not_started_art=$('#reason_not_started_art').val();
-other_reason_not_started_on_treatment=$('#other_reason_not_started_on_treatment').val();
-started_tx_site=$('#started_tx_site').val();
-other_facility_started_art=$('#other_facility_started_art').val();
-reason_for_declining_art=$('#reason_for_declining_art').val();
-other_reason_for_declining_art=$('#other_reason_for_declining_art').val();
-reason_for_death_tx=$('#reason_for_death_tx').val();
-other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
+date_tested=$("#enddate").val();
+
+self_test=$("#self_test").val();
+
 
 //user=$("#user").val();
 timestamp=$("#timestamp").val();
 
-console.log("Date started ART__"+artstartdate);
-    
-    //var user=$("#username").val(); 
+
     var user="hsdsa"; 
-   // var timestamp = $.now();
-    
-         console.log("Urefu wa CCC Number "+cccno.length); 
-    
+
     var currentdate = new Date();
     
    var mn=""+(currentdate.getMonth()+1) ;
@@ -3075,99 +2235,33 @@ console.log("Date started ART__"+artstartdate);
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
-     
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
-     
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
+ 
       else if (enddate==='')
      {
          
-     alert('Select Test Date');
+     alert('Select Reporting Date');
    $("#enddate").focus();    
      } 
      
+   else if(checktotaltests()===false){
+     
+     
+     
+ }
+     
+     
+ else if(checktotalpositives()===false){
+     
+     
+     
+ }
 
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
-else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
- else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }
- 
- //else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-
-
-else if(linked==='Yes' && linkagedate===''  ) 
-{ alert(' Enter Date linked to art');  $('#linkagedate').focus(); }
-
-else if(started_on_art==='Yes' && datestartedart===''   ) 
-{ alert('Enter date started on ART'); 
-    $('#started_on_art').focus();  }
-
-else if(linkagedate!=='' && datestartedart!=='' && Date.parse(linkagedate) > Date.parse(datestartedart) ) 
-{ alert(' Date started on ART cannot be less than date linked to ART');  $('#artstartdate').focus(); }
- 
-
-else if(date_tested!=='' && linkagedate!=='' && Date.parse(date_tested) > Date.parse(linkagedate) ) 
-{ alert(' Date liked to art cannot be less than date tested for HIV');  $('#linkagedate').focus(); }
-
-
-
- 
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked==='' ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='' && linked==='No') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
-
-
-else if(started_tx_site==='Other Facility' && other_facility_started_art==='') 
-{ alert(' Specify the name of other facility started on art');  $('#other_facility_linked').focus(); }
-else if(started_on_art==='No' && reason_not_started_art===''  ) { alert('Specify reason not started ART'); 
-    $('#reason_not_started_art').focus();  }
-else if(  reason_not_started_art==='Died' && reason_for_death_tx==='' && started_on_art==='No') { alert('Specify reason for death ');  
-    $('#reason_for_death_tx').focus();  }
-else if( reason_for_death_tx==='Other natural causes' && other_reason_for_death_tx==='' && started_on_art==='No') 
-{ alert('Specify  other reason for death');  
-    $('#other_reason_for_death_tx').focus(); }
-else if(reason_not_started_art==='Declined' && reason_not_started_art==='' && started_on_art==='No') { alert(' Select reason for declining art'); 
-    $('#reason_for_declining_art').focus();  }
-else if(reason_for_declining_art==='Other reason' && other_reason_for_declining_art==='') 
-{ alert(' Specify the other reason for declining art initiation');  $('#other_reason_for_declining_art').focus(); }
-
-
-   
-   
    
        else {
            
@@ -3177,8 +2271,7 @@ else if(reason_for_declining_art==='Other reason' && other_reason_for_declining_
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-','');      
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');     
-         
+        
      var facilityname=facilitynameandmfl[1];
             //save data to the db
  // saveweeklyupdates(id,facilitynameandmfl[1],enddate,counselorname,modality, tested,positive_tg,positive,linked_here,linked_else,declined,dead,tca,timestamp,user, syncstatus) ;
@@ -3187,7 +2280,7 @@ else if(reason_for_declining_art==='Other reason' && other_reason_for_declining_
           
      id=$("#rowid").val();
   
- saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) ;
+ saveweeklyupdates(id,facilityname,counsellor,date_tested,self_test,timestamp,user,syncstatus) ;
   
             //
             //________________________________
@@ -3213,7 +2306,7 @@ setTimeout(delayedrefresh,1800);
     
 }
    
-function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) {
+function saveweeklyupdates(id,facilityname,counsellor,date_tested,self_test,timestamp,user, syncstatus) {
  
  
  
@@ -3227,40 +2320,15 @@ function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_
   
 doc.facility=facilityname;
 doc.counselorname=counsellor;
-doc.register_no=register_no;
-doc.serialno=serialno;
 doc.date_tested=date_tested;
-doc.age=age;
-doc.gender=gender;
-doc.modality=modality;
-doc.testresult=testresult;
-doc.linked=linked;
-doc.cccno=cccno;
-doc.linked_site=linked_site;
-doc.other_facility_linked=other_facility_linked;
-doc.reason_not_linked=reason_not_linked;
-doc.reason_for_death=reason_for_death;
-doc.other_reason_for_death=other_reason_for_death;
-doc.reason_for_declining=reason_for_declining;
-doc.other_reason_for_declining=other_reason_for_declining;
-doc.datestartedart=datestartedart;
-doc.linkagedate=linkagedate;
-doc.started_on_art=started_on_art;
-doc.reason_not_started_art=reason_not_started_art;
-doc.other_reason_not_started_on_treatment=other_reason_not_started_on_treatment;
-doc.started_tx_site=started_tx_site;
-doc.other_facility_started_art=other_facility_started_art;
-doc.reason_for_declining_art=reason_for_declining_art;
-doc.other_reason_for_declining_art=other_reason_for_declining_art;
-doc.reason_for_death_tx=reason_for_death_tx;
-doc.other_reason_for_death_tx=other_reason_for_death_tx;
+
+doc.self_test=self_test;
+
 
 
 doc.user=user;
 doc.timestamp=timestamp;
 doc.syncstatus=syncstatus; 
-
-
 
         
         
@@ -3290,11 +2358,12 @@ function importdata(){
     $("#exportbutton").prop("disabled",true);
     $("#exportbutton").removeClass('btn-lg btn-success').addClass('btn btn-default');
 
-   var recordsunexported=$("#unexported").val();
-   //read db files that have not been synced 
+var recordsunexported=$("#unexported").val();
+                //read db files that have not been synced
+    
   $("#exportbutton").hide();
   $("#exportmsg").show();
-   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait response.</b><br/>");
+   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait for response.</b><br/>");
   
   dailydatadb.allDocs({include_docs: true, descending: true}).then( function(doc) { 
  syncstatusarray=[];
@@ -3311,60 +2380,34 @@ function importdata(){
 	     // console.log(dat.doc.facility);
               //how to reference each column 
               
-              var idyangu=dat.doc._id;
-		  var num=parseInt(c)-1;
+        var idyangu=dat.doc._id;
+	var num=parseInt(c)-1;
 	var missingcommentid="";
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
         {
 
            
-       var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
+        var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
         
  if(skipexporting===0)
  {
             
-            updatesyncstatus(dat.doc._id,'Yes');
+  updatesyncstatus(dat.doc._id,'Yes');
         
         
             
     $.ajax({
-                         url:'receiveData',                            
+                        url:'importhtsself',                            
                         type:'get', 
 data:{
 
 id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
-
-linkagedate:dat.doc.linkagedate,
-started_on_art:dat.doc.started_on_art,
-reason_not_started_art:dat.doc.reason_not_started_art,
-other_reason_not_started_on_treatment:dat.doc.other_reason_not_started_on_treatment,
-started_tx_site:dat.doc.started_tx_site,
-other_facility_started_art:dat.doc.other_facility_started_art,
-reason_for_declining_art:dat.doc.reason_for_declining_art,
-other_reason_for_declining_art:dat.doc.other_reason_for_declining_art,
-reason_for_death_tx:dat.doc.reason_for_death_tx,
-other_reason_for_death_tx:dat.doc.other_reason_for_death_tx,
+self_test:dat.doc.self_test,
 
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
@@ -3389,6 +2432,15 @@ dataType:'html',
                  $("#exportmsg").hide();
                  if(returnedresponses<1000){
                  $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
+                 
+                 
+                 if(parseInt(recordsunexported)===1)
+                 {     
+                  
+                    $("#screenshotwp").click();                        
+                                            
+                 }
+                 
              //setTimeout(delayedrefresh,2000);
             }
              else {
@@ -3401,7 +2453,7 @@ dataType:'html',
                                         },
                                  error:function(xhr, s, e){
                                      
-                                     console.log("Could not export data "+e);
+                                     console.log("Could not export data");
                                      
                                      $("#exportresponse").append("<b><font color='red'>Exporting did not complete successfully  .</b>"+e); 
                 // updatesyncstatus(dat.doc._id,'No');
@@ -3495,7 +2547,7 @@ var recordsunexported=$("#unexported").val();
                $("#exportbutton1").hide();
                $("#exportmsg1").show();
                
-                  $("#exportbutton").hide();
+               $("#exportbutton").hide();
                $("#exportmsg").show();
                
                //a variable to check if all comments are added for percents below 80 percent and not amongest the indicators that can be skipped.
@@ -3524,41 +2576,16 @@ var recordsunexported=$("#unexported").val();
         
             
              $.ajax({
-                         url:'receiveData',                            
+                         url:'importhtsself',                            
                         type:'get', 
 data:{
 
 id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
 
-linkagedate:dat.doc.linkagedate,
-started_on_art:dat.doc.started_on_art,
-reason_not_started_art:dat.doc.reason_not_started_art,
-other_reason_not_started_on_treatment:dat.doc.other_reason_not_started_on_treatment,
-started_tx_site:dat.doc.started_tx_site,
-other_facility_started_art:dat.doc.other_facility_started_art,
-reason_for_declining_art:dat.doc.reason_for_declining_art,
-other_reason_for_declining_art:dat.doc.other_reason_for_declining_art,
-reason_for_death_tx:dat.doc.reason_for_death_tx,
-other_reason_for_death_tx:dat.doc.other_reason_for_death_tx,
+self_test:dat.doc.self_test,
 
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
@@ -4376,55 +3403,9 @@ function autocalculate(indicator){
 
 //this fuction should sum and update the current value of the 
 
-function yearlytotal(indicator){
-  //  
-    var currentvalue=$("#"+indicator).val(); 
-    var previous=$("#"+indicator).attr("data-previous_"+indicator);
-    var newtotal=$("#"+indicator).data(""+indicator);
-    
-    
-    
-   var afteradding=0;
-   if(currentvalue!==''){
-       
-   afteradding=parseInt(previous)+parseInt(currentvalue);
-   
-   }
-   
-        //----update the excel values
-      $("#"+indicator).attr( "data-"+indicator , afteradding);  //data-total_hiv_pos_child
-      //$("#"+indicator).val(afteradding);  //the total that appears on the input field
-      console.log("before adding "+previous+" After adding "+afteradding);  
-        
-}
-
 
 //for PNS supported facilities
 
-function validatemodalities(){
-    
-    
- var ispns= $("#facilityname").find(':selected').data("pns");   
-    //alert("facil "+$("#facilityname").val()+" pns="+ispns);
-    var modalitiesoption="<option value=''>Select Modality</option>";
-        modalitiesoption+="<option value='Optimized Testing IPD'>Optimized Testing IPD</option>";
-        modalitiesoption+="<option value='Optimized Testing OPD'>Optimized Testing OPD</option>";
-        
-   if(ispns===1){
-   modalitiesoption+="<option value='PNS'>PNS</option>";
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";    
-       
-   } 
-   else {
-       
-    
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";   
-   }
-    
-  // $("#modality").html(modalitiesoption); 
-    
-    
-}
 
 
 function validateAge(){
@@ -4434,13 +3415,8 @@ function validateAge(){
      if(miakangapi.startsWith("0")){
      $("#age").val("");    
          
-                                   }
-     else if(isNaN(parseInt(miakangapi))){
-     $("#age").val("");    
-      // alert("Enter whole numbers only");   
      }
-    //isN
-    
+     //alert(miakangapi);
     
                       }
 
@@ -4451,376 +3427,9 @@ function validateAge(){
 
 
 
-function asklinkage(){
-    
-  var tr=$("#testresult").val();
-   //alert(regni);
-
-   
-        if(tr==='Positive')
-        {
-              
-            $(".linked").show();
-            //$(".linkage").show();
-            
-        }
-        else {
-          
-            $(".linkage").hide();
-            $("#linked").val("");
-            $(".cccno").hide();
-            $("#cccno").val(""); 
-            $("#linked_site").val("");
-            $("#other_facility_linked").val("");
-             
-             }
-    
-    
-}
-
-
-function askstartageonart(){
-    
-  var tr=$("#linked").val();
-   //alert(regni);
-
-   
-        if(tr==='Yes')
-        {
-              
-        $(".started_on_tx").show();
-            //$(".linkage").show();
-        }
-        else {
-          
-            $(".class_started_art").hide();
-            $("#started_on_tx").val("");
-            
-         
-            $("#class_started_art_site").val("");
-            $("#other_facility_startedart").val("");
-             
-             }
-    
-    
-}
 
 
 
-function whichfacility(){
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked").val();
-   //alert(regni);
-
-   
-        if(tr==='Yes')
-        {
-           askstartageonart();   
-            $(".linked_site").show();
-            $(".started_on_tx").show();
-           // $(".cccno").show();
-            $(".reason_not_linked").val("");
-            $(".reason_not_linked").hide();
-            
-           //hide and clear values for not linked 
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-            
-            
-        }
-        
-        
-          else if(tr==='No') {
-          askstartageonart();
-          
-           $(".linked_site").hide();
-           $(".started_on_tx").hide();
-           
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").show();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-        
-        else {
-            askstartageonart();
-          
-           $(".linked_site").hide();
-           $(".started_on_tx").hide();
-           
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").hide();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-    
-    
-}
-
-
-
-
-
-
-
-
-function specifyFacilityLinked()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked_site").val();
- if(tr==='Other Facility')
-        {
-              
-          $(".other_facility_linked").show();
-          $(".cccno").show();
-         
-        }
-        
-        
-        else  if(tr==='This Facility')
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").show();
-           
-           }
-        
-        else 
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").hide();
-           
-           }
-    
-    
-}
-
-
-
-function specifyFacilityStartedTx()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#started_tx_site").val();
- if(tr==='Other Facility')
-        {              
-          $(".other_facility_startedart").show();
-                   
-        }
-        
-        
-        else  if(tr==='This Facility')
-           {
-           $(".other_facility_startedart").hide();
-           $("#other_facility_started_art").val("");  
-           }
-        
-        else 
-           {               
-           $(".other_facility_startedart").hide();
-           $("#other_facility_started_art").val("");           
-           
-           }
-    
-    
-}
-
-
-
-function isshowdiedordeclined()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_not_linked").val();
- if(tr==='Declined')
-        {
-              
-          $(".reason_for_declining").show();
-          $(".reason_for_death").hide();
-          $("#reason_for_death").val("");
-          
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-       }
-        else if(tr==='Died') 
-           {
-            $(".reason_for_death").show();
-            $(".reason_for_declining").hide();
-            $("#reason_for_declining").val("");
-            
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-           else {
-               //if reason not linked is TCA
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-               
-           }
-    
-    
-}
-
-function isshowdiedordeclined_art()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_not_started_art").val();
- if(tr==='Declined')
-        {
-              
-          $(".class_reason_for_declining_art").show();
-          $(".reason_for_death_tx").hide();
-          $("#reason_for_death_tx").val("");
-          
-          $(".other_reason_for_death_tx").hide();
-          $("#other_reason_for_death_tx").val("");
-       }
-        else if(tr==='Died') 
-           {
-            $(".reason_for_death_tx").show();
-            $(".class_reason_for_declining_art").hide();
-            $("#reason_for_declining_art").val("");
-            
-            $(".class_other_reason_for_declining_art").hide();
-            $("#other_reason_for_declining_art").val("");
-           }
-           else {
-               //if reason not linked is TCA
-               $(".class_reason_for_declining_art").hide();
-               $(".reason_for_death_tx").hide();
-               $(".class_other_reason_for_declining_art").hide();              
-               $(".other_reason_for_death_tx").hide();
-               
-               $("#reason_for_declining_art").val("");
-               $("#reason_for_death_tx").val("");
-               $("#other_reason_for_declining_art").val("");              
-               $("#other_reason_for_death_tx").val("");
-               
-           }
-    
-    
-}
-
-
-
-
-function isshowdeclinedother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_declining").val();
- if(tr==='Other reason')
-        {
-              
-          $(".other_reason_for_declining").show();
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-    
-    
-}
-
-
-
-
-function isshowdeclined_art_other()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_declining_art").val();
- if(tr==='Other reason')
-        {
-              
-          $(".class_other_reason_for_declining_art").show();
-          $(".other_reason_for_death_tx").hide();
-          $("#other_reason_for_death_tx").val("");
-        
-       }
-        else 
-           {
-           
-            $(".class_other_reason_for_declining_art").hide();
-            $("#other_reason_for_declining_art").val("");
-           }
-    
-    
-}
-
-
-
-
-function isshowdeadother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_death").val();
- if(tr==='Other natural causes')
-        {
-              
-          $(".other_reason_for_death").show();
-          $(".other_reason_for_declining").hide();
-          $("#other_reason_for_declining").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_death").hide();
-            $("#other_reason_for_death").val("");
-           }
-    
-    
-}
-
-
-function isshowdeadother_tx()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_death_tx").val();
- if(tr==='Other natural causes')
-        {
-              
-          $(".other_reason_for_death_tx").show();
-          $(".class_other_reason_for_declining_art").hide();
-          $("#other_reason_for_declining_art").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_death_tx").hide();
-            $("#other_reason_for_death_tx").val("");
-           }
-    
-    
-}
 
 
 
@@ -4828,79 +3437,22 @@ function setrowid(){
     var id="";
     
     var f=$("#facilityname").val();
+    var usrn=$("#counsellor").val();
+       usrn=usrn.trim();
     var mfl=f.split("_")[0];
-    var sn=$("#serialno").val();
-    var rn=$("#register_no").val();
-    var md=$("#modality").val();
+    var dt=$("#enddate").val();
+    dt=dt.replace('-','');
     
-    var id=mfl+"_"+sn+"_"+rn+"_"+md;
+ 
+  
+    
+    
+    var id=mfl+"_"+dt+"_"+usrn;
     
     $("#rowid").val(id);
     
    console.log(" id sasa ni "+id); 
 }
-
-
-function whichfacility_tx(){
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#started_on_art").val();
-   //alert(regni);
-
-   
-        if(tr==='Yes')
-        {
-          
-            
-            $(".class_started_art_site").show();
-           // $(".cccno").show();
-            $(".reason_not_started_art").val("");
-            $(".class_reason_not_started_art").hide();
-            
-           //hide and clear values for not linked 
-              $(".class_reason_for_declining_art").hide();
-                $(".reason_for_death_tx").hide();
-               $(".class_other_reason_for_declining_art").hide();              
-               $(".other_reason_for_death_tx").hide();
-               
-               $("#reason_for_declining_art").val("");
-                $("#reason_for_death_tx").val("");
-               $("#other_reason_for_declining_art").val("");              
-               $("#other_reason_for_death_tx").val("");
-            
-            
-        }
-        
-        
-          else if(tr==='No') {
-          
-         
-           $(".class_started_art_site").hide();
-           
-           $("#started_tx_site").val("");
-           $("#other_facility_started_art").val("");
-           $(".other_facility_startedart").hide();
-   //show options for why not linked
-           $(".class_reason_not_started_art").show();
-            
-             
-            }
-        
-        else {
-          
-           
-           $(".class_started_art_site").hide();
-           
-           $("#started_tx_site").val("");
-           $("#other_facility_started_art").val("");
-           $(".other_facility_startedart").hide();
-   //show options for why not linked
-           $(".class_reason_not_started_art").hide();
-             
-            }
-    
-    
-}
-
 
 
 
@@ -4970,7 +3522,7 @@ break;
 }
 
 
-//autobackup();
+autobackup();
 
 
 
@@ -5075,7 +3627,8 @@ $('#clearcachebtn').click(function() {
 
 
 
-function cleardata(){
+function cleardata()
+{
     
     if(ConfirmDeleteever()===true){
     
@@ -5095,47 +3648,6 @@ function cleardata(){
 }
 
 
-function validatemodalities()
-{
-    var miaka=$("#age").val();
-    
- if(miaka>5){  
-$("#modality option[value='malnutrition']").attr("disabled", true); 
-$("#modality option[value='pediatrics']").attr("disabled", true); 
-
-$("#modality option[value='anc1']").attr("disabled",false); 
-$("#modality option[value='anc2']").attr("disabled",false); 
-$("#modality option[value='ld']").attr("disabled",false); 
-$("#modality option[value='pnc']").attr("disabled",false);
-
-
- }
- else if (miaka<9){
-     //deactivate
-$("#modality option[value='anc1']").attr("disabled", true); 
-$("#modality option[value='anc2']").attr("disabled", true); 
-$("#modality option[value='ld']").attr("disabled", true); 
-$("#modality option[value='pnc']").attr("disabled", true);
-//activate
-$("#modality option[value='malnutrition']").removeAttr("disabled"); 
-$("#modality option[value='pediatrics']").removeAttr("disabled"); 
-     
- }
- else {
-     
-$("#modality option[value='malnutrition']").attr("disabled",false);
-$("#modality option[value='pediatrics']").attr("disabled",false);   
- 
- 
-$("#modality option[value='anc1']").attr("disabled",false); 
-$("#modality option[value='anc2']").attr("disabled",false);
-$("#modality option[value='ld']").removeAttr("disabled"); 
-$("#modality option[value='pnc']").removeAttr("disabled");
-     
- }
-    
-    
-}
 
 
 function validatemodalitiesbygender(){
@@ -5160,9 +3672,6 @@ $("#modality option[value='ld']").attr("disabled",false);
 $("#modality option[value='pnc']").attr("disabled",false);  
         
                   }
-  
-
-  
     
 }
 
@@ -5230,24 +3739,17 @@ function savezeroreport()
 }
 
 
-function validateInp(elem) {
-                var validChars = /[0-9]/;
-                var strIn = elem.value;
-                var strOut = '';
-                for(var i=0; i < strIn.length; i++) {
-                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
-                }
-                elem.value = strOut;
-            }
-
 </script>
 
 <script>
-           if ('serviceWorker' in navigator) {
+
+
+
+     if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('sw1.js').then(function(registration) {
       // Registration was successful
-      console.log('HTS_ServiceWorker registration successful with scope: ', registration.scope);
+      console.log('HTS ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {
       // registration failed :(
       console.log('ServiceWorker registration failed: ', err);
@@ -5258,27 +3760,279 @@ function validateInp(elem) {
 
 
 
-function TodayYMD(){
-    
-    
-    var currentdate = new Date();
-    
-var mn=""+(currentdate.getMonth()+1) ;
 
-var dt=""+currentdate.getDate();
-    var hr=""+currentdate.getHours();
-    var min=""+currentdate.getMinutes();
-    var sc=""+currentdate.getSeconds();
-    if(mn.length===1){mn='0'+mn;}
-    if(length===1){dt='0'+dt;}
-    if(hr.length===1){hr='0'+hr;}
-    if(min.length===1){min='0'+min;}
-    if(sc.length===1){sc='0'+sc;}
+
+if($("#toolid").is(":visible")){
+                    $("#refreshpage").hide();
+                } else{
+                   $("#refreshpage").show();
+                }
+                
+                
+                
+                
+                 function percent(num,den,destination){
+           
+         var rptd=$("#"+num).val();
+         var vrfd=$("#"+den).val();
+           
+           if(rptd!=='' && rptd!==null && vrfd!=='' && vrfd!==null && !isNaN(rptd) && !isNaN(vrfd)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           rptd=parseInt(rptd);
+           vrfd=parseInt(vrfd);
+         
+            if(vrfd===0){vrfd=1;}
+            
+            var conc= Math.round(((rptd/vrfd)*100));
+            if(isNaN(conc)){
+                
+               conc=0; 
+            }
+            
+            
+            $("#"+destination).val(conc+"%");
+             //alert(conc);
+           }
+           
+           
+           
+       }
+       
+       //percent removeFirstZero
+       // var difference = function (val1, val2) { return Math.abs(val1 - val2); };
+       
+       function removeFirstZero(elem){
+           
+           
+           var vl=$("#"+elem).val();
+           
+           if(vl.length>=2 && vl.startsWith("0"))
+           {
+               
+               vl=vl.replace("0","");
+               $("#"+elem).val(vl);
+                  // alert(vl);
+           }
+           
+       
+           
+       }
+       
+       
+     function runValidation(num,den,destination){
+           
+         var nume=$("#"+num).val();
+         var denom=$("#"+den).val();
+           
+           if(nume!=='' && nume!==null && denom!=='' && denom!==null && !isNaN(nume) && !isNaN(denom)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           nume=parseInt(nume);
+           denom=parseInt(denom);
+         var haserror=false;
+            if(nume>denom){haserror=true;
+                
+            $("#"+destination).focus();
+             $("#"+num).css({"border-color": "red"});
+             $("#"+den).css({"border-color": "red"});
+            $("#utumani").html("<font color='red' style='height:45px;'>"+num+" cannot be greater than "+den+"</font>");
+            
+            }
+            else {
+                
+              $("#"+num).css({"border-color": "#337ab7"});
+             $("#"+den).css({"border-color": "#337ab7"});  
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             
+            }
+            
+         
+          
+            
+             //alert(conc);
+           }
+           
+           
+          
+           
+           
+       }  
+       
+     
+    function checktotaltests()
+    {        
+     
+     var retvl=true;
+     
+            var opdts=$("#opd_tested").val();
+            var pmtctts=$("#pmtct_tested").val();   
+//            var vctts=$("#vct_tested").val();   
+            var pnsts=$("#index_tested").val();  
+            var totalts=$("#Total_Tested").val();  
+             
+//            if(opdts===""){}
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+//          else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+             $("#Total_Tested").focus();
+             $("#Total_Tested").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Tested cannot be less than Tested for Index, OPD and PMTCT Modalities</font>");
+            alert("Total Tested cannot be less than sum of Clients tested under PMTCT , OPD , PNS Tested");
+            retvl=false;
+            }
+            else {
+                
+              $("#Total_Tested").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          retvl=true;
+             
+            }
+               //compare with sum of all tests
+               return retvl;
+           
+    }
+    
+     function checktotalpositives()
+    {        
+     var retvl=true;
+            var opdts=$("#opd_positive").val();
+            var pmtctts=$("#pmtct_positive").val();   
+           // var vctts=$("#vct_positive").val();   
+            var pnsts=$("#index_positive").val();  
+            var totalts=$("#Total_Positive").val();  
+             
+            
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+         // else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+                   console.log("totalts "+totalts+" vs opdts ("+opdts+") + pmtctts ("+pmtctts+") + pnsts ("+pnsts+")");
+                   
+             $("#Total_Positive").focus();
+             $("#Total_Positive").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS </font>");
+            alert("Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS ");
+            
+            retvl=false;
+            
+            }
+            else {
+                
+              $("#Total_Positive").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             retvl=true;
+            }
+               //compare with sum of all tests
+           return retvl;
+    }
+     
+  
+    
+// $(function() { 
+    $("#tumawp").click(function() { 
+    
+    html2canvas(document.querySelector('#whatsappform')).then(canvas => {
+    $('#visa').html(canvas);
+});
+
+
+
+
+    
+//        getScreenshotOfElement($("#whatsappform"), 0, 0, 100, 100, function(data) {
+//    // in the data variable there is the base64 image
+//    // exmaple for displaying the image in an <img>
+//     saveAs(data, "Facility_Workload.png");
+//    $("#pisa").attr("src", "data:image/png;base64,"+data);
+//});
+        
+        
+//        html2canvas($("#whatsappform"), {
+//            onrendered: function(canvas) {
+//                var theCanvas = canvas;
+//                canvas.toBlob(function(blob) {
+//                    saveAs(blob, "Facility_Workload.png"); 
+//                });
+//            }
+//        });
+    });
+//});
    
-   return currentdate.getFullYear() + "-"+ mn + "-"+ dt ;
-    
-}
-</script>
+  
+function getScreenshotOfElement(elem, posX, posY, width, height, callback) {
+    html2canvas(elem, {
+        onrendered: function (canvas) {
+            var context = canvas.getContext('2d');
+            var imageData = context.getImageData(posX, posY, width, height).data;
+            var outputCanvas = document.createElement('canvas');
+            var outputContext = outputCanvas.getContext('2d');
+            outputCanvas.width = width;
+            outputCanvas.height = height;
 
+            var idata = outputContext.createImageData(width, height);
+            idata.data.set(imageData);
+            outputContext.putImageData(idata, 0, 0);
+            callback(outputCanvas.toDataURL().replace("data:image/png;base64,", ""));
+        },
+        width: width,
+        height: height,
+        useCORS: true,
+        taintTest: false,
+        allowTaint: false
+    });
+}
+
+
+
+
+
+</script>
+ <!--
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
+
+pmtct_tested
+pmtct_positive
+pmtct_Yield
+
+
+
+index_tested
+index_positive
+index_yield
+
+self_test
+Referred_Prep
+gbv
+Total_Tested
+Total_Positive
+Total_Yield
+Total_Linked
+Total_Linkage
+ 
+ vct_tested
+vct_positive
+vct_Yield
+ 
+-->
 	</body>
 </html>

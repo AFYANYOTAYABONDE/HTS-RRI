@@ -1376,7 +1376,7 @@ function getcounsellorslist(){
    
               $.ajax({
                     url:'getcancellors',                            
-                    type:'post',  
+                    type:'get',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -1429,7 +1429,7 @@ $('#exportbutton').hide();
    
               $.ajax({
              url:'validateAccess',                            
-            type:'post',  
+            type:'get',  
             dataType: 'html',  
            
     success: function(data) {
@@ -2769,7 +2769,7 @@ var recordsunexported=$("#unexported").val();
             
     $.ajax({
                         url:'importworkload',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -2967,7 +2967,7 @@ var recordsunexported=$("#unexported").val();
             
              $.ajax({
                          url:'importworkload',                            
-                        type:'post', 
+                        type:'get', 
 data:{
 
 id:dat.doc._id,
@@ -4101,7 +4101,7 @@ function savezeroreport()
         else{
     $.ajax({
         url:'submitZero',
-        type:'post',
+        type:'get',
         data:{ 
             date:datee,
             facil:facilitii },

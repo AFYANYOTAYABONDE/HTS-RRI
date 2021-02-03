@@ -14,8 +14,8 @@
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = 'hts_precache-v9';
-const RUNTIME = 'hts_runtimev9';
+const PRECACHE = 'hts_precache-v24';
+const RUNTIME = 'hts_runtimev24';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS=[
@@ -38,6 +38,7 @@ const PRECACHE_URLS=[
     ,'js/datatables.min.js'
     ,'js/html2canvas.js'
     ,'js/FileSaver.js'
+    ,'images/htsself.png'
     ,'js/jquery.fileDownload.js'
     ,'images/ajax_loader.gif'
     ,'images/favicon.ico'

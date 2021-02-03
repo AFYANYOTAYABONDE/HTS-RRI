@@ -2246,16 +2246,18 @@ function appendtabledata(){
         
     var tbdata="";
     
-     tbdata="<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Edit</th></tr></thead><tbody>";
+     tbdata="<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result<th>Linked To ART</th><th>CCC</th><th>Date Linked</th><th>Facility Linked</th><th>Reason Not Linked</th><th>Started on ART</th><th>Date Started ON ART</th><th>Facility Started ART</th><th>Reason Not Started ON ART</th><th>Last Updated</th><th>Edit</th></tr></thead><tbody>";
         //id	 facility	 counsellor	 register_no	 serialno	 date_tested	 age	 gender	 modality	 testresult	 linked	 cccno	 linked_site	 other_facility_linked	 reason_not_linked	 reason_for_death	 other_reason_for_death	 reason_for_declining	 other_reason_for_declining	 user	 timestamp	 lastsynced	 datestartedart
     
     appendtableduplicatedata(facdetails[1]);
     
+    
     $("#searchtablediv").html("<img style='' src='images/ajax_loader.gif' />");
-        
+    
+                var rn=Math.random();
               $.ajax({
-                    url:'getrawdata?mfl='+facdetails[1],                            
-                    type:'get',  
+                    url:'getrawdata?mfl='+facdetails[1]+'&rn='+rn,                            
+                    type:'post',  
                     dataType: 'json',  
                     success: function(data) {
                    
@@ -2271,8 +2273,11 @@ function appendtabledata(){
                  //alert(data[0].facility_name);    
                      for(var i=0;i<data.length;i++)
                    {
-                         tbdata+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].lastsynced+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+data[i].id+"\",\""+data[i].facility+"\",\"no\",\""+data[i].counsellor+"\",\""+data[i].register_no+"\",\""+data[i].serialno+"\",\""+data[i].date_tested+"\",\""+data[i].age+"\",\""+data[i].gender+"\",\""+data[i].modality+"\",\""+data[i].testresult+"\",\""+data[i].linked+"\",\""+data[i].cccno+"\",\""+data[i].linked_site+"\",\""+data[i].other_facility_linked+"\",\""+data[i].reason_not_linked+"\",\""+data[i].reason_for_death+"\",\""+data[i].other_reason_for_death+"\",\""+data[i].reason_for_declining+"\",\""+data[i].other_reason_for_declining+"\",\""+data[i].user+"\",\""+data[i].timestamp+"\",\""+data[i].lastsynced+"\",\""+data[i].datestartedart+"\",\""+data[i].positive_verified+"\",\""+data[i].linkage_verified+"\")'>Edit</button></td></tr>";
+                         tbdata+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].linkagedate+"</td><td>"+data[i].linked_site+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].started_on_art+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].started_tx_site+"</td><td>"+data[i].reason_not_started_art+"</td><td>"+data[i].lastsynced+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+data[i].id+"\",\""+data[i].facility+"\",\"no\",\""+data[i].counsellor+"\",\""+data[i].register_no+"\",\""+data[i].serialno+"\",\""+data[i].date_tested+"\",\""+data[i].age+"\",\""+data[i].gender+"\",\""+data[i].modality+"\",\""+data[i].testresult+"\",\""+data[i].linked+"\",\""+data[i].cccno+"\",\""+data[i].linked_site+"\",\""+data[i].other_facility_linked+"\",\""+data[i].reason_not_linked+"\",\""+data[i].reason_for_death+"\",\""+data[i].other_reason_for_death+"\",\""+data[i].reason_for_declining+"\",\""+data[i].other_reason_for_declining+"\",\""+data[i].user+"\",\""+data[i].timestamp+"\",\""+data[i].lastsynced+"\",\""+data[i].datestartedart+"\",\""+data[i].positive_verified+"\",\""+data[i].linkage_verified+"\")'>Edit</button></td></tr>";
      
+                 
+                 
+                 
                  
                         console.log(data[i].id) 
                         
@@ -2282,7 +2287,7 @@ function appendtabledata(){
                       if(i===data.length-1)
                       {
                        tbdata+="</tbody>\n\
-       <tfoot><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Edit</th></tr></tfoot></table>";
+       <tfoot><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked To ART</th><th>CCC</th><th>Date Linked</th><th>Facility Linked</th><th>Reason Not Linked</th><th>Started on ART</th><th>Date Started ON ART</th><th>Facility Started ON ART</th><th>Reason Not Started ON ART</th><th>Last Updated</th><th>Edit</th></tr></tfoot></table>";
                 
                  $("#searchtablediv").html(tbdata); 
                  

@@ -118,6 +118,14 @@
         <servlet-name>importworkload</servlet-name>
         <servlet-class>workload.importworkload</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importhtsself</servlet-name>
+        <servlet-class>htsself.importhtsself</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>counsellor_summary</servlet-name>
+        <servlet-class>data.counsellor_summary</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -233,6 +241,14 @@
     <servlet-mapping>
         <servlet-name>importworkload</servlet-name>
         <url-pattern>/importworkload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importhtsself</servlet-name>
+        <url-pattern>/importhtsself</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>counsellor_summary</servlet-name>
+        <url-pattern>/counsellor_summary</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>
