@@ -14,8 +14,8 @@
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = 'hts_precache-v24';
-const RUNTIME = 'hts_runtimev24';
+const PRECACHE = 'hts_precache-v28';
+const RUNTIME = 'hts_runtimev28';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS=[

@@ -56,7 +56,23 @@ input:focus {
 }
 
 </style>
-<% if(session.getAttribute("user")!=null){} else {response.sendRedirect("login.jsp");} %>
+<% 
+    
+    if(request.getParameter("user")!=null){session.setAttribute("user",""+request.getParameter("user"));}
+    
+    if(session.getAttribute("user")!=null)
+{
+  
+} 
+else 
+{    
+    System.out.println("inakataa kabisa "+session.getAttribute("user"));
+    
+  response.sendRedirect("http://hsdsacluster2.fhi360.org:8080/InternalSystem/hts_rri_login.jsp");
+} 
+
+
+%>
                 
 	</head>
 	<body>

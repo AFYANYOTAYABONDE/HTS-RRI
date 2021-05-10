@@ -113,9 +113,10 @@ jobj.put("other_reason_for_death_tx",conn.rs.getString("other_reason_for_death_t
             
             out.println(jarr);
             
-         if(conn.conne!=null){conn.conne.close(); }
+     
          if(conn.rs!=null){  conn.rs.close();  }
          if(conn.st!=null){ conn.st.close(); }
+         if(conn.conne!=null){conn.conne.close(); }
          
         } catch (SQLException ex) {
             Logger.getLogger(getrawdata.class.getName()).log(Level.SEVERE, null, ex);

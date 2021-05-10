@@ -304,8 +304,9 @@ conn.pst1.setString(26,user);
    }
            
     if(id.contains("annual")){txtresponse="";}
+    if(conn.rs!=null){conn.rs.close();}
          if(conn.st!=null){conn.st.close();}  
-         if(conn.rs!=null){conn.rs.close();}  
+           
          if(conn.pst1!=null){conn.pst1.close();}  
          if(conn.conne!=null){conn.conne.close();}  
         

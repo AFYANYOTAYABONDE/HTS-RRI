@@ -480,6 +480,7 @@ if(conn.rs!=null){conn.rs.close();}
 if(conn.rs1!=null){conn.rs1.close();}
 if(conn.st!=null){conn.st.close();}
 if(conn.st1!=null){conn.st1.close();}
+if(conn.conne!=null){conn.conne.close();}
 
 
 IdGenerator IG = new IdGenerator();

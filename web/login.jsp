@@ -3,6 +3,7 @@
     Created on : May 11, 2015, 10:04:46 AM
     Author     : Maureen
 --%>
+<%@page import="java.util.Random"%>
 <%@page import="java.util.Calendar"%>
 <%-- 
     Document   : index
@@ -52,11 +53,15 @@
       </div>
       <br/>
       <div class="content" style="border-color: #33ffff;">
-      
- 
+     
+           <%
+           Random rand = new Random(); 
+           double rand_dub2 = rand.nextDouble(); 
+
+           %>
       
     <!-- BEGIN LOGIN FORM -->
-    <form action="login" class="form-vertical login-form" method="post" style="">
+    <form action="login?rn=<% out.println(rand_dub2); %>" class="form-vertical login-form" method="post" style="">
       <h3 class="form-title well" style="text-align: left;">Login</h3>
       <div class="alert alert-error hide">
         <button class="close" data-dismiss="alert"></button>
@@ -151,7 +156,7 @@ int year= cal.get(Calendar.YEAR);
 
 %>
 <br><br>
-               <p align="center" style=" font-size: 18px;"> &copy Afya Nyota Ya Bonde| USAID <%=year%></p>
+               <p align="center" style=" font-size: 18px;"> &copy USAID Tujenge Jamii| USAID <%=year%></p>
             </div>
   </div>
   <!-- END COPYRIGHT -->

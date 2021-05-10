@@ -226,7 +226,7 @@ conn.pst1.setString(31,other_reason_for_death_tx);
                             
                             if(counselorname.equals("select counsellor")){
                                 try {
-                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, n This is to notify you that data for "+facility+"  for date "+date_tested+" Has no Counsellor name. n n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facility+" & date "+date_tested,"EKaunda@fhi360.org"+usermail);
+                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, n This is to notify you that data for "+facility+"  for date "+date_tested+" Has no Counsellor name. n n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facility+" & date "+date_tested,"EMaingi@deloitte.co.ke"+usermail);
                                 } catch (MessagingException ex) {
                                     Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -326,7 +326,7 @@ conn.pst1.setString(32,other_reason_for_death_tx);
                             //add team leaders variable at this point 
                             if(counselorname.equals("select counsellor")){
                                 try {
-                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, n This is to notify you that data for "+facility+"  for date "+date_tested+" and id "+id+" Has no Counsellor name. n n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facility+" & date "+date_tested,"EKaunda@fhi360.org"+usermail);
+                                    sm.Sendemail("RRI Sep. VALIDATION FAILURE"," Hi, n This is to notify you that data for "+facility+"  for date "+date_tested+" and id "+id+" Has no Counsellor name. n n Please Request the respective counsellor to do the update and reexport data ", "RRI Sep. data export for "+facility+" & date "+date_tested,"EMaingi@deloitte.co.ke"+usermail);
                                 } catch (MessagingException ex) {
                                     Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -342,8 +342,8 @@ conn.pst1.setString(32,other_reason_for_death_tx);
    }
            
     if(id.contains("annual")){txtresponse="";}
-         if(conn.st!=null){conn.st.close();}  
-         if(conn.rs!=null){conn.rs.close();}  
+        if(conn.rs!=null){conn.rs.close();}
+         if(conn.st!=null){conn.st.close();}           
          if(conn.pst1!=null){conn.pst1.close();}  
          if(conn.conne!=null){conn.conne.close();}  
         
@@ -354,7 +354,7 @@ conn.pst1.setString(32,other_reason_for_death_tx);
         //send an email at this point of the exception
             
             try {
-                sm.Sendemail("HTS RRI RAW DATA IMPORT",ex.toString()+ "___ n Counsellor name: "+counselorname+" Facility name: n "+facility+" n "+myresponse, "MYSQL IMPORTING ERROR ","EKaunda@fhi360.org");
+                sm.Sendemail("HTS RRI RAW DATA IMPORT",ex.toString()+ "___ n Counsellor name: "+counselorname+" Facility name: n "+facility+" n "+myresponse, "MYSQL IMPORTING ERROR ","EMaingi@deloitte.co.ke");
                 } catch (MessagingException ex1) {
                 Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex1);
             }

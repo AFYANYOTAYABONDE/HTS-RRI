@@ -103,9 +103,10 @@ jobj.put("linkage_verified",conn.rs.getString("linkage_verified"));
             out.println(jarr);
             
             
-         if(conn.conne!=null){conn.conne.close(); }
+        
          if(conn.rs!=null){  conn.rs.close();  }
          if(conn.st!=null){ conn.st.close(); }
+          if(conn.conne!=null){conn.conne.close(); }
             
             
         } catch (SQLException ex) {

@@ -56,7 +56,11 @@ public class getcccnos extends HttpServlet {
              cnt++;   
             }
             
-          out.println(cccno);  
+          out.println(cccno); 
+          
+           if(conn.rs!=null){conn.rs.close();}
+              if(conn.st!=null){conn.st.close();}
+              if(conn.conne!=null){conn.conne.close();}
         }
     }
 

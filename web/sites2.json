@@ -2540,6 +2540,15 @@
   {
     "county": "Samburu",
     "subcounty": "Samburu East",
+    "facility_name": "Archers Post Sub-County Hospital",
+    "mflcode": 24233,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  },
+  {
+    "county": "Samburu",
+    "subcounty": "Samburu East",
     "facility_name": "Catholic Hospital Wamba",
     "mflcode": 15769,
     "hts": 1,

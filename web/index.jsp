@@ -4,6 +4,7 @@
     Author     : Emmanuel E
 --%>
 
+<%@page import="java.util.Random"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
@@ -86,10 +87,16 @@ input:focus {
                         <li><a href="#">My Profile</a></li>
                     </ul>
                 </li>
-          
+          <%
+               Random rand = new Random(); 
+           double rand_dub2 = rand.nextDouble(); 
+  
+        // Print random doubles 
+       
+          %>
                 
                  <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>
-                 <li><a title="Add Widget" id="adduserbutton"  href="http://hsdsacluster2.fhi360.org:8080/htsrri/live_edit.jsp"><i class="glyphicon glyphicon-bookmark"></i><span > HTS LIVE</span></a></li>
+                 <li><a title="Add Widget" id="adduserbutton"  href="http://hsdsacluster2.fhi360.org:8080/InternalSystem/hts_rri_login.jsp?rn=<% out.println(rand_dub2); %>"><i class="glyphicon glyphicon-bookmark"></i><span > HTS LIVE</span></a></li>
                   <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
                   <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
                  <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>

@@ -64,6 +64,8 @@ public class submitZero extends HttpServlet {
             
              feedback="<font color='green'><b>Zero report submitted successfully</b></font>";
             
+             if(conn.st!=null){conn.st.close();}  
+             if(conn.conne!=null){conn.conne.close();}  
             
         } catch (SQLException ex) 
         {
