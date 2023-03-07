@@ -79,7 +79,9 @@ String other_reason_for_declining_art=null;
 String reason_for_death_tx=null;
 String other_reason_for_death_tx=null;
 
-
+String enrolled_hts_recent=null;
+String offered_index_testing=null;
+String elicited_contacts=null;
         
         try {
         
@@ -108,6 +110,9 @@ other_reason_for_declining=request.getParameter("other_reason_for_declining");
 user=request.getParameter("user");
 timestamp=request.getParameter("timestamp");
 
+
+
+
 String version="4.0.0";
 if(request.getParameter("datestartedart")!=null){
 datestartedart=request.getParameter("datestartedart");
@@ -127,6 +132,10 @@ if(request.getParameter("reason_for_declining_art")!=null){reason_for_declining_
 if(request.getParameter("other_reason_for_declining_art")!=null){other_reason_for_declining_art=request.getParameter("other_reason_for_declining_art");}
 if(request.getParameter("reason_for_death_tx")!=null){reason_for_death_tx=request.getParameter("reason_for_death_tx");}
 if(request.getParameter("other_reason_for_death_tx")!=null){other_reason_for_death_tx=request.getParameter("other_reason_for_death_tx");}
+
+if(request.getParameter("enrolled_hts_recent")!=null){enrolled_hts_recent=request.getParameter("enrolled_hts_recent");}
+if(request.getParameter("offered_index_testing")!=null){offered_index_testing=request.getParameter("offered_index_testing");}
+if(request.getParameter("elicited_contacts")!=null){elicited_contacts=request.getParameter("elicited_contacts");}
 
 
 
@@ -178,7 +187,7 @@ System.out.println(" HTS RRI Data upload by "+counselorname+" ");
    //,newart=?,newpos_pmtct=?,art_pmtct=?
      
           insert=" update daily_raw set facility=?,counsellor=?,register_no=?,serialno=?,date_tested=?,age=?,gender=?,modality=?,testresult=?,linked=?,cccno=?,linked_site=?,other_facility_linked=?,reason_not_linked=?,reason_for_death=?,other_reason_for_death=?,reason_for_declining=?,other_reason_for_declining=?,user=?,timestamp=?,datestartedart=? "
-                  + " ,linkagedate=?,started_on_art=?,reason_not_started_art=?,other_reason_not_started_on_treatment=?,started_tx_site=?,other_facility_started_art=?,reason_for_declining_art=?,other_reason_for_declining_art=?,reason_for_death_tx=?,other_reason_for_death_tx=? "
+                  + " ,linkagedate=?,started_on_art=?,reason_not_started_art=?,other_reason_not_started_on_treatment=?,started_tx_site=?,other_facility_started_art=?,reason_for_declining_art=?,other_reason_for_declining_art=?,reason_for_death_tx=?,other_reason_for_death_tx=?,enrolled_hts_recent=?,offered_index_testing=?,elicited_contacts=? "
                  + " where id='"+id+"' and locked='0' and id not in ( select id from aphiaplus_moi.deleted_daily_raw ) ";
                         conn.pst1=conn.conne.prepareStatement(insert);   
 //facilityname.startdate.enddate.hiv_pos_target_child.hiv_pos_target_adult.hiv_pos_target_total.hiv_pos_child.hiv_pos_adult.hiv_pos_total.new_care_child.new_care_adult.new_care_total.new_art_target_child.new_art_target_adult.new_art_target_total.started_art_child.started_art_adult.started_art_total.viral_load_target_child.viral_load_target_adult.viral_load_target_total.viral_load_done_child.viral_load_done_adult.viral_load_done_total.ipt_target_child.ipt_target_adult.ipt_target_total.ipt_child.ipt_adult.ipt_total.testing_target_child.testing_target_adult.testing_target_total.test_child.test_adult.test_total.pmtct_hiv_pos_target.pmtct_hiv_pos.eid_target.eid_done.viral_load_mothers_target.viral_load_mothers_done.user.hiv_pos_yield_perc_child.hiv_pos_yield_perc_adult.hiv_pos_yield_perc_all.hiv_pos_care_perc_child.hiv_pos_care_perc_adult.hiv_pos_care_perc_all.started_art_perc_child.started_art_perc_adult.started_art_perc_all.viral_test_perc_child.viral_test_perc_adult.viral_test_perc_all.ipt_done_perc_child.ipt_done_perc_adult.ipt_done_perc_all.tested_perc_child.tested_perc_adult.tested_perc_all.hiv_pos_yield_cmts.hiv_pos_care_cmts.started_art_cmts.viral_test_cmts.ipt_done_cmts.tested_cmts.viral_load_mothers_perc.eid_done_perc.pmtct_hiv_pos_perc.viral_load_mothers_cmts.eid_done_cmts.pmtct_hiv_pos_cmts
@@ -216,7 +225,14 @@ conn.pst1.setString(29,other_reason_for_declining_art);
 conn.pst1.setString(30,reason_for_death_tx);
 conn.pst1.setString(31,other_reason_for_death_tx);
 
-                       
+conn.pst1.setString(32,enrolled_hts_recent);
+conn.pst1.setString(33,offered_index_testing);
+conn.pst1.setString(34,elicited_contacts);
+
+                      
+
+
+
                         
                         if(conn.pst1.executeUpdate()==1)
                         { 
@@ -269,14 +285,14 @@ conn.pst1.setString(31,other_reason_for_death_tx);
    //do insert code here
    
       myresponse=" insert into daily_raw "
-  + " ( id,facility,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,datestartedart) "
-+ " values ('"+id+"','"+facility+"','"+counselorname+"','"+register_no+"','"+serialno+"','"+date_tested+"','"+age+"','"+gender+"','"+modality+"','"+testresult+"','"+linked+"','"+cccno+"','"+linked_site+"','"+other_facility_linked+"','"+reason_not_linked+"','"+reason_for_death+"','"+other_reason_for_death+"','"+reason_for_declining+"','"+other_reason_for_declining+"','"+user+"','"+timestamp+"','"+datestartedart+"')";
+  + " ( id,facility,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,datestartedart,enrolled_hts_recent,offered_index_testing,elicited_contacts) "
++ " values ('"+id+"','"+facility+"','"+counselorname+"','"+register_no+"','"+serialno+"','"+date_tested+"','"+age+"','"+gender+"','"+modality+"','"+testresult+"','"+linked+"','"+cccno+"','"+linked_site+"','"+other_facility_linked+"','"+reason_not_linked+"','"+reason_for_death+"','"+other_reason_for_death+"','"+reason_for_declining+"','"+other_reason_for_declining+"','"+user+"','"+timestamp+"','"+datestartedart+"','"+enrolled_hts_recent+"','"+offered_index_testing+"','"+elicited_contacts+"')";
      // System.out.println(myresponse);                   
             
          
        
-          insert=" insert into daily_raw(id,facility,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) "
-                 + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          insert=" insert into daily_raw(id,facility,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx,enrolled_hts_recent,offered_index_testing,elicited_contacts) "
+                 + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                       conn.pst1=conn.conne.prepareStatement(insert);    
                           
 conn.pst1.setString(1,id);
@@ -313,7 +329,9 @@ conn.pst1.setString(30,other_reason_for_declining_art);
 conn.pst1.setString(31,reason_for_death_tx);
 conn.pst1.setString(32,other_reason_for_death_tx);
                       
-            
+     conn.pst1.setString(33,enrolled_hts_recent);
+conn.pst1.setString(34,offered_index_testing);
+conn.pst1.setString(35,elicited_contacts);       
                      
                         
                         

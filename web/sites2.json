@@ -3238,5 +3238,75 @@
     "hts": 1,
     "pns": 1,
     "isactive": "Yes"
+  },
+  {
+    "county": "Baringo",
+    "subcounty": "Mogotio",
+    "facility_name": "Mogotio Sub County Hospital (Baringo)",
+    "mflcode": 20005,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+  {
+    "county": "Samburu",
+    "subcounty": "Samburu Central",
+    "facility_name": "Loosuk Health Centre",
+    "mflcode": 15079,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+ 
+  {
+    "county": "Nakuru",
+    "subcounty": "Rongai Sub County",
+    "facility_name": "Dandelion Medical Centre",
+    "mflcode": 23952,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+  {
+    "county": "Nakuru",
+    "subcounty": "Gilgil Sub County",
+    "facility_name": "Ol-Jorai Health Center",
+    "mflcode": 15406,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+  {
+    "county": "Nakuru",
+    "subcounty": "Kuresoi North Sub County",
+    "facility_name": "Total Dispensary",
+    "mflcode": 16403,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+  {
+    "county": "Nakuru",
+    "subcounty": "Kuresoi South Sub County",
+    "facility_name": "Korao Dispensary",
+    "mflcode": 16391,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
+  }
+  ,
+  {
+    "county": "Nakuru",
+    "subcounty": "Kuresoi North Sub County",
+    "facility_name": "Kimeswon Health Centre",
+    "mflcode": 20299,
+    "hts": 1,
+    "pns": 1,
+    "isactive": "Yes"
   }
 ]

@@ -39,7 +39,7 @@ public String filenames,cu,dates,computername,senderofmail;
         }
         //toAddress+="";
         String host = "smtp.gmail.com";
-        String Password ="plusaphia";
+        String Password ="yvokgsemrscvdcde";
         String from = "aphiabackup@gmail.com";
         // toAddress = "aphiapluschwsattendance@gmail.com";  filled above...
         

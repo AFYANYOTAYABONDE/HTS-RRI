@@ -47,7 +47,7 @@ public class getrawdata extends HttpServlet {
             dbConnweb conn = new dbConnweb();
             
             
-            String getdata=" select id, facility, counsellor, register_no, serialno, date_tested, age, gender, modality, testresult, linked, cccno, linked_site, other_facility_linked, reason_not_linked, reason_for_death, other_reason_for_death, reason_for_declining, other_reason_for_declining, timestamp, ( lastsynced + INTERVAL 3 HOUR) as lastsynced, ifnull(datestartedart,'') as datestartedart ,ifnull(positive_verified,'No') as positive_verified ,ifnull(linkage_verified,'No') as linkage_verified  ,ifnull(linkagedate,'') as linkagedate , ifnull(started_on_art,'') as started_on_art ,ifnull(reason_not_started_art,'') as reason_not_started_art ,other_reason_not_started_on_treatment,ifnull(started_tx_site,'') as started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx from aphiaplus_moi.daily_raw  where ( testresult='Positive' or testresult='Negative') and facility in ('"+facilitymfl+"')  ";
+            String getdata=" select id, facility, counsellor, register_no, serialno, date_tested, age, gender, modality, testresult, linked, cccno, linked_site, other_facility_linked, reason_not_linked, reason_for_death, other_reason_for_death, reason_for_declining, other_reason_for_declining, timestamp, ( lastsynced + INTERVAL 3 HOUR) as lastsynced, ifnull(datestartedart,'') as datestartedart ,ifnull(positive_verified,'No') as positive_verified ,ifnull(linkage_verified,'No') as linkage_verified  ,ifnull(linkagedate,'') as linkagedate , ifnull(started_on_art,'') as started_on_art ,ifnull(reason_not_started_art,'') as reason_not_started_art ,other_reason_not_started_on_treatment,ifnull(started_tx_site,'') as started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx ,enrolled_hts_recent,offered_index_testing,elicited_contacts from aphiaplus_moi.daily_raw  where ( testresult='Positive' or testresult='Negative') and facility in ('"+facilitymfl+"')  ";
           //SUBSTR(`daily_raw`.`id`, 1, 5) in ('"+facilitymfl+"')
             
           
@@ -97,6 +97,12 @@ jobj.put("reason_for_declining_art",conn.rs.getString("reason_for_declining_art"
 jobj.put("other_reason_for_declining_art",conn.rs.getString("other_reason_for_declining_art"));
 jobj.put("reason_for_death_tx",conn.rs.getString("reason_for_death_tx"));
 jobj.put("other_reason_for_death_tx",conn.rs.getString("other_reason_for_death_tx"));
+
+//,,,
+
+jobj.put("enrolled_hts_recent",conn.rs.getString("enrolled_hts_recent"));
+jobj.put("offered_index_testing",conn.rs.getString("offered_index_testing"));
+jobj.put("elicited_contacts",conn.rs.getString("elicited_contacts"));
 
             jarr.put(jobj);
                 

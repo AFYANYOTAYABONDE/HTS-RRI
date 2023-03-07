@@ -96,7 +96,7 @@ input:focus {
           %>
                 
                  <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>
-                 <li><a title="Add Widget" id="adduserbutton"  href="http://hsdsacluster2.fhi360.org:8080/InternalSystem/hts_rri_login.jsp?rn=<% out.println(rand_dub2); %>"><i class="glyphicon glyphicon-bookmark"></i><span > HTS LIVE</span></a></li>
+                 <li><a title="Add Widget" id="adduserbutton"  href="https://usaidtujengejamii.org:8443/InternalSystem/hts_rri_login.jsp?rn=<% out.println(rand_dub2); %>"><i class="glyphicon glyphicon-bookmark"></i><span > HTS LIVE</span></a></li>
                   <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
                   <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
                  <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>
@@ -175,7 +175,7 @@ input:focus {
                         </a>-->
                       
                         
-<!--                        <a class="btn btn-primary col-sm-2" title="Excel report" href="https://hsdsacluster2.fhi360.org:8443/Reports/rri.jsp">
+<!--                        <a class="btn btn-primary col-sm-2" title="Excel report" href="https://usaidtujengejamii.org:8443/Reports/rri.jsp">
                             <i class="glyphicon glyphicon-stats"></i>
                             <br> Excel Report
                         </a> -->
@@ -366,13 +366,14 @@ input:focus {
                                             <option value='anc2'>Initial test at ANC 2</option>
                                             <option value='ld'>Initial test at Labour & Delivery</option>
                                             <option value='pnc'>Initial test at PNC < 6 wks</option>
+                                            <option value='sns'>Social Networking Strategy(SNS)</option>
                                             
                                             <!--<option value="Others">Others</option>-->
                                            
                                         </select>
                                     </div>
                                 </div>
-                                             
+<div id="pnsval" class="control-group col-xs-12" style="color:red;display:none;"><label >Ensure this record is reported under daily PNS Template</label></div>        
                                              
 <!--                                             </td></tr>
                                 
@@ -397,13 +398,22 @@ input:focus {
                                  
                                  <tr class="" >
                                      <td class="col-xs-12"> -->
-
+                                 <div class="control-group col-xs-12 linkage linked" style="display:none;">
+                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Was Patient Enrolled for HTS Recency?</label>
+                                 <div class="controls col-xs-12" >
+                                 <select  onchange=""   name="enrolled_hts_recent" id="enrolled_hts_recent" class="form-control" >
+                                 <option value="">Select Results</option>
+                                 <option value='Yes'>Yes</option>
+                                 <option value='No'>No</option>
+                                 </select>
+                                 </div>
+                                 </div>
 
 
                                <div class="control-group col-xs-12 linkage linked" style="display:none;">
                                  <label class="col-xs-12"> <font color="red"><b>*</b></font>Offered Index Testing</label>
                                  <div class="controls col-xs-12" >
-                                 <select  onchange=""   name="offered_Index_Testing" id="offered_Index_Testing" class="form-control" >
+                                 <select  onchange=""   name="offered_index_testing" id="offered_index_testing" class="form-control" >
                                  <option value="">Select Results</option>
                                  <option value='Yes'>Yes</option>
                                  <option value='No'>No</option>
@@ -1307,7 +1317,7 @@ input:focus {
                 <script type="text/javascript" src="js/datatables.min.js"></script>
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
-              //var hostname="https://hsdsacluster2.fhi360.org:8443/htsrri/";
+              //var hostname="https://usaidtujengejamii.org:8443/htsrri/";
               var hostname="";
 //var hostname="http://localhost/hsdsarri";
 
@@ -1721,7 +1731,7 @@ var remoteCouch = false;
 var weeklydata;
 
 //receive the artist, song title and lyrics text
-function insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user,syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) {
+function insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user,syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx,enrolled_hts_recent,offered_index_testing,elicited_contacts) {
    
    
         dailydata = {
@@ -1756,7 +1766,9 @@ reason_for_declining_art:reason_for_declining_art,
 other_reason_for_declining_art:other_reason_for_declining_art,
 reason_for_death_tx:reason_for_death_tx,
 other_reason_for_death_tx:other_reason_for_death_tx,
-
+enrolled_hts_recent:enrolled_hts_recent,
+offered_index_testing:offered_index_testing,
+elicited_contacts:elicited_contacts,
 timestamp:timestamp,
 user:user,
 syncstatus:syncstatus,        
@@ -1855,6 +1867,9 @@ var other_reason_for_declining_art=null;
 var reason_for_death_tx=null;
 var other_reason_for_death_tx=null;
 
+var enrolled_hts_recent=null;
+var offered_index_testing=null;
+var elicited_contacts=null;
 //var viralload_tg=null; 
 //var viralload=null; 
 //var viralload_mothers=null; 
@@ -1866,7 +1881,7 @@ var other_reason_for_death_tx=null;
    
    //added 201605 
     var progressbarstoskip=[];
-     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining","linkagedate","started_on_art","reason_not_started_art","other_reason_not_started_on_treatment","started_tx_site","other_facility_started_art","reason_for_declining_art","other_reason_for_declining_art","reason_for_death_tx","other_reason_for_death_tx"];
+     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining","linkagedate","started_on_art","reason_not_started_art","other_reason_not_started_on_treatment","started_tx_site","other_facility_started_art","reason_for_declining_art","other_reason_for_declining_art","reason_for_death_tx","other_reason_for_death_tx","enrolled_hts_recent","offered_index_testing","elicited_contacts"];
      var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
@@ -2189,6 +2204,10 @@ other_reason_for_declining_art=$('#other_reason_for_declining_art').val();
 reason_for_death_tx=$('#reason_for_death_tx').val();
 other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
 
+enrolled_hts_recent=$('#enrolled_hts_recent').val();
+offered_index_testing=$('#offered_index_testing').val();
+elicited_contacts=$('#elicited_contacts').val();
+
 
     console.log("Date started ART__"+datestartedart);
     
@@ -2272,7 +2291,10 @@ else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
 else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
 //else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
 else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }  
+else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); } 
+else if(testresult==='Positive' && enrolled_hts_recent==='') { alert(' Specify if client is enrolled into HTS Recency');  $('#enrolled_hts_recent').focus(); } 
+
+
 else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
 else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }    
 else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
@@ -2364,8 +2386,8 @@ else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focu
             //add a variable to distinguish the two
             //use _wk
             
-  insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) ;
-  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+" @ "+linkagedate+" @ "+datestartedart+" @ "+started_on_art+" @ "+reason_not_started_art+" @ "+other_reason_not_started_on_treatment+" @ "+started_tx_site+" @ "+other_facility_started_art+" @ "+reason_for_declining_art+" @ "+other_reason_for_declining_art+" @ "+reason_for_death_tx+" @ "+other_reason_for_death_tx) ;
+  insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,linkagedate,datestartedart,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx,enrolled_hts_recent,offered_index_testing,elicited_contacts) ;
+  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+" @ "+linkagedate+" @ "+datestartedart+" @ "+started_on_art+" @ "+reason_not_started_art+" @ "+other_reason_not_started_on_treatment+" @ "+started_tx_site+" @ "+other_facility_started_art+" @ "+reason_for_declining_art+" @ "+other_reason_for_declining_art+" @ "+reason_for_death_tx+" @ "+other_reason_for_death_tx+" @ "+enrolled_hts_recent+" @ "+offered_index_testing+" @ "+elicited_contacts) ;
 
 
 
@@ -2894,6 +2916,13 @@ $('#other_reason_for_declining_art').val(doc.other_reason_for_declining_art);
 $('#reason_for_death_tx').val(doc.reason_for_death_tx);
 $('#other_reason_for_death_tx').val(doc.other_reason_for_death_tx);
 
+$('#enrolled_hts_recent').val(doc.enrolled_hts_recent);
+$('#offered_index_testing').val(doc.offered_index_testing);
+$('#elicited_contacts').val(doc.elicited_contacts);
+
+
+
+
    
      //$('#facilityname').select2(); 
      $('#facilityname').select2();
@@ -3035,6 +3064,11 @@ other_reason_for_declining_art=$('#other_reason_for_declining_art').val();
 reason_for_death_tx=$('#reason_for_death_tx').val();
 other_reason_for_death_tx=$('#other_reason_for_death_tx').val();
 
+enrolled_hts_recent=$('#enrolled_hts_recent').val();
+offered_index_testing=$('#offered_index_testing').val();
+elicited_contacts=$('#elicited_contacts').val();
+
+
 //user=$("#user").val();
 timestamp=$("#timestamp").val();
 
@@ -3130,6 +3164,7 @@ else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focu
  //else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
 else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
 else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
+else if(testresult==='Positive' && enrolled_hts_recent==='') { alert(' Specify if client is enrolled to HTS Recent');  $('#enrolled_hts_recent').focus(); }
 
 
 else if(linked==='Yes' && linkagedate===''  ) 
@@ -3194,7 +3229,7 @@ else if(reason_for_declining_art==='Other reason' && other_reason_for_declining_
           
      id=$("#rowid").val();
   
- saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) ;
+ saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx,enrolled_hts_recent,offered_index_testing,elicited_contacts) ;
   
             //
             //________________________________
@@ -3220,7 +3255,7 @@ setTimeout(delayedrefresh,1800);
     
 }
    
-function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx) {
+function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart,linkagedate,started_on_art,reason_not_started_art,other_reason_not_started_on_treatment,started_tx_site,other_facility_started_art,reason_for_declining_art,other_reason_for_declining_art,reason_for_death_tx,other_reason_for_death_tx,enrolled_hts_recent,offered_index_testing,elicited_contacts) {
  
  
  
@@ -3261,6 +3296,11 @@ doc.reason_for_declining_art=reason_for_declining_art;
 doc.other_reason_for_declining_art=other_reason_for_declining_art;
 doc.reason_for_death_tx=reason_for_death_tx;
 doc.other_reason_for_death_tx=other_reason_for_death_tx;
+
+doc.enrolled_hts_recent=enrolled_hts_recent;
+doc.offered_index_testing=offered_index_testing;
+doc.elicited_contacts=elicited_contacts;
+
 
 
 doc.user=user;
@@ -3372,6 +3412,11 @@ reason_for_declining_art:dat.doc.reason_for_declining_art,
 other_reason_for_declining_art:dat.doc.other_reason_for_declining_art,
 reason_for_death_tx:dat.doc.reason_for_death_tx,
 other_reason_for_death_tx:dat.doc.other_reason_for_death_tx,
+
+enrolled_hts_recent:dat.doc.enrolled_hts_recent,
+offered_index_testing:dat.doc.offered_index_testing,
+elicited_contacts:dat.doc.elicited_contacts,
+
 
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
@@ -3566,6 +3611,11 @@ reason_for_declining_art:dat.doc.reason_for_declining_art,
 other_reason_for_declining_art:dat.doc.other_reason_for_declining_art,
 reason_for_death_tx:dat.doc.reason_for_death_tx,
 other_reason_for_death_tx:dat.doc.other_reason_for_death_tx,
+
+enrolled_hts_recent:dat.doc.enrolled_hts_recent,
+offered_index_testing:dat.doc.offered_index_testing,
+elicited_contacts:dat.doc.elicited_contacts,
+
 
 user:dat.doc.user,
 timestamp:dat.doc.timestamp

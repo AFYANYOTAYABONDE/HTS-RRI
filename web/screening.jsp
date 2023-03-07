@@ -4,24 +4,26 @@
     Author     : Emmanuel E
 --%>
 
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 <!--<html  manifest="htsrriv1.appcache">-->
-<html  >
+<!--<html  >-->
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>HTS RRI Live</title>
+		<title>Data Screening</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                  <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
-                  <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
-                    <link rel="stylesheet" href="css/select2.css">
-                    <link rel="shortcut icon" href="htsrri.png">
+                <link rel="stylesheet" href="css/select2.css">
+                <link rel="shortcut icon" href="images/fwl.png">
                   
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -41,6 +43,7 @@ input:focus {
   table-layout: fixed;
 }
 
+
 @media screen and (min-width: 600px) and (max-width: 1199px)  {
   #weeklydataform {
     margin-left:20%;
@@ -55,31 +58,25 @@ input:focus {
   }
 }
 
+.form-control input {
+border-color: #5cb85c; 
+border:#5cb85c;
+    
+}
+
+
+
 </style>
-<% 
-    
-    if(request.getParameter("user")!=null){session.setAttribute("user",""+request.getParameter("user"));}
-    
-    if(session.getAttribute("user")!=null)
-{
-  
-} 
-else 
-{    
-    System.out.println("inakataa kabisa "+session.getAttribute("user"));
-    
-  response.sendRedirect("http://usaidtujengejamii.org:8080/InternalSystem/hts_rri_login.jsp");
-} 
 
-
-%>
                 
 	</head>
 	<body>
 <!-- header -->
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
+        
         <div class="navbar-header">
+            <button id="toolid" style="float:left;color:white;" class="navbar-toggle btn btn-default" > <i class="glyphicon glyphicon-stats"></i>  Daily Facility WorkLoad Summary (version 1.0.0) </button>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -100,9 +97,11 @@ else
                 </li>
           
                 
-                 <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Activate a counsellor</span></a></li>-->
-                  <!--<li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>-->
-                 <li ><a  title="Add Widget"   href="logout.jsp"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Update user</span></a></li>
+                  <li><a id="clearcachebtn"  title=""   href="" onclick='clearsws();'<i class="glyphicon glyphicon-log-in"></i> Clear Cache</a></li>
+                  <li><a id="cleardatabtn"  title=""    onclick='cleardata();'<i class="glyphicon glyphicon-fire"></i>Delete all Data</a></li>
+                 <li ><a  title="Add Widget" data-toggle="modal"  id="exportdataanchor2" href="#addWidgetModal1"><i class="glyphicon glyphicon-cloud-upload"></i> Export all Data</a></li>
+                 <!--<li ><a  title="Add Widget" data-toggle="modal"  id="zeroreportanchor" href="#zeroreportmodal"><i class="glyphicon glyphicon-remove-circle"></i> Submit Zero report</a></li>-->
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
@@ -130,37 +129,46 @@ else
 
             
             
-          <h5 id="feedbacklabel" style="text-align: center;color:blue;font-family: sans-serif;">HTS RRI Live</h5>
+           
 
-      
-      
-  
-
-            <div class="row">
+     
+          <div class="row">
                 <!-- center left-->
-                <div class="col-md-12">
+                
+          <div class="col-md-12" style="padding-left:3px;padding-right:3px;">
                     
 
                   
 
-
-                    
-                    
-                    
-                    
-                    
-  <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-6"> <font color="red"><b>*</b></font>  Facility</label>
-                                    <div class="controls col-xs-6" style="padding-bottom: 15px;">
-                                    <select  onchange="appendtabledata();" style='width:100%;'   name="searchfacilityname" id="searchfacilityname" class="form-control" >
-                                    <option>Select Facility Name</option>
-                                    </select>
-                                    </div>
-                                </div>                    
-                    
-                    
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" id='refreshpage' class="btn btn-success col-sm-2">
+                            <i class="glyphicon glyphicon-stats"></i>
+                             Facility WorkLoad Summary  (version 1.0.0) 
+                        </a>
+                       
+                         
+                            
+                            <a  class="btn btn-success col-sm-2" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
+                                <i class="glyphicon glyphicon-cloud-upload"></i> Export Data 
+                                <label id="unexportedno" style="color:yellow;">(0 records )</label>
+                            </a>
+                             
+                       
+<!--                         <a href="indextesting.jsp" class="btn btn-primary col-sm-2">
+                            <i class="glyphicon glyphicon-link"></i>
+                            <br>Index Testing <br/>/ PNS
+                        </a>-->
+                        
+                        <!--<a href="#" class="btn btn-primary col-sm-3">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            <br> Settings
+                        </a>-->
                       
-                     
+                        
+<!--                        <a class="btn btn-primary col-sm-2" title="Excel report" href="https://hsdsacluster2.fhi360.org:8443/Reports/rri.jsp">
+                            <i class="glyphicon glyphicon-stats"></i>
+                            <br> Excel Report
+                        </a> -->
                     </div>
 
                     <hr>
@@ -171,29 +179,29 @@ else
                     <!--tabs-->
                     <div class="panel">
                         <ul class=" nav nav-tabs " id="myTab">
-                            <li class="newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> New Data</a></li>
+                            <li class="active newdata col-xs-4"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Data</a></li>
                             <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                             <!--<li><a href="#reports" style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li>--> 
-                            <li class=' active col-xs-4'><a href="#searchdata" id="searchdatabutton" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
+                            <li class='col-xs-4'><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                            
-                            <!--<li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class=""></i>Possible Duplicates</a></li>-->
+                            <li class='col-xs-4'><a href="#viewcounsellors" data-toggle="tab"> <i class="glyphicon glyphicon-bishop"></i>Screeners</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane well col-md-12" id="dataentry">
+                            <div class="tab-pane active well col-md-12" style='padding:0px;' id="dataentry">
                                 
                                 
                               <!--Data entry code-->
                     <div class="panel panel-default">
                        
-                        <div class="panel-body" style="width:100%;">
+                        <div class="panel-body" style="width:100%;padding:2px;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 
                                 
-                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
+<!--                                <table class='table table-responsive table-bordered'  style="overflow-x: hidden ;" >
                                 
-                                <tr><th class="col-xs-12" style="text-align:center"><b>Enter HTS Data</b></th></tr>
-                                </table>
+                                <tr><th class="col-xs-12" style="text-align:center" id="headerid"><b>Enter HTS Data</b></th></tr>
+                                </table>-->
 <!--                                <tr><td class="col-xs-12">
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Date </label>
@@ -206,14 +214,30 @@ else
                                 
 <!--                                <tr>
                                     <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Date Test Conducted </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+
+                           <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: solid; border-right-style: solid; border-bottom-style: none; border-left-style: solid;">
+                                    <label  class="col-xs-4" style="padding-top:20px;padding-left:2px;">Date </label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:20px;">
+                                        <input type="text" onchange="checkids();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" required="true" readonly placeholder="e.g yyyy-mm-dd">
                                    <input type="hidden"  name ="rowid" id="rowid"  />
                                    <input type="hidden"  name ="unexported" id="unexported"  />
                                     </div>
                                 </div>
+
+      
+                                  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Facility</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="checkids();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
+                                            <option>Select Facility Name</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                                
+
+
+        
                                         
                                         
 <!--                                </td>
@@ -224,366 +248,109 @@ else
                                 
                                 
                               
+                          
                                 
-          <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="checkids();validatemodalities();" style='width:100%;'   name="facilityname" id="facilityname" class="form-control" >
-                                            <option>Select Facility Name</option>
-                                           
+              
+
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:2px;" class="col-xs-6">Total Facility Workload<span class='badge' title='OPD' data-toggle='popover' data-trigger='hover' data-content='Total Facility Workload'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4"  required="true" onkeypress='return numbers(event);' onkeyup="percent('screened','opd_t','screenrate'); removeFirstZero('opd_t');" name="opd_t" id="opd_t"  autocomplete="off"  class="form-control" title="enter Total Facility on the date above"  placeholder="New & Revisit">
+ </div>
+ </div>
+       <!--onblur="runValidation('screened','opd_t','opd_t');"-->      
+
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">Total Screened <span class='badge' title='Screened' data-toggle='popover' data-trigger='hover' data-content='# OPD Clients Screened'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('screened','opd_t','screenrate'); removeFirstZero('opd_t');" onblur="runValidation('opd_eligible','screened','screened');" required="true" name="screened" id="screened"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="# Screened">
+ </div>
+ </div>
+       <!--runValidation('screened','opd_t','screened');-->
+                                
+  <div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">Screening Rate <span class='badge' title='Screening Rate' data-toggle='popover' data-trigger='hover' data-content='% of the Clients Screened'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="screenrate" id="screenrate"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="%OPD Screened">
+ </div>
+ </div>                               
+        
+                                
+  <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">Total Eligible Clients<span class='badge' title='Eligible' data-toggle='popover' data-trigger='hover' data-content='# of Clients Eligible for Testing'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="removeFirstZero('opd_eligible');" onblur="runValidation('opd_eligible','screened','opd_eligible');runValidation('opd_tested','opd_eligible','opd_eligible');" required="true" name="opd_eligible" id="opd_eligible"  autocomplete="off"  class="form-control" title="enter Screened on the date above"  placeholder="#Clients Eligible">
+ </div>
+ </div>                               
+                                
+  <div class="control-group col-xs-12" style="background-color: #EBEBEB; border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">Total Tested <span class='badge' title='Tested' data-toggle='popover' data-trigger='hover' data-content='# of Clients Tested'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('opd_positive','opd_tested','opd_Yield');removeFirstZero('opd_tested');" onblur="runValidation('opd_positive','opd_tested','opd_tested');runValidation('opd_tested','opd_eligible','opd_tested');" required="true" name="opd_tested" id="opd_tested"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="#Clients Tested">
+ </div>
+ </div>                                 
+   
+                                
+ <div class="control-group col-xs-12" style="border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:1px;" class="col-xs-6">Total Positive <span class='badge' title='Positive' data-toggle='popover' data-trigger='hover' data-content='# of Clients Tested & HIV +ve'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" onkeypress='return numbers(event);' onkeyup="percent('opd_positive','opd_tested','opd_Yield');removeFirstZero('opd_positive');" onblur="runValidation('opd_positive','opd_tested','opd_positive');" required="true" name="opd_positive" id="opd_positive"  autocomplete="off"  class="form-control" title="enter # Tested on the date above"  placeholder="#Tested Positive">
+ </div>
+ </div>  
+                                
+                                
+<div class="control-group col-xs-12"  style="display:none;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+  <label style="padding-left:0px;" class="col-xs-6">Positive Yield <span class='badge' title='OPD Yield' data-toggle='popover' data-trigger='hover' data-content='% of the Positive Clients out of the tests'>?</span> </label>
+ <div class="controls col-xs-6" style="padding-bottom: 5px;">
+ <input type="text" maxlength="4" readonly onkeypress='return numbers(event);' onblur="" name="opd_Yield" id="opd_Yield"  autocomplete="off"  class="form-control" title=""  placeholder="% Yield">
+ </div>
+ </div>  
+                                
+                                
+           <div class="control-group col-xs-12" style="background-color:#EBEBEB ;border-width: 0.15px ; border-color:  #EBEBEB;  border-top-style: none; border-right-style: solid; border-bottom-style: none; border-left-style: solid;" >
+                                    <label style="padding-left:2px;" class="col-xs-4">Uploaded By</label>
+                                    <div class="controls col-xs-8" style="padding-bottom:5px;padding-top:5px;">
+                                        <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
+                                            <option value=''>Select user</option>
+
                                         </select>
                                     </div>
-                                </div>
-                                
-                                
-                               
-                                
-                               
-                                
-                                          <!--</td></tr>-->
-                                  
-                                <!--counsellor-->
-                                <!--<tr><td class="col-xs-12">--> 
-
-                                        <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                            <label class="col-xs-12"> <font color="red"><b>*</b></font>  Name of Counsellor:</label>
-                                            <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                                <select  onchange="" required  name="counsellor" id="counsellor" class="form-control" >
-                                                    <option value=''>Select Counsellor</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                    <!--</td></tr>-->
-                                    
-                                
-                                
-                                
-                                
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font> Register Number </label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" maxlength="4"  onblur="" name="register_no" id="register_no"  autocomplete="off"  class="form-control" title="this is a code of the "  placeholder="e.g 01, 02,03 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                -->
+                                </div>                        
                                 
                                  
-<!--                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Patient Serial No.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="serialno" id="serialno"  autocomplete="off"  class="form-control"  placeholder="e.g 0001 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Age.</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text" onkeypress='return numbers(event);'  onblur="" name="age" id="age" maxlength="2" autocomplete="off"  class="form-control"  placeholder="e.g 22 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Sex</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select type="text"   onblur="" name="gender" id="gender"  autocomplete="off"  class="form-control" >
-                                            <option value=''>select sex</option>
-                                            <option value='Female'>Female</option>
-                                            <option value='Male'>Male</option>
-                                            </select>
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>
-                                
-                                
-                                HTS Testing Modality
-                                
-                                
-                                <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HTS Testing Modality</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange=""   name="modality" id="modality" class="form-control" >
-                                            <option value="">Select Modality</option>
-                                            <option value='index_testing'>Index Testing</option>
-                                            <option value='malnutrition'>PITC Malnutrition</option>
-                                            <option value='pediatrics'>PITC Pediatrics</option>
-                                            <option value='tb_clinics'>PITC TB</option>
-                                            <option value='other_pitc'>Other PITC</option>
-                                            <option value='vmmc'>VMMC Services</option>
-                                            <option value='vct'>VCT</option>
-                                            <option value='inpatient'>PITC Inpatient</option>
-                                            <option value='sti'>PITC STI</option>
-                                            <option value='emergency'>PITC Emergency</option>
-                                            <option value='anc1'>Initial test at ANC 1</option>
-                                            <option value='anc2'>Initial test at ANC 2</option>
-                                            <option value='ld'>Initial test at Labour & Delivery</option>
-                                            <option value='pnc'>Initial test at PNC < 6 wks</option>
-                                            
-                                            <!--<option value="Others">Others</option>-->
-                                           
-                                        </select>
-                                    </div>
-                                </div>
-                                             
-                                             
-<!--                                             </td></tr>
-                                
-                                 <tr><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12" style="border: 0.5px dotted #2e6da4;">
-                                    <label class="col-xs-12"> <font color="red"><b>*</b></font> HIV Test Results</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <select  onchange="asklinkage();"   name="testresult" id="testresult" class="form-control" >
-                                            <option value="">Select Results</option>
-                                            <option value='Positive'>Positive</option>
-                                            <option value='Negative'>Negative</option>
-                                          </select>
-                                    </div>
-                                </div>
-                                             
 <!--
- <tr class="" >
-                                     <td class="col-xs-12"> -->
-                                 <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Was Patient Enrolled for HTS Recency?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange=""   name="enrolled_hts_recent" id="enrolled_hts_recent" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
 
+pmtct_tested
+pmtct_positive
+pmtct_Yield
 
-                               <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Offered Index Testing</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange=""   name="offered_index_testing" id="offered_index_testing" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
+vct_tested
+vct_positive
+vct_Yield
 
-                                <div class="control-group col-xs-12 linkage linked" style="display:none;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font># of Contacts Elicited</label>
-                                 <div class="controls col-xs-12" >
-                                 <input type="text"    name="elicited_contacts" id="elicited_contacts" class="form-control" >
-                                
-                                
-                                 </div>
-                                 </div>
-                                             
-<!--                                             </td></tr>
-                                 
-                                 
-                                 <tr class="" >
-                                     <td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage linked" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Is the Patient Started on ART?</label>
-                                 <div class="controls col-xs-12" >
-                                 <select  onchange="whichfacility();"   name="linked" id="linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Yes'>Yes</option>
-                                 <option value='No'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                    
+index_tested
+index_positive
+index_yield
 
+self_test
+Referred_Prep
 
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-                                 
-<!--                                  <tr class='' >
-                                      <td class="col-xs-12"> -->
+Total_Tested
+Total_Positive
+Total_Linked
+Total_Linkage
+-->
 
-
-                               
-
-                                             
-                                             <div class="control-group  linkage linked_site col-xs-12"  style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Started in this Facility?</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="specifyFacilityLinked();"   name="linked_site" id="linked_site" class="form-control" >
-                                 <option value='' >Select Results</option>
-                                 <option value='This Facility'>Yes</option>
-                                 <option value='Other Facility'>No</option>
-                                 </select>
-                                 </div>
-                                 </div>
-
-                                <div class="control-group  linkage linked_site col-xs-12" style="display:none;border: 0.5px dotted #2e6da4;">
-                                <label class="col-xs-12"><font color="red"><b>*</b></font>Date Started on ART</label>
-                                <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                <input  type="text"  onblur="" name="artstartdate" id="artstartdate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
-                                </div>
-                                </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_facility_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Facility Started on ART</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onblur="" name="other_facility_linked" id="other_facility_linked"  autocomplete="off"  class="form-control"  placeholder="e.g Kabarnet District Hospital ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>-->
-                                 
-<!--                                <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage cccno" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>CCC Number (mflcode-patient no)</label>
-                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                        <input type="text"  onclick="setmflcode();" onkeypress="setmflcode();" name="cccno" id="cccno"  autocomplete="off"  class="form-control"  placeholder="e.g 55555-23232 ">
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr>  -->
-                                 
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_not_linked" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Not started on ART</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdiedordeclined();"   name="reason_not_linked" id="reason_not_linked" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='Declined'>Declined</option>
-                                 <option value='Died'>Died</option>
-                                 <option value='TCA'>TCA</option>
-                                 <option value='On Treatment preparation'>On Treatment preparation</option>
-                                 <option value='Started TB Treatment'>Started TB Treatment</option>
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;">
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Declined</label>
-                                 <div class="controls col-xs-12" style="padding-bottom: 15px;">
-                                 <select  onchange="isshowdeclinedother();"   name="reason_for_declining" id="reason_for_declining" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='To consult spouse'>To consult spouse</option>
-                                 <option value='Not ready to start'>Not ready to start</option>
-                                 <option value='Religious reasons'>Religious reasons</option>
-                                 <option value='Associated costs '>Associated costs </option>
-                                 <option value='Relocated to other area'>Relocated to other area</option>
-                                 <option value='Distance to health facility'>Distance to health facility</option>
-                                 <option value='Guardian declined RX for child'>Guardian declined RX for child</option>
-                                 <option value='No reason given'>No reason given</option>
-                                 <option value='Other reason'>Other reason</option>
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>
-                                 
-                                 
-                                 <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_declining" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Declined</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_declining" id="other_reason_for_declining"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
-                                        
-<!--                                </td>
-                                </tr> -->
-                                
-                                
-<!--                                 <tr class='' ><td class="col-xs-12"> -->
-                                             
-                                             <div class="control-group col-xs-12 linkage reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                 <label class="col-xs-12"> <font color="red"><b>*</b></font>Reason Died</label>
-                                 <div class="controls col-xs-12">
-                                 <select  onchange="isshowdeadother();"   name="reason_for_death" id="reason_for_death" class="form-control" >
-                                 <option value="">Select Results</option>
-                                 <option value='HIV disease resulting in TB'>HIV disease resulting in TB</option>
-                                 <option value='HIV disease resulting in other infectious and parasitic disease'>HIV disease resulting in other infectious and parasitic disease</option>
-                                 <option value='HIV disease resulting in cancer'>HIV disease resulting in cancer</option>
-                                 <option value='HIV disease, resulting in other diseases or conditions leading to death'>HIV disease, resulting in other diseases or conditions leading to death</option>
-                                 <option value='Other natural causes'>Other natural causes</option>
-                                 <option value='Non-natural causes'>Non-natural causes</option>
-                                 <option value='Unknown Cause'>Unknown Cause</option>
-
-
-                                 </select>
-                                 </div>
-                                 </div>
-                                             
-                                             
-<!--                                 </td>
-                                 </tr>-->
-                                 
-                                 
-<!--                                  <tr class='' >
-                                    <td class="col-xs-12">-->
-                                   <div class="control-group col-xs-12 linkage other_reason_for_death" style="display:none;border: 0.5px dotted #2e6da4;" >
-                                    <label class="col-xs-12"><font color="red"><b>*</b></font>Specify Other reason Died</label>
-                                    <div class="controls col-xs-12">
-                                        <input type="text"  onblur="" name="other_reason_for_death" id="other_reason_for_death"  autocomplete="off"  class="form-control"  >
-                                  
-                                    </div>
-                                </div>
-                                        
+                                      
                                         
 <!--                                </td>
                                 </tr> -->
@@ -602,7 +369,7 @@ else
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note: Please enter data for all input fields.</div>
+                               <div id="utumani" class="alert-info">Note: Please enter data for all input fields.</div>
                                    <br/>
                                     <div class="controls">
                                         <button type="submit" id='savebutton' onmouseover="setrowid();" onclick="validateweeklydata();" style="margin-left: 0%;" class="btn-lg btn-success active">
@@ -665,21 +432,21 @@ else
                                <!--- Data export---->
                             </div>
                             
-                            <div class="tab-pane  active well" id="searchdata">
+                            <div class="tab-pane well" id="searchdata">
                                  <button id="btnDeleteRow" style='display:none;' value="cancel">Delete selected Row</button>
-                                <div style="text-align: center;" id="searchtablediv">
-                                    <img style="" src="images/ajax_loader.gif" />
+                                <div id="searchtablediv">
+                                  
                                 </div>    
                                <!--- Data export---->
                             </div>
                             
-<!--                            <div class="tab-pane well" id="viewcounsellors">
-                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected record</button>
+                            <div class="tab-pane well" id="viewcounsellors">
+                                 <button id="btnDeleteRowcns" style='display:none;' value="cancel">Delete selected User</button>
                                 <div id="searchtabledivcns">
                                   
                                 </div>    
-                               - Data export--
-                            </div>-->
+                               <!--- Data export---->
+                            </div>
                             
                             
                             </div>
@@ -706,13 +473,13 @@ else
 
 <!-- /Main -->
 
-<footer class="text-center"> &copy; HSDSA USAID </footer>
+<footer class="text-center"> &copy; AfyaNyota | USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr1" aria-hidden="true">x</button>
                 <h4 class="modal-title">Data Export</h4>
             </div>
             <div class="modal-body">
@@ -751,7 +518,7 @@ else
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
                 <h4 class="modal-title">Data Re-Export</h4>
             </div>
             <div class="modal-body">
@@ -778,6 +545,47 @@ else
 
 
 
+<div class="modal" id="zeroreportmodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
+                <h4 class="modal-title">Submit zero report</h4>
+            </div>
+            <div class="modal-body">
+              <form id="zeroreportform">
+                  <div class="control-group col-xs-12" >
+               <label class="col-xs-12"> <font color="red"><b>*</b></font>  Date:</label>
+               <div class="controls col-xs-12" style="padding-bottom: 15px;">
+              <input type="text" onchange="" onblur="" name="zeroreportdate" id="zeroreportdate" data-date-end-date="0d" autocomplete="off" class="form-control dates" readonly="" placeholder="datepicker" style="border-color: rgb(51, 122, 183);">
+                </div>
+                </div>
+               <div class="control-group col-xs-12" >
+                                    <label class="col-xs-12"> <font color="red"><b>*</b></font>  Facility Name:</label>
+                                    <div class="controls col-xs-12" style="padding-bottom: 15px;">
+                                        <select  onchange="" style='width:100%;'   name="facilityname_zerorpt" id="facilityname_zerorpt" class="form-control" >
+                                        <option>Select Facility Name</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+              
+              <button class=" btn-sm btn-success" style="text-align: center;" id="savezeroreportbutton" onclick="savezeroreport();">Submit</button>
+              
+              
+              <button class=" btn-lg btn-info" style="display:none;text-align: center;"   > Exporting Data..</button>
+              <p id="savezeromsg"> </p>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
 
 
 
@@ -790,17 +598,17 @@ else
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Counsellor Activation</h4>
+                <button type="button" id="saveuserbtn" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title">System User Details</h4>
             </div>
             <div class="modal-body">
                 <form action="#" id="userform" method="post">
-                 <div class="control-group">
-                                    <label><font color="red"><b>*</b></font>Counsellor Name</label>
+                                  <div class="control-group">
+                                    <label><font color="red"><b>*</b></font>Screener Name</label>
                                     <div class="controls">
                                         <select  maxlength='30' placeholder="eg John Ndoe"   required name="counsellorreg" id="counsellorreg" class="form-control" >
                                     
-                                        <option value=''>select counsellors</option>
+                                        <option value=''>loading.Please wait</option>
                                         </select>
                                     </div>
                                 </div> 
@@ -822,7 +630,7 @@ else
                                 </div>
                     
                     <div class="control-group" >
-                                    <label>Current Facility:</label>
+                                    <label>Facility Name</label>
                                     <div class="controls">
                                         <select  name="counsellorfacil" id="counsellorfacil" style="width:100%;" class="form-control">
                                             <option value="">Select Facility</option>
@@ -840,7 +648,7 @@ else
                                     <label></label>
                                     <div class="controls">
                                         <button onclick=" updateuser();"  type="submit" style="margin-left: 50%;"  class="btn-lg btn-success active">
-                                            Activate
+                                            Update
                                         </button>
                                     </div>
                                 </div>   
@@ -863,7 +671,7 @@ else
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
             </div>
             <div class="modal-body">
@@ -959,13 +767,13 @@ else
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting patient level data for the HTS RRI.</p>
-                    <h3>Activating HTS counsellors</h3>
-                 <p> The first time of installing/running the application,You should specify the name of the HTS counsellor from the availed list.</p>
+                <p>This  application is created for aiding users in collecting Facility Attendance Tool</p>
+                    <h3>Activating User</h3>
+                 <p> The first time of installing/running the application,You should specify the name of the system users from the availed list.</p>
                 
                 <h3>Data Elements</h3>
                 <p>The specific elements that we are interested in are;</p>
@@ -1014,12 +822,66 @@ else
 
 
 
+
+
+
+
+<div class="modal" id="whatsappform" style='height:99%;'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+<!--            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="refr11" aria-hidden="true">x</button>
+            <label id='tumawp' class='btn btn-info'>Share <i class='glyphicon glyphicon-share'></i></label>
+            </div>-->
+            <div class="modal-body">
+              
+            <form id="whatsapp">
+               
+                  <table border='0px' class='table table-condensed' style='font-size:9px;'>
+<tr style='color:white;background-color:gray;'><th colspan='4' style='font-size:11px;text-align:center;'> <b><label id='lbl_facility' ></label></b> : <label id='lbl_date_tested'></label></th></tr>
+
+<tr><td style='border:1px solid gray;' rowspan='7'><b>Total Facility</b></td><td style='text-align:left;'><b>Workload</b> </td><td><label id='lbl_opd_t'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Total screened:</b> </td><td><label id='lbl_screened'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Screening rate (%)</b> </td><td><label id='lbl_screenrate'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>Eligible for testing:</b> </td><td><label id='lbl_opd_eligible'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. tested:</b> </td><td><label id='lbl_opd_tested'></label></td><td></td></tr>
+<tr><td style='text-align:left;'><b>No. positive:</b> </td><td><label id='lbl_opd_positive'></label></td><td></td></tr>
+<tr style='background-color:gray;color:white;'><td style='text-align:left;'><b>Positive yield (%)</b> </td><td><label id='lbl_opd_Yield'></label></td><td></td></tr>
+<tr style='border:1px solid gray;'><td></td><td style='text-align:left;'><b>Submitted By:</b> </td><td><label id='lbl_counsellor'></label></td><td></td></tr>
+
+
+  
+  <tr><td><div alt='' id='pisa' ></div></td></tr>
+
+
+</table>
+              
+              </form>
+            
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn" id="refr">Close</a>
+              
+            </div>
+        </div>
+        
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
+
+
+
+
+
+
+
+
 	<!-- script references -->
                 <script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.js"></script>
 		<script src="js/scripts.js"></script>
                 <script src="js/bootstrap-datepicker.min.js"></script>
-                <script src="js/table-edits.min.js"></script>
                 
 <!--                <script type="text/javascript" src="select/selectstyle.js"></script>  
                 <link href="select/selectstyle.css" rel="stylesheet">-->
@@ -1027,10 +889,14 @@ else
           
                 
                 <script src="js/select2.js"></script>
-                <script src="js/pouchdb-4.0.1.js"></script>
+                <script src="js/pouchdb-7.1.1.js"></script>
                  
                 <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
                 <script type="text/javascript" src="js/datatables.min.js"></script>
+                <script type="text/javascript" src="js/html2canvas.js"></script>
+                <script type="text/javascript" src="js/FileSaver.js"></script>
+                <!--<script type="text/javascript" src="js/screenshot.js"></script>-->
+                
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                 <script>
               //var hostname="https://hsdsacluster2.fhi360.org:8443/htsrri/";
@@ -1052,21 +918,20 @@ else
   
   $('#rowid').val("");  
   
-  $.ajaxSetup({ cache: false });
-  
   });   
                  </script>
 
 
 <script>
-   $.ajaxSetup({ cache: false });
+   
   var user="hsdsa";  
 //load data from the cloud server 
    
 //load data from the cloud server 
    function getFacilitiesJson(){
        
- 
+      
+       
         var facilities="<option value=''>Select Facility</option>";
         
               $.ajax({
@@ -1086,15 +951,15 @@ else
                      }
                      //alert(facilities);
                       $("#facilityname").html(facilities);
-                      $("#searchfacilityname").html(facilities);
                       $("#counsellorfacil").html(facilities);
+                      $("#facilityname_zerorpt").html(facilities);
                       
                       
                    $(document).ready(function() {
             //$('#lyricstable').DataTable();
               $('#facilityname').select2();
-              $('#searchfacilityname').select2();
               $('#counsellorfacil').select2(); 
+              $('#facilityname_zerorpt').select2(); 
               
             //   $('#facilityname').chosen();
             //  $('#facilityname').trigger("chosen:updated");
@@ -1156,7 +1021,7 @@ function adduser(code,cname,cfacil,fullname) {
    {
       
     adduser(code,counsname,counsfacil,fullname); 
-   //showuser();   
+   showuser();   
        
    }
    
@@ -1167,14 +1032,14 @@ function adduser(code,cname,cfacil,fullname) {
 userdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
 if(da.total_rows===0){
     //activatecounsellors();
-$("#usernamelabel").html("Load a Counsellor");
+$("#usernamelabel").html("Activate a User");
 $("#usernamelabel").click();
 $("#usernamelabel").click();
 
                       }
      else {
        
-            var counsellors="<option value=''>select  Counsellor</option>";
+            var counsellors="<option value=''>select  Screener</option>";
             var a;
      for(a=0;a<da.total_rows;a++){
                 var dat={}; 
@@ -1186,8 +1051,12 @@ $("#usernamelabel").click();
                 if(da.total_rows===1){
           counsellors="<option value='"+dat.cname+"'>"+dat.cname+"</option>";
            $("#facilityname").val(dat.cfacil);
+           $("#facilityname_zerorpt").val(dat.cfacil);
         
             $('#facilityname').select2();
+            $('#facilityname_zerorpt').select2();
+           
+           $("#usernamelabel").html("Hi "+dat.cname);
            
            // validatemodalities();
                                      
@@ -1204,7 +1073,7 @@ $("#usernamelabel").click();
            user=dat.cname;
             }
             else {
-             counsellors="<option value=''>Activate a Counsellor</option>";
+             counsellors="<option value=''>Activate a User</option>";
              $("#counsellor").html(counsellors);
      }
    
@@ -1212,11 +1081,11 @@ $("#usernamelabel").click();
      }//end of row
 
         }
-});
+}).catch(function (err){console.log("makosa ni :"+err.reason);   if(err.reason==='QuotaExceededError'){alert("Your device has run out of space.Please create space by deleting unwanted videos,photos or large documents");}  });
 	} //end of function
         
         
-     //showuser();
+     showuser();
      
    function loaduser()
    {
@@ -1310,6 +1179,9 @@ RRI_Name: RRI_Name
   counsellorslistdb.put(receivedcounsellors, function callback(err, result) {
     if (!err) {
       //console.log('targets added succesfully');
+      
+      
+      
     }
   });
 }
@@ -1358,7 +1230,8 @@ function getcounsellorslist(){
                          
                        // console.log(data[i].facility_name) 
                         
-                        addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
+                        
+            addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
                         updatecounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
                         
                       if(i===data.length-2){
@@ -1408,8 +1281,10 @@ $('#exportbutton').hide();
     success: function(data) {
                              //alert('offline');
 	$('#exportbutton').show();
+	$('#savezeroreportbutton').show();
        // alert("failed");
         $("#exportresponse").html("");
+        $("#savezeromsg").html("");
    
     }
                                            
@@ -1418,8 +1293,10 @@ $('#exportbutton').hide();
     {
         //alert('offline');
 	$('#exportbutton').hide();
+	$('#savezeroreportbutton').hide();
        // alert("failed");
         $("#exportresponse").html("<b><font color='orange'>Connect to internet to export data </b><br/>");
+        $("#savezeromsg").html("<b><font color='orange'>Connect to internet to submit zero report</b><br/>");
     }
                         
                          });
@@ -1437,46 +1314,48 @@ $('#exportbutton').hide();
 
  
 //This is a document to save all tables 
-var dailydatadb = new PouchDB('client_data_rrisep',{auto_compaction: true});
+var dailydatadb = new PouchDB('workload_client_data',{auto_compaction: true});
 var remoteCouch = false;
 var weeklydata;
 
 //receive the artist, song title and lyrics text
-function insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user,syncstatus,datestartedart) {
+function insertdailydata(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,timestamp,user, syncstatus) {
    
    
         dailydata = {
-        _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
-	facility:facilityname,
-       counselorname:counsellor,
-       register_no:register_no,
-       serialno:serialno,
+       _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
+       facility:facilityname,
+       counselorname:counsellor,      
        date_tested:date_tested,
-       age:age,
-       gender:gender,
-	modality:modality,
-        testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-timestamp:timestamp,
-user:user,
-syncstatus:syncstatus,        
-completed: false
+       opd_t:opd_t,
+       screened:screened,
+       screenrate:screenrate,
+       opd_eligible:opd_eligible,
+       opd_tested:opd_tested,
+       opd_positive:opd_positive,
+       opd_Yield:opd_Yield,   
+       timestamp:timestamp,
+       user:user,
+       syncstatus:syncstatus,        
+       completed: false
   };
   dailydatadb.put(dailydata, function callback(err, result) {
+      
+      console.log("Result:  "+result+" error: "+err);
+      
     if (!err) 
     {
       console.log('daily data added succesfully');
       
     }
+    else {
+        
+       $("#headerid").html("<font color='red'><b>Record Not Saved. You have already entered data for that date</b></font>");
+         alert("Duplicate Error!.You have already entered data for that date. Consider editing the data");
+        
+            console.log('Saving Error: Data for that data has been entered ');   
+        
+         }
   });
 }	
 
@@ -1489,38 +1368,25 @@ completed: false
 var id=null;
 var facility=null;
 var counsellor=null;
-var register_no=null;
-var serialno=null;
+
 var date_tested=null;
-var age=null;
-var gender=null;
-var modality=null;
-var testresult=null;
-var linked=null;
-var cccno=null;
-var linked_site=null;
-var other_facility_linked=null;
-var reason_not_linked=null;
-var reason_for_death=null;
-var other_reason_for_death=null;
-var reason_for_declining=null;
-var other_reason_for_declining=null;
+
 var user=null;
 var timestamp=null;
 var datestartedart=null;
 
-//var viralload_tg=null; 
-//var viralload=null; 
-//var viralload_mothers=null; 
 
-   
-//var newart=null;
-//var newpos_pmtct=null;
-//var art_pmtct=null;
-   
+var opd_t=null;
+var screened=null;
+var screenrate=null;
+var opd_eligible=null;
+var opd_tested=null;
+var opd_positive=null;
+var opd_Yield=null;
+
    //added 201605 
     var progressbarstoskip=[];
-     var allindicatorsarray=["rowid","facilityname","counsellor","register_no","serialno","enddate","age","gender","modality","testresult","linked","cccno","linked_site","other_facility_linked","reason_not_linked","reason_for_death","other_reason_for_death","reason_for_declining","other_reason_for_declining"];
+     var allindicatorsarray=["rowid","facilityname","enddate","counsellor","opd_t","screened","screenrate","opd_eligible","opd_tested","opd_positive","opd_Yield"];
      var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
@@ -1703,7 +1569,7 @@ function createdynamicinputs(){
                  
              }//end of for loop
              row2+=" </tr> ";   
-             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>×</button><span id='actiondone'></span></div></td></tr> ";   
+             row2+=" <tr><td colspan='1'><a id='finishbutton' href='#' style='margin-left: 50%;' onclick='setTimeout(delayedrefresh(),1500);clearcmtsandprcent();' class='btn btn-success btn-lg'>Finish</a></td></tr><tr><td colspan='1'> <div class='alert alert-success' id='message' style='display:none;'><button type='button' class='close' data-dismiss='alert'>x</button><span id='actiondone'></span></div></td></tr> ";   
             
             //alert(row2);
              $("#reportstable").html(row2);
@@ -1756,12 +1622,12 @@ function activatecounsellors(){
 counsellorslistdb.allDocs({include_docs: true, ascending: true}).then(function (da) {
 if(da.total_rows===0){
 //getcounsellorslist();
-alert("No loaded list of counsellors");
+//alert("No loaded list of counsellors");
 
                       }
      else {
        
-            var counsellors="<option value=''>select  Counsellor(s)</option>";
+            var counsellors="<option value=''>select  Screener(s)</option>";
             var a;
      for(a=0;a<da.total_rows;a++){
                 var dat={}; 
@@ -1772,7 +1638,7 @@ alert("No loaded list of counsellors");
                 if(1===1){
                // if(dat.isactive===1){
                     
-           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+" ["+dat.Currentfacility+"]</option>"
+           counsellors+="<option data-code='"+dat._id+"' data-fullname=\""+dat.fullname+"\" value='"+dat.RRI_Name+"'>"+dat.fullname+"-"+dat._id+" </option>"
            
            
          
@@ -1781,12 +1647,10 @@ alert("No loaded list of counsellors");
      
            
            $("#counsellorreg").html(counsellors);
-           $("#counsellor").html(counsellors);
-           $('#counsellorreg').select2(); 
-           $('#counsellor').select2(); 
-           $('#counsellorreg').css('width','100%'); 
+          $('#counsellorreg').select2(); 
+          $('#counsellorreg').css('width','100%'); 
 
-           $(".select2-container").css('width','100%');
+        
             }
             else {
              //alert("");
@@ -1812,35 +1676,30 @@ function validateweeklydata(){
     
     //receive all the fields from the weekly data from
 id=$("#rowid").val();
-facility=$("#facilityname").val();
-counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
-date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-//user=$("#user").val();
-//timestamp=$("#timestamp").val();
-datestartedart=$("#artstartdate").val();
 
+facility=$("#facilityname").val();
+
+counsellor=$("#counsellor").val();
+
+opd_t=$("#opd_t").val();
+screened=$("#screened").val();
+screenrate=$("#screenrate").val();
+opd_eligible=$("#opd_eligible").val();
+opd_tested=$("#opd_tested").val();
+opd_positive=$("#opd_positive").val();
+opd_Yield=$("#opd_Yield").val();
+Total_Tested=$("#Total_Tested").val();
+Total_Positive=$("#Total_Positive").val();
+Total_Yield=$("#Total_Yield").val();
+date_tested=$("#enddate").val();
+
+var user="hsdsa"; 
+
+var currentdate = new Date();
     
-    //var user=$("#username").val(); 
-    var user="hsdsa"; 
-      var currentdate = new Date();
-    
-    var mn=""+(currentdate.getMonth()+1) ;
-    var dt=""+currentdate.getDate();
+var mn=""+(currentdate.getMonth()+1) ;
+
+var dt=""+currentdate.getDate();
     var hr=""+currentdate.getHours();
     var min=""+currentdate.getMinutes();
     var sc=""+currentdate.getSeconds();
@@ -1859,8 +1718,7 @@ datestartedart=$("#artstartdate").val();
     
      var id=null;
      
-      console.log("Urefu wa CCC Number "+cccno.length); 
-          
+      
      if(facility==='')
      {         
   
@@ -1874,67 +1732,16 @@ datestartedart=$("#artstartdate").val();
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
      
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
      
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
-      else if (enddate==='')
-     {
-         
-     alert('Select Test Date');
-   $("#enddate").focus();    
-     } 
-    
 
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
 else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-  
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
-else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }
-    
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-
-else if(linked==='Yes' && datestartedart==='') { alert(' Enter date started on ART');  $('#artstartdate').focus(); }
-
-else if(date_tested!=='' && datestartedart!=='' && Date.parse(date_tested) > Date.parse(datestartedart) ) { alert(' Date started on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
-
-
-
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked===''  ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
-
-
     
        else {
      var facilitynameandmfl=facility.split("_");        
@@ -1943,10 +1750,8 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-',''); 
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');
-     
-     // id=facilitynameandmfl[0]+"_"+endd+"_"+cns+"_"+mod;
-      //this should not be cleared
+    
+   
      id=$("#rowid").val();
       
      var facilityname=facilitynameandmfl[1];
@@ -1954,71 +1759,23 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
             //we are now saving both weekly totals and annual cumulatives on the db
             //add a variable to distinguish the two
             //use _wk
-      
-             var ymp=date_tested.replace("-","").substring(0,6);
-     
-             id+=ymp;
             
-            
-  //insertdailydata(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
-  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+register_no+" @"+serialno+" @ "+ date_tested+" @ "+age+" @ "+gender+" @ "+modality+" @ "+testresult+" @ "+linked+" @ "+cccno+" @ "+linked_site+" @ "+other_facility_linked+" @ "+reason_not_linked+" @ "+ reason_for_death+"@"+ other_reason_for_death+"@"+ reason_for_declining+"@"+ other_reason_for_declining+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@"+datestartedart) ;
-
-
-
-  $.ajax({
-url:'receive_live_data',                            
-type:'get', 
-data:{
-id:id,
-facility:facilityname,
-counselorname:counsellor,
-register_no:register_no,
-serialno:serialno,
-date_tested:date_tested,
-age:age,
-gender:gender,
-modality:modality,
-testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-user:user,
-timestamp:timestamp,newid:id
-},
-dataType:'html',  
-                    success: function(data) {
-                        
-                  $("#feedbacklabel").html(data); 
-                  
-//                 $('#searchdatabutton').click();      
+  insertdailydata(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,timestamp,user, syncstatus) ;
+  console.log(id+" @ "+facilityname+" @ "+counsellor+" @ "+ date_tested+" @ "+opd_t+" @ "+screened+" @ "+screenrate+" @ "+opd_eligible+" @ "+opd_tested+" @ "+opd_positive+" @ "+opd_Yield+"@"+ timestamp+"@"+ user+"@"+ syncstatus+"@") ;
 
  //selectsearchdata();
 $("#message").show();
-$("#actiondone").html(data);
-cleardailyfields();
-
-        }});
-
-
-
-
+$("#actiondone").html("Data Saved Successfully");
 //call the function that loads entered data
 //$("#message").hide().delay(800).fade(400);
 
 
-console.log('daily data entered');
+//console.log('daily data entered');
 //open reports tab
  //$('#reportsbutton').click();
  //$('#inpatient_uptake_cmts').focus();
  window.scrollTo(0,0);
-//setTimeout(delayedrefresh,1500);
+setTimeout(delayedrefresh,1500);
  // delayedrefresh
  //delayedrefresh();
        }
@@ -2102,7 +1859,63 @@ var dbdata1="";
 
 //===================================================VIEW WEEKLY DATA============================================================
 //a function to select a few search data that should appear in a data table
+function selectsearchdata()
+{
+    
+    
+    
+    //rread from weekly data db
+    
 
+  
+    
+  dailydatadb.allDocs({include_docs: true, ascending: true}).then( function(doc) { 
+ 
+     
+	   //console.log(doc);
+	   for(b=0;b<doc.total_rows;b++)
+           {
+             
+               var dat={};
+               dat=doc.rows[b];
+               
+                 var myid=dat.doc._id;
+               if(myid.indexOf("annual")===-1){
+	   
+	       
+	      //console.log(dat.doc.facility);
+              //how to reference each column 
+              //alert(dat.doc.startdate);
+              //dat.doc._id
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>";
+              if(dat.doc.syncstatus==="Yes"){
+                 statusicon=""; 
+                  
+               }
+	     
+		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
+		 dbdata+="<tr id=\""+dat.doc._id+"\"><td> "+dat.doc.date_tested+" </td><td> Facility: <b>"+dat.doc.facility+"</b> Total Facility Workload: <b>"+dat.doc.opd_t+"</b> Total Tes: <b>"+dat.doc.opd_tested+" </b> Total Pos#: <b>"+dat.doc.opd_positive+"Total Yield:</b> "+dat.doc.opd_Yield+" </td><td><button class='btn-info' onclick='loadsaveddailydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button><a onclick='loadwhatsappdata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'  data-toggle='modal'  href='#whatsappform' class='btn btn-default' ><img src='images/wp.png' style='height:22px;'></a></button></td></tr>";
+          	    
+                  }
+            } //end of for loop
+                    
+	appendtabledata(dbdata);
+			
+  }).catch(function (err){console.log(err)});
+    
+
+    
+    
+    
+    
+    
+    
+    //read data from the db
+    
+  	  
+    
+    
+}
 
 
 
@@ -2148,7 +1961,7 @@ function selectconsdata()
                   }
             } //end of for loop
                     
-	//appendtablecounsellordata(dbdata1);
+	appendtablecounsellordata(dbdata1);
 			
   }).catch(function (err){console.log(err)});
     
@@ -2174,55 +1987,26 @@ selectconsdata();
 
 //--------------------------------------------------------------------------------------------------------------------------------
 //
-function appendtableduplicatedata( facil ) 
+function appendtablecounsellordata( dbdata1 ) 
 {
     
-     var tbdata2="";
-    
-     tbdata2="<table id='searchtablecns' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked</th><th>CCC</th><th>Date Linked</th><th>Reason Not Linked</th><th>Last Updated</th><th>Date Entered</th></tr></thead><tbody>";
-    
-    
-//   #searchtablecns
-     $("#searchtabledivcns").html("<img style='' src='images/ajax_loader.gif' />");
-     
-     
-      $.ajax({
-                    url:'getDuplicates?mfl='+facil,                            
-                    type:'get',  
-                    dataType: 'json',  
-                    success: function(data) {
-                        
-                          if(data.length===0){
-                       
-                    $("#searchtabledivcns").html("<h4 class='well' style='color:green;text-align:center;'>Selected Facility has no Possible duplicates. Please select another facility</h4>");    
-                       
-                   }
-                   
-                   
-                 //alert(data[0].facility_name);    
-                     for(var i=0;i<data.length;i++)
-                     {
-                         tbdata2+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].lastsynced+"</td><td>"+data[i].timestamp+"</td></tr>";
-     
-                 
-                       // console.log(data[i].facility_name) 
-                        
-//                        addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        updatecounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        
-                      if(i===data.length-1){
+     $("#searchtabledivcns").html("<table id='searchtablecns' class='table table-striped table-bordered'><thead><tr><th style='width:50%;'>Facility</th><th style='width:50%;'>Counsellor Name</th></tr></thead><tbody>"+dbdata1+"</tbody></table>");
+         
+	   $(document).ready(function() {
                 
-                
-                       tbdata2+="</tbody></table>";
-                
-                 $("#searchtabledivcns").html(tbdata2);
-                 
-                 
-                 var table2 = $('#searchtablecns').DataTable({"autoWidth": true,
+         /* $('#searchtable').DataTable({              
+              "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": true,  
-              "order": [[3,'desc']]});
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+   var table2 = $('#searchtablecns').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
  
     $('#searchtablecns tbody').on( 'click', 'tr', function () {
         if ($(this).hasClass('selected') ) {
@@ -2237,123 +2021,59 @@ function appendtableduplicatedata( facil )
     } );
  
     $('#btnDeleteRowcns').click( function () {
-    
-     var tablerowid=table2.$('tr.selected').attr('id');
-     var serialno=table2.$('tr.selected').find("td:eq(3)").text();
-     var facil=table2.$('tr.selected').find("td:eq(0)").text();
+       
+     var tablerowid1=table2.$('tr.selected').attr('id');
+      
         
-        if(ConfirmDelete()===true){
+        if(ConfirmDeletecns()===true){
         
-     deletedata(tablerowid);
+        deletecnsdata(tablerowid1);
         
-        $("#feedbacklabel").html("Duplicate Serial No <b>"+serialno+"</b> for <b>"+facil+"</b> deleted successfully");
-        
-        table2.row('.selected').remove().draw(false);
+        table2.row('.selected').remove().draw( false );
     }
-    
-    
         //call the delete function now
     } );
-                 
-                 
-                 
-     
-            }}
-    }
-      });
-       
-   
-
 
           
           
           
           
             
-                                   
+                                     } ); 
     
                                                           }
                                                           
                                                          // appendtablecounsellordata( dbdata1 );
-      $("#searchtabledivcns").html("<h3 class='well' style='color:green;'>Select facility name above to load its data</h3>");                                                     
+                                                          
 //
 //
 //--------------------------------------------------------------------------------------------------------------------------------
 
-//appendtabledata('15156');
-appendtabledata();
+
 
 //call the function that displays the data
 
-function appendtabledata(){
+function appendtabledata( dbdata ){
     
-        var facili=$("#searchfacilityname").val();
-        
-        console.log(" Loaded facility name "+facili);
-        
-        if(facili!=='' && facili!=='Select Facility Name'){
-        
-        var facdetails=facili.split("_");
-        
-        
-    var tbdata="";
-    
-     tbdata="<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result<th>Linked To ART</th><th>CCC</th><th>Date Linked</th><th>Facility Linked</th><th>Reason Not Linked</th><th>Started on ART</th><th>Date Started ON ART</th><th>Facility Started ART</th><th>Reason Not Started ON ART</th><th>Last Updated</th><th>Edit</th></tr></thead><tbody>";
-        //id	 facility	 counsellor	 register_no	 serialno	 date_tested	 age	 gender	 modality	 testresult	 linked	 cccno	 linked_site	 other_facility_linked	 reason_not_linked	 reason_for_death	 other_reason_for_death	 reason_for_declining	 other_reason_for_declining	 user	 timestamp	 lastsynced	 datestartedart
-    
-   // appendtableduplicatedata(facdetails[1]);
-    
-    
-    $("#searchtablediv").html("<img style='' src='images/ajax_loader.gif' />");
-    
-                var rn=Math.random();
-              $.ajax({
-                    url:'getrawdata?mfl='+facdetails[1]+'&rn='+rn,                            
-                    type:'get',  
-                    dataType: 'json',  
-                    success: function(data) {
-                   
-                   console.log(data.length);
-                   
-                    if(data.length===0)
-                   {
-                       
-                   $("#searchtablediv").html("<h4class='well' style='color:green;text-align:center;'>Selected Facility has no Data. Please select another facility</h4>");    
-                       
-                   }
-                   
-                 //alert(data[0].facility_name);    
-                     for(var i=0;i<data.length;i++)
-                   {
-                         tbdata+="<tr id='"+data[i].id+"'><td>"+data[i].facility+"</td><td>"+data[i].counsellor+"</td><td>"+data[i].register_no+"</td><td serialno='"+data[i].serialno+"' >"+data[i].serialno+"</td><td>"+data[i].date_tested+"</td><td>"+data[i].age+", "+data[i].gender+"</td><td>"+data[i].modality+"</td><td>"+data[i].testresult+"</td><td>"+data[i].linked+"</td><td>"+data[i].cccno+"</td><td>"+data[i].linkagedate+"</td><td>"+data[i].linked_site+"</td><td>"+data[i].reason_not_linked+"</td><td>"+data[i].started_on_art+"</td><td>"+data[i].datestartedart+"</td><td>"+data[i].started_tx_site+"</td><td>"+data[i].reason_not_started_art+"</td><td>"+data[i].lastsynced+"</td><td><button class='btn-info' onclick='loadsaveddailydata(\""+data[i].id+"\",\""+data[i].facility+"\",\"no\",\""+data[i].counsellor+"\",\""+data[i].register_no+"\",\""+data[i].serialno+"\",\""+data[i].date_tested+"\",\""+data[i].age+"\",\""+data[i].gender+"\",\""+data[i].modality+"\",\""+data[i].testresult+"\",\""+data[i].linked+"\",\""+data[i].cccno+"\",\""+data[i].linked_site+"\",\""+data[i].other_facility_linked+"\",\""+data[i].reason_not_linked+"\",\""+data[i].reason_for_death+"\",\""+data[i].other_reason_for_death+"\",\""+data[i].reason_for_declining+"\",\""+data[i].other_reason_for_declining+"\",\""+data[i].user+"\",\""+data[i].timestamp+"\",\""+data[i].lastsynced+"\",\""+data[i].datestartedart+"\",\""+data[i].positive_verified+"\",\""+data[i].linkage_verified+"\")'>Edit</button></td></tr>";
-     
-                 
-                 
-                 
-                 
-                        console.log(data[i].id) 
-                        
-//                        addcounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        updatecounsellorslist( data[i].active,data[i].code,data[i].gender,data[i].county,data[i].cadre,data[i].facility,data[i].mflcode,data[i].fullname,data[i].Currentfacility,data[i].Currentmflcode,data[i].RRI_Name);
-//                        
-                      if(i===data.length-1)
-                      {
-                       tbdata+="</tbody>\n\
-       <tfoot><tr><th>Facility</th><th>Counsellor</th><th>Register no.</th><th>Serial no.</th><th>Date Tested</th><th>Age and Gender</th><th>Modality</th><th>Test Result</th><th>Linked To ART</th><th>CCC</th><th>Date Linked</th><th>Facility Linked</th><th>Reason Not Linked</th><th>Started on ART</th><th>Date Started ON ART</th><th>Facility Started ON ART</th><th>Reason Not Started ON ART</th><th>Last Updated</th><th>Edit</th></tr></tfoot></table>";
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>Date</th><th style='width:50%;'>Summary</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+         
+	   $(document).ready(function() {
                 
-                 $("#searchtablediv").html(tbdata); 
-                 
-                  $('#searchtable tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" style=\'width:100%;font-size:9px;\' title="Search '+title+'" placeholder="search '+title+'" />' );
-    });
-                 
-                 
-                   var table = $('#searchtable').DataTable({"autoWidth": true,
+         /* $('#searchtable').DataTable({              
+              "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": true,  
-              "order": [[4,'desc']]});
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+          
+     
+    var table = $('#searchtable').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
  
     $('#searchtable tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
@@ -2366,141 +2086,85 @@ function appendtabledata(){
              $('#btnDeleteRow').show();
         }
     } );
-    
-    
-     // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-    
-    
  
     $('#btnDeleteRow').click( function () {
         
      var tablerowid=table.$('tr.selected').attr('id');
-     var serialno=table.$('tr.selected').find("td:eq(3)").text();
-     var facil=table.$('tr.selected').find("td:eq(0)").text();
         
         if(ConfirmDelete()===true){
         
-     deletedata(tablerowid);
+        deletedata(tablerowid);
         
-        $("#feedbacklabel").html("Serial No <b>"+serialno+"</b> for <b>"+facil+"</b> deleted successfully");
-        
-        table.row('.selected').remove().draw(false);
+        table.row('.selected').remove().draw( false );
     }
         //call the delete function now
     } );
-    
-    
-     
-    
-                 
-                 
-                      } 
-                     }
-                     
-                     
-                     
-                       
-                   
-        
-                                           }
-                                           
-                                              ,
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                      
-        alert('error loading data'+errorThrown);
-	
-    }
-                        
-                         });
-       
-       }
-       else {
-           
-           
-           $("#searchtablediv").html("<h3 class='well' style='color:green;text-align:center;'>Select facility name above to load its data</h3>"); 
-           
-       }
-       
-  
 
           
           
           
           
             
-                                    
+                                     } ); 
     
                                                           }
 
-function showreports()
-{
- $("#reportsbutton").show();
+ selectsearchdata();
+
+function showreports(){
+    
+     $("#reportsbutton").show();
 }
 
 
-function loadsaveddailydata(id,facility,openreportstab,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,user,timestamp,lastsynced,datestartedart,positive_verified,linkage_verified )
-
-    {
+function loadsaveddailydata(id,facility,openreportstab ){
     $("#reportsbutton").show();
- //  alert(id);
+    
+  //  alert(id);
  //load from weekly db where id is as selected   
- 
- 
- 
   var mflanddates=id.split('_');
         	
-//	 $.ajax({
-//                    url:'loadclient?id='+id,                            
-//                    type:'post',  
-//                    dataType: 'json',  
-//                    success: function(data) {
+	dailydatadb.get(id).then(function (doc) {
     var rowid=id;    
     //populate div with respective content
     $("#rowid").val(id);
-    var mflid=mflanddates[0];
-     if(mflid==="17799"){ mflid='18087';  }
     
-$("#facilityname").val(mflid+"_"+facility);   
-$("#counsellor").val(counsellor);
-$("#register_no").val(register_no);
-$("#serialno").val(serialno);
-$("#enddate").val(date_tested);
-$("#age").val(age);
-$("#gender").val(gender);
-$("#modality").val(modality);
-$("#testresult").val(testresult);
-$("#linked").val(linked);
-$("#cccno").val(cccno);
-$("#linked_site").val(linked_site);
-$("#other_facility_linked").val(other_facility_linked);
-$("#reason_not_linked").val(reason_not_linked);
-$("#reason_for_death").val(reason_for_death);
-$("#other_reason_for_death").val(other_reason_for_death);
-$("#reason_for_declining").val(reason_for_declining);
-$("#other_reason_for_declining").val(other_reason_for_declining);
-$("#artstartdate").val(datestartedart);
+    
+    
+$("#facilityname").val(mflanddates[0]+"_"+facility);   
+$("#counsellor").val(doc.counselorname);
 
+$("#enddate").val(doc.date_tested);
+
+$("#opd_t").val(doc.opd_t);
+$("#screened").val(doc.screened);
+$("#screenrate").val(doc.screenrate);
+$("#opd_eligible").val(doc.opd_eligible);
+$("#opd_tested").val(doc.opd_tested);
+$("#opd_positive").val(doc.opd_positive);
+$("#opd_Yield").val(doc.opd_Yield);
+$("#pmtct_tested").val(doc.pmtct_tested);
+$("#pmtct_positive").val(doc.pmtct_positive);
+$("#pmtct_Yield").val(doc.pmtct_Yield);
+$("#index_tested").val(doc.index_tested);
+$("#index_positive").val(doc.index_positive);
+$("#index_yield").val(doc.index_yield);
+$("#self_test").val(doc.self_test);
+$("#Referred_Prep").val(doc.Referred_Prep);
+$("#gbv").val(doc.gbv);
+$("#Total_Tested").val(doc.Total_Tested);
+$("#Total_Positive").val(doc.Total_Positive);
+$("#Total_Linked").val(doc.Total_Linked);
+$("#Total_Linkage").val(doc.Total_Linkage);
 
    
      //$('#facilityname').select2(); 
-     $('#facilityname').select2();
-     $('#counsellor').select2(); 
-   
-         $("#counsellor").css('width','100%');
-         $("#facilityname").css('width','100%');
-         $(".select2-container").css('width','100%');
-         
+ $('#facilityname').select2();
+ $('#counsellor').select2(); 
+ $("#counsellor").css('width','100%');
+ $("#facilityname").css('width','100%');
+ $(".select2-container").css('width','100%');
+     
      
      $("#savebutton").hide();
      
@@ -2508,12 +2172,12 @@ $("#artstartdate").val(datestartedart);
      //$("#savenewbutton").show();
       checkids();
       
-      asklinkage();
-whichfacility();
-specifyFacilityLinked();
-isshowdiedordeclined();
-isshowdeclinedother();
-isshowdeadother();
+//      asklinkage();
+//whichfacility();
+//specifyFacilityLinked();
+//isshowdiedordeclined();
+//isshowdeclinedother();
+//isshowdeadother();
       
       
  $('#newdatabutton').html("<i class='glyphicon glyphicon-edit'></i>Edit Data");
@@ -2534,10 +2198,62 @@ isshowdeadother();
                    
                }
   
-//}});
+});
 
  selectwidth();
 }
+
+
+
+<!-------------------------------------------------------------->
+
+
+function loadwhatsappdata(id,facility){
+     
+      	
+	dailydatadb.get(id).then(function (doc) {
+  
+$('#lbl_date_tested').html(doc.date_tested);
+$('#lbl_facility').html(facility);
+
+
+$('#lbl_opd_t').html(""+doc.opd_t);
+$('#lbl_screened').html(""+doc.screened);
+$('#lbl_screenrate').html(""+doc.screenrate+" ");
+$('#lbl_opd_eligible').html(""+doc.opd_eligible);
+$('#lbl_opd_tested').html(""+doc.opd_tested);
+$('#lbl_opd_positive').html(""+doc.opd_positive);
+$('#lbl_opd_Yield').html(""+doc.opd_Yield);
+$('#lbl_pmtct_tested').html(""+doc.pmtct_tested);
+$('#lbl_pmtct_positive').html(""+doc.pmtct_positive);
+$('#lbl_pmtct_Yield').html(""+doc.pmtct_Yield);
+$('#lbl_index_tested').html(""+doc.index_tested);
+$('#lbl_index_positive').html(""+doc.index_positive);
+$('#lbl_index_yield').html(""+doc.index_yield);
+$('#lbl_self_test').html(""+doc.self_test);
+$('#lbl_Referred_Prep').html(""+doc.Referred_Prep);
+$('#lbl_gbv').html(""+doc.gbv);
+$('#lbl_Total_Tested').html(""+doc.Total_Tested);
+$('#lbl_Total_Positive').html(""+doc.Total_Positive);
+
+$('#lbl_Total_Yield').html(""+doc.Total_Yield);
+$('#lbl_Total_Linked').html(""+doc.Total_Linked);
+$('#lbl_Total_Linkage').html(""+doc.Total_Linkage);
+$('#lbl_counsellor').html(""+doc.counselorname);
+
+
+  
+});
+
+
+}
+
+<!-------------------------------------------------------------->
+
+
+
+
+
 
 $("#refreshpage" ).click(function() 
 {
@@ -2547,6 +2263,11 @@ $("#refreshpage" ).click(function()
 });
 
 $("#exportdataanchor1" ).click(function() 
+{
+    checkinternet();
+   
+});
+$("#zeroreportanchor" ).click(function() 
 {
     checkinternet();
    
@@ -2578,43 +2299,31 @@ function updateweeklydata()
  //this id will be used to update the entered data
    var id=$("#rowid").val();
    
-   var newid="";
   // var annualid=id.replace(/weekly/g,"annual");
    
- //receive all the fields from the weekly data from
-//id=$("#rowid").val();
+        //receive all the fields from the weekly data from
+id=$("#rowid").val();
 facility=$("#facilityname").val();
-var mf=facility.split("_");
-
 counsellor=$("#counsellor").val();
-register_no=$("#register_no").val();
-serialno=$("#serialno").val();
+
 date_tested=$("#enddate").val();
-age=$("#age").val();
-gender=$("#gender").val();
-modality=$("#modality").val();
-testresult=$("#testresult").val();
-linked=$("#linked").val();
-cccno=$("#cccno").val();
-linked_site=$("#linked_site").val();
-other_facility_linked=$("#other_facility_linked").val();
-reason_not_linked=$("#reason_not_linked").val();
-reason_for_death=$("#reason_for_death").val();
-other_reason_for_death=$("#other_reason_for_death").val();
-reason_for_declining=$("#reason_for_declining").val();
-other_reason_for_declining=$("#other_reason_for_declining").val();
-datestartedart=$("#artstartdate").val();
+
+opd_t=$("#opd_t").val();
+screened=$("#screened").val();
+screenrate=$("#screenrate").val();
+opd_eligible=$("#opd_eligible").val();
+opd_tested=$("#opd_tested").val();
+opd_positive=$("#opd_positive").val();
+opd_Yield=$("#opd_Yield").val();
+
+
+
 //user=$("#user").val();
 timestamp=$("#timestamp").val();
 
-newid=mf[0]+"_"+serialno+"_"+register_no+"_"+modality+""+(date_tested.replace("-","").substring(0,6));
-    
-    //var user=$("#username").val(); 
+
     var user="hsdsa"; 
-   // var timestamp = $.now();
-    
-         console.log("Urefu wa CCC Number "+cccno.length); 
-    
+
     var currentdate = new Date();
     
    var mn=""+(currentdate.getMonth()+1) ;
@@ -2651,66 +2360,21 @@ newid=mf[0]+"_"+serialno+"_"+register_no+"_"+modality+""+(date_tested.replace("-
      else if(counsellor===''||counsellor==='select  Counsellor')
      {         
   
-   alert('Select Counsellor');
+   alert('Select User');
    //$("#facilityname select:first").focus();
    
    $("#counsellor").css('border-color','red');
     //$("select:first").focus();
      }
-     
-     else if(modality==='')
-     {         
-  
-   alert('Select Modality');
-   //$("#facilityname select:first").focus();
-   
-   $("#modality").css('border-color','red');
-    //$("select:first").focus();
-     }
-     
-//     //startdate
-//     else if (startdate==='')
-//     {
-//         
-//     alert('Select week begining date');
-//   $("#startdate").focus();    
-//     }    
-   //end date
+ 
       else if (enddate==='')
      {
          
-     alert('Select Test Date');
+     alert('Select Reporting Date');
    $("#enddate").focus();    
      } 
      
 
-else if(register_no==='') { alert(' Enter  Register Number');  $('#register_no').focus(); }
-else if(serialno==='') { alert(' Enter patient  serial number');  $('#serialno').focus(); }
-else if(date_tested==='') { alert(' Select date tested');  $('#enddate').focus(); }
-else if(age==='') { alert(' Enter Age');  $('#age').focus(); }
-else if(gender==='') { alert(' Enter Gender');  $('#gender').focus(); }
-//else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
-
-else if(linked==='Yes' && cccno==='') { alert(' enter cccno');  $('#cccno').focus(); }
- else if(linked_site==='This Facility' && cccno.length!==11) { alert(' Ensure the ccc number is 11 digits eg 15358-01234');  $('#cccno').focus(); }
- 
- //else if(modality==='') { alert(' Select modality');  $('#modality').focus(); }
-else if(testresult==='') { alert(' Enter  test result');  $('#testresult').focus(); }
-else if(testresult==='Positive' && linked==='') { alert(' Specify if client is linked');  $('#linked').focus(); }
- else if(linked==='Yes' && datestartedart==='') { alert(' Enter date started on ART');  $('#artstartdate').focus(); }
-
-else if(date_tested!=='' && datestartedart!=='' && Date.parse(date_tested) > Date.parse(datestartedart) ) { alert(' Date started on ART cannot be less than date tested for HIV');  $('#artstartdate').focus(); }
- 
- 
-else if(linked==='Yes' && linked_site==='') { alert(' Select linked_site');  $('#linked_site').focus(); }
-else if(linked_site==='Other Facility' && other_facility_linked==='') { alert(' Specify the name of other facility linked');  $('#other_facility_linked').focus(); }
-else if(linked==='No' && reason_not_linked==='' ) { alert('Specify reason not linked');  $('#reason_not_linked').focus();  }
-else if(  reason_not_linked==='Died' && reason_for_death==='' && linked==='No') { alert('Specify reason for death');  $('#reason_for_death').focus();  }
-else if( reason_for_death==='Other natural causes' && other_reason_for_death==='' && linked==='No') { alert('Specify  other reason for death');  $('#other_reason_for_death').focus(); }
-else if(reason_not_linked==='Declined' && reason_for_declining==='' && linked==='No') { alert(' Select reason for declining');  $('#reason_for_declining').focus();  }
-else if(reason_for_declining==='Other reason' && other_reason_for_declining==='' && linked==='No') { alert(' Specify the other reason for declining');  $('#other_reason_for_declining').focus(); }
 
    
        else {
@@ -2721,8 +2385,7 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
      var endd=enddate.replace('-','');      
      var endd=endd.replace('-','');      
      var cns=counsellor.replace('-','');
-     var mod=modality.replace('-','');     
-         
+        
      var facilityname=facilitynameandmfl[1];
             //save data to the db
  // saveweeklyupdates(id,facilitynameandmfl[1],enddate,counselorname,modality, tested,positive_tg,positive,linked_here,linked_else,declined,dead,tca,timestamp,user, syncstatus) ;
@@ -2730,51 +2393,9 @@ else if(reason_for_declining==='Other reason' && other_reason_for_declining===''
             //________________________________
           
      id=$("#rowid").val();
-     
-     
   
-  //saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked
-  //,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) ;
+ saveweeklyupdates(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,timestamp,user, syncstatus) ;
   
-  
-  
-  $.ajax({
-url:'receive_live_data',                            
-type:'get', 
-data:{
-    id:id,
-facility:facilityname,
-counselorname:counsellor,
-register_no:register_no,
-serialno:serialno,
-date_tested:date_tested,
-age:age,
-gender:gender,
-modality:modality,
-testresult:testresult,
-linked:linked,
-cccno:cccno,
-linked_site:linked_site,
-other_facility_linked:other_facility_linked,
-reason_not_linked:reason_not_linked,
-reason_for_death:reason_for_death,
-other_reason_for_death:other_reason_for_death,
-reason_for_declining:reason_for_declining,
-other_reason_for_declining:other_reason_for_declining,
-datestartedart:datestartedart,
-user:user,
-timestamp:timestamp,newid:newid
-},
-dataType:'html',  
-                    success: function(data) {
-                        
-                  $("#feedbacklabel").html(data); 
-                  
-                 $('#searchdatabutton').click();       
-        }});
-  
-  
- 
             //
             //________________________________
             
@@ -2792,14 +2413,14 @@ console.log('weekly data updated');
 
 //$('#reportsbutton').click();
 //$('#inpatient_uptake_cmts').focus();
-//setTimeout(delayedrefresh,1800);
+setTimeout(delayedrefresh,1800);
 //delayedrefresh();
        }
        
     
 }
    
-function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_tested,age,gender,modality,testresult,linked,cccno,linked_site,other_facility_linked,reason_not_linked,reason_for_death,other_reason_for_death,reason_for_declining,other_reason_for_declining,timestamp,user, syncstatus,datestartedart) {
+function saveweeklyupdates(id,facilityname,counsellor,date_tested,opd_t,screened,screenrate,opd_eligible,opd_tested,opd_positive,opd_Yield,timestamp,user, syncstatus) {
  
  
  
@@ -2813,23 +2434,15 @@ function saveweeklyupdates(id,facilityname,counsellor,register_no,serialno,date_
   
 doc.facility=facilityname;
 doc.counselorname=counsellor;
-doc.register_no=register_no;
-doc.serialno=serialno;
 doc.date_tested=date_tested;
-doc.age=age;
-doc.gender=gender;
-doc.modality=modality;
-doc.testresult=testresult;
-doc.linked=linked;
-doc.cccno=cccno;
-doc.linked_site=linked_site;
-doc.other_facility_linked=other_facility_linked;
-doc.reason_not_linked=reason_not_linked;
-doc.reason_for_death=reason_for_death;
-doc.other_reason_for_death=other_reason_for_death;
-doc.reason_for_declining=reason_for_declining;
-doc.other_reason_for_declining=other_reason_for_declining;
-doc.datestartedart=datestartedart;
+
+doc.opd_t=opd_t;
+doc.screened=screened;
+doc.screenrate=screenrate;
+doc.opd_eligible=opd_eligible;
+doc.opd_tested=opd_tested;
+doc.opd_positive=opd_positive;
+doc.opd_Yield=opd_Yield;
 doc.user=user;
 doc.timestamp=timestamp;
 doc.syncstatus=syncstatus; 
@@ -2841,11 +2454,6 @@ doc.syncstatus=syncstatus;
   return dailydatadb.put(doc);
    }
 });
- 
- 
- //daily data
- 
- 
  
  
 } 
@@ -2872,7 +2480,7 @@ var recordsunexported=$("#unexported").val();
     
   $("#exportbutton").hide();
   $("#exportmsg").show();
-   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait response.</b><br/>");
+   $("#exportresponse").append("<b><font color='orange'>Exporting data.. please wait for response.</b><br/>");
   
   dailydatadb.allDocs({include_docs: true, descending: true}).then( function(doc) { 
  syncstatusarray=[];
@@ -2889,47 +2497,40 @@ var recordsunexported=$("#unexported").val();
 	     // console.log(dat.doc.facility);
               //how to reference each column 
               
-              var idyangu=dat.doc._id;
-		  var num=parseInt(c)-1;
+        var idyangu=dat.doc._id;
+	var num=parseInt(c)-1;
 	var missingcommentid="";
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
-                        {
+        {
 
            
-              var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
+        var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsaveddailydata('"+dat.doc._id+"','"+dat.doc.facility+"','no"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
         
-        if(skipexporting===0){
+ if(skipexporting===0)
+ {
             
-            updatesyncstatus(dat.doc._id,'Yes');
+  updatesyncstatus(dat.doc._id,'Yes');
         
         
             
-             $.ajax({
-url:'receiveData',                            
-type:'get', 
+    $.ajax({
+                        url:'importscreening',                            
+                        type:'get', 
 data:{
-    id:dat.doc._id,
+
+id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
+opd_t:dat.doc.opd_t,
+screened:dat.doc.screened,
+screenrate:dat.doc.screenrate,
+opd_eligible:dat.doc.opd_eligible,
+opd_tested:dat.doc.opd_tested,
+opd_positive:dat.doc.opd_positive,
+opd_Yield:dat.doc.opd_Yield,
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
 },
@@ -2953,7 +2554,16 @@ dataType:'html',
                  $("#exportmsg").hide();
                  if(returnedresponses<1000){
                  $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
-             setTimeout(delayedrefresh,2000);
+                 
+                 
+                 if(parseInt(recordsunexported)===1)
+                 {     
+                  
+                    $("#screenshotwp").click();                        
+                                            
+                 }
+                 
+             //setTimeout(delayedrefresh,2000);
             }
              else {
                       $("#exportresponse").append("<b><font color='orange'>Exporting did not complete successfully.</b>"); 
@@ -3059,7 +2669,7 @@ var recordsunexported=$("#unexported").val();
                $("#exportbutton1").hide();
                $("#exportmsg1").show();
                
-                  $("#exportbutton").hide();
+               $("#exportbutton").hide();
                $("#exportmsg").show();
                
                //a variable to check if all comments are added for percents below 80 percent and not amongest the indicators that can be skipped.
@@ -3088,30 +2698,22 @@ var recordsunexported=$("#unexported").val();
         
             
              $.ajax({
-                         url:'receiveData',                            
+                         url:'importscreening',                            
                         type:'get', 
 data:{
 
 id:dat.doc._id,
 facility:dat.doc.facility,
 counselorname:dat.doc.counselorname,
-register_no:dat.doc.register_no,
-serialno:dat.doc.serialno,
 date_tested:dat.doc.date_tested,
-age:dat.doc.age,
-gender:dat.doc.gender,
-modality:dat.doc.modality,
-testresult:dat.doc.testresult,
-linked:dat.doc.linked,
-cccno:dat.doc.cccno,
-linked_site:dat.doc.linked_site,
-other_facility_linked:dat.doc.other_facility_linked,
-reason_not_linked:dat.doc.reason_not_linked,
-reason_for_death:dat.doc.reason_for_death,
-other_reason_for_death:dat.doc.other_reason_for_death,
-reason_for_declining:dat.doc.reason_for_declining,
-other_reason_for_declining:dat.doc.other_reason_for_declining,
-datestartedart:dat.doc.datestartedart,
+
+opd_t:dat.doc.opd_t,
+screened:dat.doc.screened,
+screenrate:dat.doc.screenrate,
+opd_eligible:dat.doc.opd_eligible,
+opd_tested:dat.doc.opd_tested,
+opd_positive:dat.doc.opd_positive,
+opd_Yield:dat.doc.opd_Yield,
 user:dat.doc.user,
 timestamp:dat.doc.timestamp
 },
@@ -3138,7 +2740,7 @@ dataType: 'html',
             {
              $("#exportresponse1").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
              $("#exportresponse").append("<br/>.<br/>.<br/>.<br/><b><font color='green'><b>"+returnedresponses+" records</b> completed successfully. </b>"); 
-             setTimeout(delayedrefresh,2000);
+             //setTimeout(delayedrefresh,2000);
             }
              else 
              {
@@ -3617,6 +3219,9 @@ $("#reportsform").submit(function(e){
 $("#excelreportsfom").submit(function(e){
     return false;
 });
+$("#zeroreportform").submit(function(e){
+    return false;
+});
 
  $('input').css('border-color','#337ab7');
 
@@ -3625,7 +3230,7 @@ $("#excelreportsfom").submit(function(e){
 
 $('form').on('focus', 'input[type=number]', function (e) {
   $(this).on('mousewheel.disableScroll', function (e) {
-    e.preventDefault()
+    e.preventDefault();
   })
 });
 $('form').on('blur', 'input[type=number]', function (e) {
@@ -3806,31 +3411,29 @@ function ConfirmDeletecns()
     }
 
 
+function ConfirmDeleteever()
+    {
+      var y = confirm("Are you sure you want to delete all the data from this device ?");
+      if (y)
+          return true;
+      else
+        return false;
+    }
 
 
 
 function deletedata(id){
     
-  $.ajax({
-             url:'deletedata?id='+id,                            
-            type:'get',  
-            dataType: 'html',  
-           
-    success: function(data) {
-                             //alert('offline');
-	
-      //  $("#exportresponse").html("");
-   
-    }
-                                           
-    ,
-    error: function(XMLHttpRequest, textStatus, errorThrown) 
-    {
-        //alert('offline');
-	
-    }
-                        
-                         });
+    //a function to delete entered data
+console.log("______"+id);
+dailydatadb.get(id).then(function(doc) {
+  return dailydatadb.remove(doc);
+}).then(function (result) {
+    unsynceddata();
+  // handle result
+}).catch(function (err) {
+  console.log(err);
+});
 
   
     
@@ -3897,7 +3500,8 @@ function autocalculate(indicator){
      var b=0;     
     for(b=0;b<sourcearray.length;b++){
         //check if there
-        if(sourcearray[b].trim()===''){sourcearray[b]=0;}
+        if(sourcearray[b].trim()==='')
+        {sourcearray[b]=0;}
         
         if(sourcearray[b]!=='')
         {
@@ -3927,55 +3531,22 @@ function autocalculate(indicator){
 
 //this fuction should sum and update the current value of the 
 
-function yearlytotal(indicator){
-  //  
-    var currentvalue=$("#"+indicator).val(); 
-    var previous=$("#"+indicator).attr("data-previous_"+indicator);
-    var newtotal=$("#"+indicator).data(""+indicator);
-    
-    
-    
-   var afteradding=0;
-   if(currentvalue!==''){
-       
-   afteradding=parseInt(previous)+parseInt(currentvalue);
-   
-   }
-   
-        //----update the excel values
-      $("#"+indicator).attr( "data-"+indicator , afteradding);  //data-total_hiv_pos_child
-      //$("#"+indicator).val(afteradding);  //the total that appears on the input field
-      console.log("before adding "+previous+" After adding "+afteradding);  
-        
-}
-
 
 //for PNS supported facilities
 
-function validatemodalities(){
+
+
+function validateAge(){
     
+     var miakangapi=$("#age").val();
+     
+     if(miakangapi.startsWith("0")){
+     $("#age").val("");    
+         
+     }
+     //alert(miakangapi);
     
- var ispns= $("#facilityname").find(':selected').data("pns");   
-    //alert("facil "+$("#facilityname").val()+" pns="+ispns);
-    var modalitiesoption="<option value=''>Select Modality</option>";
-        modalitiesoption+="<option value='Optimized Testing IPD'>Optimized Testing IPD</option>";
-        modalitiesoption+="<option value='Optimized Testing OPD'>Optimized Testing OPD</option>";
-        
-   if(ispns===1){
-   modalitiesoption+="<option value='PNS'>PNS</option>";
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";    
-       
-   } 
-   else {
-       
-    
-        modalitiesoption+="<option value='Index Testing'>Index Testing</option>";   
-   }
-    
-  // $("#modality").html(modalitiesoption); 
-    
-    
-}
+                      }
 
 //validatemodalities();
 
@@ -3984,225 +3555,21 @@ function validatemodalities(){
 
 
 
-function asklinkage(){
-    
-  var tr=$("#testresult").val();
-   //alert(regni);
-
-   
-        if(tr==='Positive')
-        {
-              
-            $(".linked").show();
-            //$(".linkage").show();
-            
-        }
-        else {
-          
-           $(".linkage").hide();
-           $("#linked").val("");
-           $(".cccno").hide();
-            $("#cccno").val(""); 
-            $("#linked_site").val("");
-            $("#other_facility_linked").val("");
-             
-             }
-    
-    
-}
-
-
-function whichfacility(){
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked").val();
-   //alert(regni);
-
-   
-        if(tr==='Yes')
-        {
-              
-            $(".linked_site").show();
-           // $(".cccno").show();
-            $(".reason_not_linked").val("");
-            $(".reason_not_linked").hide();
-            
-           //hide and clear values for not linked 
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-            
-            
-        }
-        
-        
-          else if(tr==='No') {
-          
-           $(".linked_site").hide();
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").show();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-        
-        else {
-          
-           $(".linked_site").hide();
-           $("#linked_site").val("");
-           $("#other_facility_linked").val("");
-           $(".other_facility_linked").hide();
-   //show options for why not linked
-           $(".reason_not_linked").hide();
-            $(".cccno").hide();
-            $("#cccno").val("");
-             
-            }
-    
-    
-}
-
-
-function specifyFacilityLinked()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#linked_site").val();
- if(tr==='Other Facility')
-        {
-              
-          $(".other_facility_linked").show();
-          $(".cccno").show();
-         
-        }
-        
-        
-        else  if(tr==='This Facility')
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").show();
-           
-           }
-        
-        else 
-           {
-               
-           $(".other_facility_linked").hide();
-           $("#other_facility_linked").val("");
-           $(".cccno").hide();
-           
-           }
-    
-    
-}
 
 
 
-function isshowdiedordeclined()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_not_linked").val();
- if(tr==='Declined')
-        {
-              
-          $(".reason_for_declining").show();
-          $(".reason_for_death").hide();
-          $("#reason_for_death").val("");
-          
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-       }
-        else if(tr==='Died') 
-           {
-            $(".reason_for_death").show();
-            $(".reason_for_declining").hide();
-            $("#reason_for_declining").val("");
-            
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-           else {
-               //if reason not linked is TCA
-               $(".reason_for_declining").hide();
-                $(".reason_for_death").hide();
-               $(".other_reason_for_declining").hide();              
-               $(".other_reason_for_death").hide();
-               
-               $("#reason_for_declining").val("");
-                $("#reason_for_death").val("");
-               $("#other_reason_for_declining").val("");              
-               $("#other_reason_for_death").val("");
-               
-           }
-    
-    
-}
 
 
-
-function isshowdeclinedother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_declining").val();
- if(tr==='Other reason')
-        {
-              
-          $(".other_reason_for_declining").show();
-          $(".other_reason_for_death").hide();
-          $("#other_reason_for_death").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_declining").hide();
-            $("#other_reason_for_declining").val("");
-           }
-    
-    
-}
-
-function isshowdeadother()
-{
-  //if linked , show the next input field which asks which facility users is linked 
-  var tr=$("#reason_for_death").val();
- if(tr==='Other natural causes')
-        {
-              
-          $(".other_reason_for_death").show();
-          $(".other_reason_for_declining").hide();
-          $("#other_reason_for_declining").val("");
-        
-       }
-        else 
-           {
-           
-            $(".other_reason_for_death").hide();
-            $("#other_reason_for_death").val("");
-           }
-    
-    
-}
 
 function setrowid(){
     var id="";
     
     var f=$("#facilityname").val();
     var mfl=f.split("_")[0];
-    var sn=$("#serialno").val();
-    var rn=$("#register_no").val();
-    var md=$("#modality").val();
-    
-    var id=mfl+"_"+sn+"_"+rn+"_"+md;
+    var dt=$("#enddate").val();
+    dt=dt.replace('-','');
+    var usr=$("#counsellor").val();
+    var id=mfl+"_"+dt+"_"+usr;
     
     $("#rowid").val(id);
     
@@ -4380,16 +3747,413 @@ $('#clearcachebtn').click(function() {
 });
 
 
+
+
+function cleardata()
+{
+    
+    if(ConfirmDeleteever()===true){
+    
+    dailydatadb.destroy(function (err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log ("Data Database Deleted");
+     // $("#resetdbbtn").hide();
+      $("#cleardatabtn").html("Data deleted successful!");
+      window.location.reload();
+      
+   }
+                                        });
+    
+        }
+}
+
+
+
+
+function validatemodalitiesbygender(){
+    
+  var sex=$("#gender").val();
+  
+  if(sex==='Male'){  
+$("#modality option[value='anc1']").attr("disabled",true); 
+$("#modality option[value='anc2']").attr("disabled",true);
+$("#modality option[value='ld']").attr("disabled",true); 
+$("#modality option[value='pnc']").attr("disabled",true); 
+
+$("#modality option[value='vmmc']").attr("disabled",false);
+                  }
+  else if(sex==='Female')
+                  {  
+$("#modality option[value='vmmc']").attr("disabled",true);
+  
+$("#modality option[value='anc1']").attr("disabled",false); 
+$("#modality option[value='anc2']").attr("disabled",false);
+$("#modality option[value='ld']").attr("disabled",false); 
+$("#modality option[value='pnc']").attr("disabled",false);  
+        
+                  }
+    
+}
+
+
+
+
+
+   var zeroreportdb = new PouchDB('htszeroreports');
+var remoteCouch = false;
+var blankreportde;
+
+//receive the artist, song title and lyrics text
+function savezeroreport()
+{
+    
+    var datee=$("#zeroreportdate").val();
+    var facilitii=$("#facilityname_zerorpt").val();
+    
+    
+        if(facilitii===''){ alert("Select Facilty");}
+        else if(datee===''){ alert("Select Date");}
+        
+        else{
+    $.ajax({
+        url:'submitZero',
+        type:'get',
+        data:{ 
+            date:datee,
+            facil:facilitii },
+        dataType:'html',
+        success: function(data) {
+        {
+    
+        $("#savezeromsg").html(data);
+            
+        }
+        
+        
+                                 }
+
+});
+}
+    
+//blankreportde = 
+//           {
+//            _id:""+datee+facilit, //this is static since we cant have two users using the same phone
+//	    date:datee,
+//        facility:facilit,
+//            zero:0,        
+//       completed:false
+//           };
+//  zeroreportdb.put(blankreportde, function callback(err, result) {
+//    if (!err) {
+//      console.log('zero report submitted succesfully');
+//              }
+//          else{
+//        console.log(err);
+//              }
+//    
+//    //setTimeout(delayedrefresh,1500);
+//  });
+  
+  
+  
+}
+
+
 </script>
 
 <script>
-//if('serviceWorker' in navigator) 
-//{
-//  navigator.serviceWorker
-//           .register('sw1.js')
-//           .then(function() { console.log("Service Worker Registered"); });
-//}
-</script>
 
+
+
+          if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw1.js').then(function(registration) {
+      // Registration was successful
+      console.log('HTS ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+
+
+
+
+if($("#toolid").is(":visible")){
+                    $("#refreshpage").hide();
+                } else{
+                   $("#refreshpage").show();
+                }
+                
+                
+                
+                
+                 function percent(num,den,destination){
+           
+         var rptd=$("#"+num).val();
+         var vrfd=$("#"+den).val();
+           
+           if(rptd!=='' && rptd!==null && vrfd!=='' && vrfd!==null && !isNaN(rptd) && !isNaN(vrfd)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           rptd=parseInt(rptd);
+           vrfd=parseInt(vrfd);
+         
+            if(vrfd===0){vrfd=1;}
+            
+            var conc= Math.round(((rptd/vrfd)*100));
+            if(isNaN(conc)){
+                
+               conc=0; 
+            }
+            
+            
+            $("#"+destination).val(conc+"%");
+             //alert(conc);
+           }
+           
+           
+           
+       }
+       
+       //percent removeFirstZero
+       // var difference = function (val1, val2) { return Math.abs(val1 - val2); };
+       
+       function removeFirstZero(elem){
+           
+           
+           var vl=$("#"+elem).val();
+           
+           if(vl.length>=2 && vl.startsWith("0"))
+           {
+               
+               vl=vl.replace("0","");
+               $("#"+elem).val(vl);
+                  // alert(vl);
+           }
+           
+       
+           
+       }
+       
+       
+     function runValidation(num,den,destination){
+           
+         var nume=$("#"+num).val();
+         var denom=$("#"+den).val();
+           
+           if(nume!=='' && nume!==null && denom!=='' && denom!==null && !isNaN(nume) && !isNaN(denom)){
+            //get the variance between the two..   
+           // var largest=Math.Max(val1,val2); 
+           nume=parseInt(nume);
+           denom=parseInt(denom);
+         var haserror=false;
+            if(nume>denom){haserror=true;
+                
+            $("#"+destination).focus();
+             $("#"+num).css({"border-color": "red"});
+             $("#"+den).css({"border-color": "red"});
+            $("#utumani").html("<font color='red' style='height:45px;'>"+num+" cannot be greater than "+den+"</font>");
+            
+            }
+            else {
+                
+              $("#"+num).css({"border-color": "#337ab7"});
+             $("#"+den).css({"border-color": "#337ab7"});  
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             
+            }
+            
+         
+          
+            
+             //alert(conc);
+           }
+           
+           
+          
+           
+           
+       }  
+       
+     
+    function checktotaltests()
+    {        
+     
+     var retvl=true;
+     
+            var opdts=$("#opd_tested").val();
+            var pmtctts=$("#pmtct_tested").val();   
+//            var vctts=$("#vct_tested").val();   
+            var pnsts=$("#index_tested").val();  
+            var totalts=$("#Total_Tested").val();  
+             
+//            if(opdts===""){}
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+//          else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+             $("#Total_Tested").focus();
+             $("#Total_Tested").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Tested cannot be less than Tested for Index, OPD and PMTCT Modalities</font>");
+            alert("Total Tested cannot be less than sum of Clients tested under PMTCT , OPD , PNS Tested");
+            retvl=false;
+            }
+            else {
+                
+              $("#Total_Tested").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          retvl=true;
+             
+            }
+               //compare with sum of all tests
+               return retvl;
+           
+    }
+    
+     function checktotalpositives()
+    {        
+     var retvl=true;
+            var opdts=$("#opd_positive").val();
+            var pmtctts=$("#pmtct_positive").val();   
+           // var vctts=$("#vct_positive").val();   
+            var pnsts=$("#index_positive").val();  
+            var totalts=$("#Total_Positive").val();  
+             
+            
+               if(opdts==='' || opdts===null || isNaN(opdts)){ opdts=0; }
+           if(pmtctts==='' || pmtctts===null || isNaN(pmtctts)){ pmtctts=0; }
+         // else if(vctts==='' || vctts===null || isNaN(vctts)){ vctts=0; }
+           if(pnsts==='' || pnsts===null || isNaN(pnsts)){ pnsts=0; }
+           if(totalts==='' || totalts===null || isNaN(totalts)){ totalts=0; }
+               if(parseInt(totalts)<(parseInt(opdts)+parseInt(pmtctts)+parseInt(pnsts))){
+                   
+                   console.log("totalts "+totalts+" vs opdts ("+opdts+") + pmtctts ("+pmtctts+") + pnsts ("+pnsts+")");
+                   
+             $("#Total_Positive").focus();
+             $("#Total_Positive").css({"border-color": "red"});
+            
+            $("#utumani").html("<font color='red' style='height:45px;'>Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS </font>");
+            alert("Total Positive cannot be less than sum of Positive for OPD , PMTCT , PNS ");
+            
+            retvl=false;
+            
+            }
+            else {
+                
+              $("#Total_Positive").css({"border-color": "#337ab7"});              
+              $("#utumani").html("Note: Please enter data for all input fields");
+          
+             retvl=true;
+            }
+               //compare with sum of all tests
+           return retvl;
+    }
+     
+  
+    
+// $(function() { 
+    $("#tumawp").click(function() { 
+    
+    html2canvas(document.querySelector('#whatsappform')).then(canvas => {
+    $('#visa').html(canvas);
+});
+
+
+
+
+    
+//        getScreenshotOfElement($("#whatsappform"), 0, 0, 100, 100, function(data) {
+//    // in the data variable there is the base64 image
+//    // exmaple for displaying the image in an <img>
+//     saveAs(data, "Facility_Workload.png");
+//    $("#pisa").attr("src", "data:image/png;base64,"+data);
+//});
+        
+        
+//        html2canvas($("#whatsappform"), {
+//            onrendered: function(canvas) {
+//                var theCanvas = canvas;
+//                canvas.toBlob(function(blob) {
+//                    saveAs(blob, "Facility_Workload.png"); 
+//                });
+//            }
+//        });
+    });
+//});
+   
+  
+function getScreenshotOfElement(elem, posX, posY, width, height, callback) {
+    html2canvas(elem, {
+        onrendered: function (canvas) {
+            var context = canvas.getContext('2d');
+            var imageData = context.getImageData(posX, posY, width, height).data;
+            var outputCanvas = document.createElement('canvas');
+            var outputContext = outputCanvas.getContext('2d');
+            outputCanvas.width = width;
+            outputCanvas.height = height;
+
+            var idata = outputContext.createImageData(width, height);
+            idata.data.set(imageData);
+            outputContext.putImageData(idata, 0, 0);
+            callback(outputCanvas.toDataURL().replace("data:image/png;base64,", ""));
+        },
+        width: width,
+        height: height,
+        useCORS: true,
+        taintTest: false,
+        allowTaint: false
+    });
+}
+
+
+if(window.operamini) { alert("Use of Opera Mini Browser is not supported by this app. Please use Google Chrome"); }
+
+
+</script>
+ <!--
+facilityname
+counsellor
+opd_attendance
+screened
+screenrate
+opd_eligible
+opd_tested
+opd_positive
+opd_Yield
+
+pmtct_tested
+pmtct_positive
+pmtct_Yield
+
+
+
+index_tested
+index_positive
+index_yield
+
+self_test
+Referred_Prep
+gbv
+Total_Tested
+Total_Positive
+Total_Yield
+Total_Linked
+Total_Linkage
+ 
+ vct_tested
+vct_positive
+vct_Yield
+ 
+-->
 	</body>
 </html>
